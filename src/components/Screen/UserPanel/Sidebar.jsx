@@ -287,7 +287,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               />
             </SidebarDropdown>
 
-            {/* 3. Deposit (NODEXAI $25 Package, Trading Package, Node Wonder, Re-Invest) */}
+            {/* 3. Deposit (NODEXAI $25 Package, Node Wonder, Re-Invest) */}
             <SidebarDropdown
               id="deposit"
               icon="fa-solid fa-wallet"
@@ -300,16 +300,6 @@ const Sidebar = ({ isOpen, onClose }) => {
                 icon="fa-solid fa-cubes"
                 text="NODEXAI Package"
                 badge="$25"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-              <NavLink
-                to={AuthenticatedUserRouters.TRADING_PACKAGE}
-                icon="fa-solid fa-chart-line"
-                text="Trading Profit (3%)"
-                badge="Min $50 / 2X"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
@@ -345,7 +335,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               />
             </SidebarDropdown>
 
-            {/* 4. History (NODEXAI Incomes: Direct 10%, Level 20%, Binary 50%, Club CTO 10%, Trading 3%, Node Wonder) */}
+            {/* 4. History (NODEXAI Incomes: Direct 10%, Level 20%, Binary 50%, Club CTO 10%, Node Wonder) */}
             <SidebarDropdown
               id="history"
               icon="fa-solid fa-clock-rotate-left"
@@ -403,20 +393,20 @@ const Sidebar = ({ isOpen, onClose }) => {
                 }}
               />
               <NavLink
-                to={AuthenticatedUserRouters.TRADING_PACKAGE}
-                icon="fa-solid fa-arrow-trend-up"
-                text="05. Trading Profit"
-                badge="3% / 2X Cap"
+                to={AuthenticatedUserRouters.NODE_WONDER_INCOME_HISTORY}
+                icon="fa-solid fa-arrows-split-up-and-left"
+                text="05. Node Wonder Income"
+                badge="$150 Payouts"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
                 }}
               />
               <NavLink
-                to={AuthenticatedUserRouters.NODE_WONDER}
-                icon="fa-solid fa-arrows-split-up-and-left"
-                text="06. Node Wonder"
-                badge="$150 Queue"
+                to={AuthenticatedUserRouters.NODE_WONDER_REFERRAL_HISTORY}
+                icon="fa-solid fa-hand-holding-dollar"
+                text="06. Node Wonder Referral"
+                badge="5% ($5)"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
@@ -620,6 +610,36 @@ const Sidebar = ({ isOpen, onClose }) => {
                 icon="fa-solid fa-crown"
                 text="04. Club Income (10% CTO)"
                 badge="Puma/Pajero/Panther"
+                onClose={() => {
+                  onClose();
+                  setOpenDropdown(null);
+                }}
+              />
+              <NavLink
+                to={AuthenticatedAdminRouters.ADMIN_NODE_WONDER_INCOME}
+                icon="fa-solid fa-arrows-split-up-and-left"
+                text="05. Node Wonder Income"
+                badge="$150 Payouts"
+                onClose={() => {
+                  onClose();
+                  setOpenDropdown(null);
+                }}
+              />
+              <NavLink
+                to={AuthenticatedAdminRouters.ADMIN_NODE_WONDER_REFERRAL}
+                icon="fa-solid fa-hand-holding-dollar"
+                text="06. Node Wonder Referral"
+                badge="5% ($5)"
+                onClose={() => {
+                  onClose();
+                  setOpenDropdown(null);
+                }}
+              />
+              <NavLink
+                to={AuthenticatedAdminRouters.ADMIN_NODE_WONDER_QUEUE}
+                icon="fa-solid fa-list-ol"
+                text="07. Node Wonder Queue"
+                badge="Queue Monitor"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);

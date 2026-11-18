@@ -78,8 +78,9 @@ export const AuthenticatedUserRouters = {
   MENTORSHIP_BONUS: "/mentorship-bonus",
   SALARY_INCOME: "/salary-income",
   SALARY_WITHDRAWAL: "/salary-withdrawal",
-  TRADING_PACKAGE: "/trading-package",
   NODE_WONDER: "/node-wonder",
+  NODE_WONDER_INCOME_HISTORY: "/node-wonder-income-history",
+  NODE_WONDER_REFERRAL_HISTORY: "/node-wonder-referral-history",
 }
 
 export const AuthenticatedAdminRouters = {
@@ -130,6 +131,8 @@ export const AuthenticatedAdminRouters = {
   ADMIN_SALARY_INCOME: "/admin-salary-income",
   ADMIN_SALARY_WITHDRAWAL: "/admin-salary-withdrawal",
   ADMIN_COMPOUNDING: "/admin-compounding",
-  ADMIN_TRADING_PACKAGE: "/admin-trading-package",
   ADMIN_NODE_WONDER: "/admin-node-wonder",
+  ADMIN_NODE_WONDER_QUEUE: "/admin-node-wonder-queue",
+  ADMIN_NODE_WONDER_INCOME: "/admin-node-wonder-income",
+  ADMIN_NODE_WONDER_REFERRAL: "/admin-node-wonder-referral",
 }

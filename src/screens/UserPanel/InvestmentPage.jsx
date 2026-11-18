@@ -177,125 +177,60 @@ const InvestmentPage = () => {
         </div>
       </div>
 
-      {/* Package 2 & 3 Showcase Grid */}
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Package 2: Trading Profit Package (Min $50 / 3% Weekly / 2X Capping) */}
-        <div className="p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-[#061b24] via-[#031118] to-[#01080c] border-2 border-emerald-500/40 shadow-xl flex flex-col justify-between space-y-6">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
-                WEEKLY 3% TRADING PROFIT
-              </span>
-              <span className="text-xs font-mono text-emerald-400 font-bold">2X CAPPING</span>
-            </div>
-
-            <h3 className="text-2xl font-black font-['Orbitron',monospace] text-white">
-              Trading Package — <span className="text-emerald-400">Min $50</span>
-            </h3>
-
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Earn <strong>3.0% Weekly</strong> (Mon–Fri daily 0.60%) with strict <strong>200% (2X) capping</strong>. Plus earn <strong>60% across 10 levels</strong> on downline trading profits (ROI of ROI). Both ROI and Level ROI count towards your 2X cap.
-            </p>
-
-            <div className="space-y-2 pt-2 text-xs font-mono text-slate-300">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>3.0% Weekly Profit (Mon-Fri)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>2X Absolute Return Capping (200%)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>10-Level ROI of ROI (L1: 20%, L2: 10%, L3: 6%...)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Wallet or Web3 BSC USDT payment</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-4 border-t border-slate-800">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <span className="text-[10px] text-slate-400 font-mono block">MINIMUM INVESTMENT</span>
-                <span className="text-2xl font-black font-['Orbitron',monospace] text-emerald-400">$50+</span>
-              </div>
-              <div className="text-right">
-                <span className="text-[10px] text-slate-400 font-mono block">WEEKLY RATE</span>
-                <span className="text-base font-bold text-white font-mono">3.0% / Week</span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => navigate(AuthenticatedUserRouters.TRADING_PACKAGE)}
-              className="w-full py-3.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:brightness-110 shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 font-['Orbitron',monospace]"
-            >
-              <TrendingUp className="w-4 h-4" />
-              <span>Go To Trading Package</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Package 3: Node Wonder ($100 / $150 Universal Queue) */}
-        <div className="p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-[#180a2b] via-[#0e041c] to-[#06020c] border-2 border-purple-500/40 shadow-xl flex flex-col justify-between space-y-6">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
+      {/* Package 2 Showcase: Node Wonder ($100 / $150 Universal Queue) */}
+      <div className="max-w-5xl mx-auto">
+        <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-[#180a2b] via-[#0e041c] to-[#06020c] border-2 border-purple-500/40 shadow-[0_0_50px_rgba(139,92,246,0.25)] flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="space-y-4 flex-1">
+            <div className="flex items-center gap-3">
               <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">
                 UNIVERSAL 2-ID QUEUE
               </span>
-              <span className="text-xs font-mono text-amber-400 font-bold">5% DIRECT REF</span>
+              <span className="text-xs font-mono text-amber-400 font-bold">5% UNCONDITIONAL DIRECT REF</span>
             </div>
 
-            <h3 className="text-2xl font-black font-['Orbitron',monospace] text-white">
-              Node Wonder — <span className="text-purple-400">$100</span>
+            <h3 className="text-2xl sm:text-3xl font-black font-['Orbitron',monospace] text-white">
+              NODE WONDER — <span className="text-purple-400">$100 USDT</span>
             </h3>
 
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-sm text-slate-300 leading-relaxed max-w-xl">
               Buy for fixed <strong>$100</strong>. When <strong>any 2 IDs</strong> join globally across the entire company after your position, you receive <strong>$150</strong> cycle payout and your slot disables. Reinvest $100 to cycle again!
             </p>
 
-            <div className="space-y-2 pt-2 text-xs font-mono text-slate-300">
-              <div className="flex items-center gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono text-slate-300">
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#090312] border border-purple-500/20">
                 <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
-                <span>$150 Payout on 2 Global Subsequent IDs</span>
+                <span>$150 Cycle Payout (2 Global IDs)</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#090312] border border-purple-500/20">
                 <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
-                <span>5% ($5.00) Unconditional Direct Referral</span>
+                <span>5% ($5.00) Direct Referral</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#090312] border border-purple-500/20">
                 <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
-                <span>Direct referrals pay even when you are disabled!</span>
+                <span>Referral pays even when disabled!</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#090312] border border-purple-500/20">
                 <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
-                <span>Universal company-wide transparent queue</span>
+                <span>Universal Single-Leg Queue</span>
               </div>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-800">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <span className="text-[10px] text-slate-400 font-mono block">FIXED PACKAGE</span>
-                <span className="text-2xl font-black font-['Orbitron',monospace] text-purple-400">$100.00</span>
-              </div>
-              <div className="text-right">
-                <span className="text-[10px] text-slate-400 font-mono block">CYCLE PAYOUT</span>
-                <span className="text-base font-bold text-emerald-400 font-mono">$150.00 USDT</span>
-              </div>
+          <div className="p-8 rounded-3xl bg-[#0b0314]/90 border border-purple-400/30 text-center w-full lg:w-80 shrink-0 shadow-xl space-y-4">
+            <span className="text-xs font-mono uppercase text-slate-400 tracking-wider block">
+              Fixed Package Cost
+            </span>
+            <div className="text-4xl font-black font-['Orbitron',monospace] text-purple-400">
+              $100<span className="text-base text-slate-400 font-normal">.00</span>
             </div>
+            <span className="text-xs text-emerald-400 font-mono block">Payout: $150.00 USDT</span>
 
             <button
               onClick={() => navigate(AuthenticatedUserRouters.NODE_WONDER)}
-              className="w-full py-3.5 rounded-xl text-center text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-500 hover:brightness-110 shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 font-['Orbitron',monospace]"
+              className="w-full py-4 rounded-xl text-center text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-500 hover:brightness-110 shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 font-['Orbitron',monospace]"
             >
               <Zap className="w-4 h-4" />
-              <span>Go To Node Wonder</span>
+              <span>Go To Node Wonder Hub</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

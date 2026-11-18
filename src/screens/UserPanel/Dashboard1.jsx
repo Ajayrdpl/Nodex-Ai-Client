@@ -280,12 +280,7 @@ const Dashboard1 = () => {
     0
   );
 
-  // 6. TRADING PROFIT (Weekly 3%, 2X Capping) & ROI OF ROI (10 Levels)
-  const totalTradingRoi = Number(stats?.tradingRoi?.total ?? incomes?.tradingRoi?.total ?? userObj?.tradingInfo?.totalTradingRoiEarned ?? 0);
-  const totalRoiOfRoi = Number(stats?.roiOfRoi?.total ?? incomes?.roiOfRoi?.total ?? userObj?.tradingInfo?.totalLevelRoiEarned ?? 0);
-  const totalTradingIncome = totalTradingRoi + totalRoiOfRoi;
-
-  // 7. NODE WONDER (Universal 2-ID Queue + 5% Referral)
+  // 6. NODE WONDER (Universal 2-ID Queue + 5% Referral)
   const totalNodeWonderCycle = Number(stats?.nodeWonderIncome?.total ?? incomes?.nodeWonderIncome?.total ?? userObj?.nodeWonderInfo?.totalEarnedFromCycles ?? 0);
   const totalNodeWonderRef = Number(stats?.nodeWonderReferral?.total ?? incomes?.nodeWonderReferral?.total ?? userObj?.nodeWonderInfo?.totalReferralIncome ?? 0);
   const totalNodeWonder = totalNodeWonderCycle + totalNodeWonderRef;
@@ -294,7 +289,7 @@ const Dashboard1 = () => {
   const totalIncomeAmount = Number(
     stats?.totalIncome ??
     incomes?.total ??
-    (totalDirectIncome + totalLevelIncome + totalBinaryIncome + totalClubIncome + totalCommunity + totalTradingIncome + totalNodeWonder)
+    (totalDirectIncome + totalLevelIncome + totalBinaryIncome + totalClubIncome + totalCommunity + totalNodeWonder)
   );
   const todayIncomeAmount = Number(
     stats?.todayIncome ??
@@ -443,25 +438,25 @@ const Dashboard1 = () => {
       badge: "CARRY FORWARD",
       subText: `Total Vol: $${(leftVolume + rightVolume).toFixed(2)}`,
     },
-    // 9. TRADING PROFIT (3% / 2X)
+    // 9. NODE WONDER CYCLE INCOME ($150)
     {
-      title: "Trading Profit (3%)",
-      value: `$ ${totalTradingIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-      icon: "https://img.icons8.com/3d-fluency/94/bullish.png",
-      path: AuthenticatedUserRouters.TRADING_PACKAGE,
-      theme: "emerald",
-      badge: "3% WEEKLY / 2X",
-      subText: `ROI: $${totalTradingRoi.toFixed(2)} • ROI of ROI: $${totalRoiOfRoi.toFixed(2)}`,
-    },
-    // 10. NODE WONDER ($100 / $150)
-    {
-      title: "Node Wonder Queue",
-      value: `$ ${totalNodeWonder.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      title: "Node Wonder Income",
+      value: `$ ${totalNodeWonderCycle.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://img.icons8.com/3d-fluency/94/process.png",
-      path: AuthenticatedUserRouters.NODE_WONDER,
+      path: AuthenticatedUserRouters.NODE_WONDER_INCOME_HISTORY,
       theme: "purple",
-      badge: userObj?.nodeWonderInfo?.hasActivePackage ? "IN QUEUE" : "$150 CYCLE",
-      subText: `Cycles: $${totalNodeWonderCycle.toFixed(2)} • 5% Ref: $${totalNodeWonderRef.toFixed(2)}`,
+      badge: userObj?.nodeWonderInfo?.hasActivePackage ? "IN QUEUE" : "$150 / CYCLE",
+      subText: `${userObj?.nodeWonderInfo?.totalCyclesCompleted || 0} Cycles Completed`,
+    },
+    // 10. NODE WONDER REFERRAL INCOME (5%)
+    {
+      title: "Node Wonder Referral",
+      value: `$ ${totalNodeWonderRef.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      icon: "https://img.icons8.com/3d-plastilina/69/share--v1.png",
+      path: AuthenticatedUserRouters.NODE_WONDER_REFERRAL_HISTORY,
+      theme: "amber",
+      badge: "5% UNCONDITIONAL",
+      subText: "$5.00 per direct $100 package",
     },
     // 11. TOTAL INCOME
     {

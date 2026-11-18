@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -19,6 +20,7 @@ import {
   HelpCircle,
   Layers,
   History,
+  Share2,
 } from "lucide-react";
 import { setLoading } from "../../redux/slices/loadingSlice";
 import {
@@ -28,6 +30,7 @@ import {
   getGlobalNodeWonderQueueApi,
   getAvailableIncomeBalance,
 } from "../../api/user.api";
+import { AuthenticatedUserRouters } from "../../constants/routes";
 import { getInjectedProvider } from "../../utils/additionalFunc";
 import Pagination from "../../components/Screen/UserPanel/Pagination";
 
@@ -39,6 +42,7 @@ const USDT_ABI = [
 ];
 
 const NodeWonderPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state?.isLoggedUser?.data);
 
@@ -274,6 +278,23 @@ const NodeWonderPage = () => {
           <p className="text-slate-400 text-sm mt-1 max-w-3xl">
             A revolutionary, transparent universal single-leg queue system. Buy a fixed <strong className="text-purple-400">$100 package</strong>. As soon as <strong className="text-emerald-400">any 2 IDs</strong> join globally across the entire company, you receive <strong className="text-emerald-400">$150</strong> instant payout! Plus, earn <strong className="text-amber-400">5% ($5.00) unconditional direct referral</strong> bonuses.
           </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate(AuthenticatedUserRouters.NODE_WONDER_INCOME_HISTORY)}
+            className="px-4 py-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800/80 border border-purple-500/40 text-purple-200 text-xs font-mono font-bold flex items-center gap-2 cursor-pointer transition-all shadow-md"
+          >
+            <History className="w-3.5 h-3.5 text-purple-400" />
+            <span>$150 Incomes</span>
+          </button>
+          <button
+            onClick={() => navigate(AuthenticatedUserRouters.NODE_WONDER_REFERRAL_HISTORY)}
+            className="px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-mono font-bold flex items-center gap-2 cursor-pointer transition-all shadow-md"
+          >
+            <Share2 className="w-3.5 h-3.5 text-amber-400" />
+            <span>5% Referrals</span>
+          </button>
         </div>
       </div>
 

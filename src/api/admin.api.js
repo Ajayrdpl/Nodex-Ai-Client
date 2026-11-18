@@ -1069,3 +1069,34 @@ export async function getCompoundingStatsAdmin() {
     return error?.response?.data || { success: false, message: error.message || "Failed to fetch compounding stats" };
   }
 }
+
+// ==========================================
+// NODEXAI NODE WONDER - ADMIN
+// ==========================================
+
+export const getAdminNodeWonderIncomeHistoryApi = async (params = {}) => {
+  try {
+    const response = await Axios.get(`${adminApi}/node-wonder/income-history`, { params });
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getAdminNodeWonderReferralHistoryApi = async (params = {}) => {
+  try {
+    const response = await Axios.get(`${adminApi}/node-wonder/referral-history`, { params });
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getAdminNodeWonderQueueApi = async (params = {}) => {
+  try {
+    const response = await Axios.get(`${adminApi}/node-wonder/queue`, { params });
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};

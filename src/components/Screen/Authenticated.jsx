@@ -108,8 +108,12 @@ import SalaryWithdrawal from "../../screens/UserPanel/SalaryWithdrawal";
 import AdminSalaryIncome from "../../screens/AdminPanel/AdminSalaryIncome";
 import AdminSalaryWithdrawal from "../../screens/AdminPanel/AdminSalaryWithdrawal";
 import User3MatrixGenealogy from "../../screens/UserPanel/User3MatrixGenealogy";
-import TradingPackagePage from "../../screens/UserPanel/TradingPackagePage";
 import NodeWonderPage from "../../screens/UserPanel/NodeWonderPage";
+import UserNodeWonderIncomeHistory from "../../screens/UserPanel/UserNodeWonderIncomeHistory";
+import UserNodeWonderReferralHistory from "../../screens/UserPanel/UserNodeWonderReferralHistory";
+import AdminNodeWonderIncomeHistory from "../../screens/AdminPanel/AdminNodeWonderIncomeHistory";
+import AdminNodeWonderReferralHistory from "../../screens/AdminPanel/AdminNodeWonderReferralHistory";
+import AdminNodeWonderQueue from "../../screens/AdminPanel/AdminNodeWonderQueue";
 
 const Authenticated = () => {
   const role = useSelector((state) => state?.isLoggedUser?.role);
@@ -185,12 +189,16 @@ const Authenticated = () => {
               element={<ReinvestmentPage />}
             />
             <Route
-              path={AuthenticatedUserRouters.TRADING_PACKAGE}
-              element={<TradingPackagePage />}
-            />
-            <Route
               path={AuthenticatedUserRouters.NODE_WONDER}
               element={<NodeWonderPage />}
+            />
+            <Route
+              path={AuthenticatedUserRouters.NODE_WONDER_INCOME_HISTORY}
+              element={<UserNodeWonderIncomeHistory />}
+            />
+            <Route
+              path={AuthenticatedUserRouters.NODE_WONDER_REFERRAL_HISTORY}
+              element={<UserNodeWonderReferralHistory />}
             />
             <Route
               path={AuthenticatedUserRouters.MY_EARNING}
@@ -557,6 +565,18 @@ const Authenticated = () => {
             <Route
               path={AuthenticatedAdminRouters.ADMIN_SALARY_WITHDRAWAL}
               element={<AdminSalaryWithdrawal />}
+            />
+            <Route
+              path={AuthenticatedAdminRouters.ADMIN_NODE_WONDER_INCOME}
+              element={<AdminNodeWonderIncomeHistory />}
+            />
+            <Route
+              path={AuthenticatedAdminRouters.ADMIN_NODE_WONDER_REFERRAL}
+              element={<AdminNodeWonderReferralHistory />}
+            />
+            <Route
+              path={AuthenticatedAdminRouters.ADMIN_NODE_WONDER_QUEUE}
+              element={<AdminNodeWonderQueue />}
             />
           </Route>
 

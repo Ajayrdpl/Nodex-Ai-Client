@@ -1,0 +1,563 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700;800&family=Orbitron:wght@400;600;800;900&display=swap');
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-slate-950: #0b0e11;
+  --color-slate-900: #181a20;
+  --color-slate-800: #1e2329;
+  --color-slate-700: #2b313a;
+  --color-indigo-950: #12161c;
+  --color-indigo-900: #181a20;
+  --color-rich-black: #0b0e11;
+  --color-space-cadet: #181a20;
+  --color-raisin-black: #0b0e11;
+  --color-hero-primary: #eaecef;
+  --color-hero-secondary: #f0b90b;
+  --color-hero-accent: #fcd535;
+}
+
+:root {
+  /* Official Binance Pro Crypto Trading Palette */
+  --primary-blue: #0284c7;         /* Deep Sky Blue Accent */
+  --primary-blue-light: #38bdf8;   /* Light Sky Blue */
+  --primary-blue-dark: #0369a1;    /* Deep Ocean Blue */
+  --primary-blue-deep: #0c4a6e;    /* Navy Accent */
+
+  --accent-gold: #f0b90b;          /* Official Binance Yellow / Gold */
+  --accent-gold-light: #fcd535;    /* Binance Hover Gold */
+  --accent-gold-dark: #d99e00;     /* Deep Gold */
+  --accent-green: #0ecb81;        /* Binance Buy / Up Green */
+  --accent-red: #f6465d;          /* Binance Sell / Down Red */
+  
+  --neutral-white: #eaecef;        /* Binance Crisp White Text */
+  --neutral-black: #0b0e11;        /* Binance Deepest Obsidian */
+  --neutral-gray-dark: #181a20;    /* Binance Card Surface */
+  --neutral-gray-50: #f8fafc;
+  --neutral-gray-100: #f1f5f9;
+  --neutral-gray-200: #e2e8f0;
+  --neutral-gray-300: #b7bdc6;
+  --neutral-gray-400: #848e9c;     /* Binance Muted Secondary Text */
+  --neutral-gray-500: #5e6673;
+  --neutral-gray-600: #474d57;
+  --neutral-gray-700: #2b313a;     /* Binance Border Line */
+  --neutral-gray-800: #1e2329;     /* Binance Elevated Box */
+  --neutral-gray-900: #181a20;     /* Binance Surface Dark */
+  
+  --background-primary: #0b0e11;   /* Binance Main Background */
+  --background-secondary: #181a20; /* Binance Surface Dark */
+  --background-dark: #0b0e11;      /* True Deep Dark */
+  --background-card: #181a20;      /* Binance Card */
+  --background-sidebar: #12161c;   /* Binance Sidebar */
+  
+  --text-primary: #eaecef;         /* Binance Main Text */
+  --text-secondary: #f0b90b;       /* Binance Gold Text */
+  --text-muted: #848e9c;          /* Binance Secondary Text */
+  --text-light: #eaecef;
+  --text-gold: #f0b90b;           /* Binance Gold */
+  --text-success: #0ecb81;        /* Binance Green */
+  --text-accent: #fcd535;         /* Binance Yellow Accent */
+  
+  --border-light: rgba(43, 49, 58, 0.8);   /* Binance Border */
+  --border-medium: rgba(240, 185, 11, 0.4); /* Binance Gold Glow Border */
+  --border-dark: #2b313a;
+  --border-accent: rgba(240, 185, 11, 0.5); /* Gold Accent Border */
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #f0b90b 0%, #fcd535 50%, #e5ac00 100%);
+  --gradient-gold: linear-gradient(135deg, #fff3b8 0%, #fcd535 40%, #f0b90b 70%, #d99e00 100%);
+  --gradient-light: linear-gradient(135deg, #eaecef 0%, #b7bdc6 100%);
+  --gradient-dark: linear-gradient(180deg, #181a20 0%, #0b0e11 100%);
+  --gradient-success: linear-gradient(135deg, #0ecb81 0%, #00c076 100%);
+  
+  /* Shadows & Neon Glows */
+  --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.6);
+  --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.7);
+  --shadow-blue: 0 0 20px rgba(14, 165, 233, 0.25);
+  --shadow-gold: 0 0 20px rgba(240, 185, 11, 0.35);
+  
+  /* Glass Effects */
+  --glass-bg: rgba(24, 26, 32, 0.95);
+  --glass-border: rgba(43, 49, 58, 0.85);
+  --glass-dark-bg: rgba(11, 14, 17, 0.98);
+  --glass-dark-border: rgba(43, 49, 58, 0.9);
+  
+  --rich-black: #0b0e11;
+  --space-cadet: #181a20;
+  --raisin-black: #0b0e11;
+  --delft-blue: rgba(43, 49, 58, 0.6);
+  --hero-text-primary: #eaecef;
+  --hero-text-secondary: #f0b90b;
+  --hero-text-accent: #fcd535;
+  --hero-bg-gradient: radial-gradient(ellipse at 50% 0%, #1e2329 0%, #181a20 50%, #0b0e11 100%);
+}
+
+.gradient-text {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hover-blue-shadow:hover {
+  box-shadow: var(--shadow-blue);
+}
+
+.dark {
+  --background-primary: var(--neutral-black);
+  --background-secondary: var(--neutral-gray-dark);
+  --background-card: var(--background-card);
+  --text-primary: var(--neutral-white);
+  --text-secondary: #f0b90b;
+  --text-muted: var(--neutral-gray-400);
+  --border-light: rgba(43, 49, 58, 0.8);
+  --border-medium: rgba(240, 185, 11, 0.4);
+  --glass-bg: var(--glass-dark-bg);
+  --glass-border: var(--glass-dark-border);
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: #0b0e11;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.main-bg-image {
+  background-color: #0b0e11 !important;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(240, 185, 11, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 90% 15%, rgba(14, 203, 129, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 10% 80%, rgba(246, 70, 93, 0.04) 0%, transparent 50%),
+    linear-gradient(180deg, #12161c 0%, #0b0e11 60%, #080a0c 100%) !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
+}
+
+/* Universal Page Containers & Cards (Binance Dark Surface) */
+.hero-glass,
+.bg-card,
+.card,
+.reusable-box {
+  background: #181a20 !important;
+  border: 1px solid #2b313a !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(16px) !important;
+  border-radius: 16px !important;
+}
+
+.hero-text-gradient {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+.hero-glow-text {
+  text-shadow: 0 0 30px rgba(142, 197, 255, 0.4),
+               0 0 60px rgba(142, 197, 255, 0.3),
+               0 0 90px rgba(142, 197, 255, 0.2);
+}
+
+.hero-particle {
+  background: var(--particle-color);
+  border-radius: 50%;
+}
+
+.hero-grid {
+  background-image: 
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px var(--glow-color),
+                0 0 40px hsla(var(--ecru-hsl), 0.1); 
+  }
+  50% { 
+    box-shadow: 0 0 40px var(--glow-color),
+                0 0 80px hsla(var(--ecru-hsl), 0.2); 
+  }
+}
+
+@keyframes grid-flow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(64px); }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes particle-float {
+  0% { transform: translate(0, 0) scale(1); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-grid { animation: grid-flow 20s linear infinite; }
+.animate-rotate-slow { animation: rotate 20s linear infinite; }
+
+/* Utility Classes */
+.bg-hero-gradient { background: var(--hero-bg-gradient); }
+.bg-gold-gradient { background: var(--gradient-gold); }
+.bg-navy-gradient { background: var(--gradient-navy); }
+.bg-rich-black { background-color: var(--rich-black); }
+.bg-space-cadet { background-color: var(--space-cadet); }
+.bg-raisin-black { background-color: var(--raisin-black); }
+
+.text-hero-primary { color: var(--hero-text-primary); }
+.text-hero-secondary { color: var(--hero-text-secondary); }
+.text-hero-accent { color: var(--hero-text-accent); }
+.text-ecru { color: var(--ecru); }
+.text-beaver { color: var(--beaver); }
+.text-chamoisee { color: var(--chamoisee); }
+
+.border-hero-gold { border-color: var(--glass-border); }
+.border-delft-blue { border-color: var(--delft-blue); }
+
+/* Individual Color Classes */
+.bg-delft-blue { background-color: var(--delft-blue); }
+.bg-chamoisee { background-color: var(--chamoisee); }
+.bg-ecru { background-color: var(--ecru); }
+.bg-space-cadet { background-color: var(--space-cadet); }
+.bg-beaver { background-color: var(--beaver); }
+.bg-kobicha { background-color: var(--kobicha); }
+.bg-rich-black { background-color: var(--rich-black); }
+.bg-space-cadet-2 { background-color: var(--space-cadet-2); }
+.bg-delft-blue-2 { background-color: var(--delft-blue-2); }
+.bg-raisin-black { background-color: var(--raisin-black); }
+
+.text-delft-blue { color: var(--delft-blue); }
+.text-chamoisee { color: var(--chamoisee); }
+.text-ecru { color: var(--ecru); }
+.text-space-cadet { color: var(--space-cadet); }
+.text-beaver { color: var(--beaver); }
+.text-kobicha { color: var(--kobicha); }
+.text-rich-black { color: var(--rich-black); }
+.text-space-cadet-2 { color: var(--space-cadet-2); }
+.text-delft-blue-2 { color: var(--delft-blue-2); }
+.text-raisin-black { color: var(--raisin-black); }
+
+/* =========================================================
+   OFFICIAL BINANCE PRO TRADING PLATFORM DESIGN SYSTEM
+   ========================================================= */
+
+/* Universal Page Containers & Cards (Binance Dark Surface) */
+.hero-glass,
+.bg-card,
+.card,
+.reusable-box {
+  background: #181a20 !important;
+  border: 1px solid #2b313a !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(16px) !important;
+  border-radius: 14px !important;
+}
+
+.hero-text-gradient,
+.gold-metallic-text {
+  background: linear-gradient(135deg, #fff3b8 0%, #fcd535 35%, #f0b90b 70%, #d99e00 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.blue-metallic-text {
+  background: linear-gradient(135deg, #ffffff 0%, #eaecef 40%, #f0b90b 80%, #fcd535 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Sidebar & Header */
+.sidebar {
+  background: #12161c !important;
+  border-right: 1px solid #2b313a !important;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.header {
+  background: #181a20 !important;
+  border-bottom: 1px solid #2b313a !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Input Fields */
+.input-field {
+  background: #1e2329 !important;
+  border: 1px solid #2b313a !important;
+  border-radius: 10px !important;
+  color: #eaecef !important;
+  padding: 0.65rem 1rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.input-field:focus {
+  outline: none !important;
+  border-color: #f0b90b !important;
+  box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.2) !important;
+}
+
+/* Button Styles - Signature Binance Gold & Green/Red */
+.btn-primary,
+.btn-gold {
+  background: #f0b90b !important;
+  color: #181a20 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 0.65rem 1.4rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(240, 185, 11, 0.25) !important;
+  cursor: pointer !important;
+}
+
+.btn-primary:hover,
+.btn-gold:hover {
+  background: #fcd535 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 15px rgba(240, 185, 11, 0.4) !important;
+}
+
+.btn-secondary,
+.btn-blue {
+  background: #2b313a !important;
+  color: #eaecef !important;
+  border: 1px solid #363d45 !important;
+  border-radius: 10px !important;
+  padding: 0.65rem 1.4rem !important;
+  font-weight: 700 !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+.btn-secondary:hover,
+.btn-blue:hover {
+  background: #363d45 !important;
+  color: #ffffff !important;
+}
+
+.btn-green {
+  background: #0ecb81 !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+  font-weight: 800 !important;
+  transition: all 0.2s ease !important;
+}
+.btn-green:hover {
+  background: #02c076 !important;
+}
+
+.btn-red {
+  background: #f6465d !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+  font-weight: 800 !important;
+  transition: all 0.2s ease !important;
+}
+.btn-red:hover {
+  background: #e0354c !important;
+}
+
+/* User & Admin Active Link Styles */
+.user-active-link {
+  background: rgba(240, 185, 11, 0.12) !important;
+  border-left: 3px solid #f0b90b !important;
+  color: #f0b90b !important;
+}
+
+
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-gray-400);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue);
+}
+
+/* Selection Styles */
+::selection {
+  background: rgba(142, 197, 255, 0.3);
+  color: var(--text-primary);
+}
+
+/* Focus Styles */
+*:focus {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :root {
+    --glass-blur: blur(10px);
+  }
+}
+
+/* Loading States */
+.loading {
+  background: linear-gradient(90deg, transparent, rgba(142, 197, 255, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Success/Error States */
+.success {
+  color: var(--primary-blue);
+  background: rgba(142, 197, 255, 0.1);
+  border: 1px solid rgba(142, 197, 255, 0.3);
+}
+
+.error {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Professional Utility Classes */
+.bg-primary { background-color: var(--background-primary); }
+.bg-secondary { background-color: var(--background-secondary); }
+.bg-card { background-color: var(--background-card); }
+.bg-sidebar { background-color: var(--background-sidebar); }
+.bg-dark { background-color: var(--background-dark); }
+
+.bg-blue-gradient { background: var(--gradient-primary); }
+.bg-light-gradient { background: var(--gradient-light); }
+.bg-dark-gradient { background: var(--gradient-dark); }
+.bg-success-gradient { background: var(--gradient-success); }
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-light { color: var(--text-light); }
+.text-success { color: var(--text-success); }
+.text-accent { color: var(--text-accent); }
+
+.border-light { border-color: var(--border-light); }
+.border-medium { border-color: var(--border-medium); }
+.border-dark { border-color: var(--border-dark); }
+.border-accent { border-color: var(--border-accent); }
+
+/* Luxury Neon Blue & Gold Showcase Theme (Matching Plan Presentation Image) */
+.neon-glow-card,
+.blue-gold-glow-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(8, 20, 44, 0.95) 0%, rgba(5, 12, 28, 0.98) 50%, rgba(3, 7, 18, 0.99) 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+  box-shadow: 0 0 25px rgba(14, 165, 233, 0.2), 0 8px 32px rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+}
+
+.gold-glow-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(28, 20, 8, 0.95) 0%, rgba(18, 14, 5, 0.98) 50%, rgba(11, 14, 17, 0.99) 100%) !important;
+  border: 1.5px solid rgba(240, 185, 11, 0.45) !important;
+  box-shadow: 0 0 25px rgba(240, 185, 11, 0.22), 0 8px 32px rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+}
+
+.gold-badge-icon {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
+  color: #0b0e11;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(254, 240, 138, 0.6);
+  border-radius: 9999px;
+}
+
+.blue-badge-icon {
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #0369a1 100%);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(186, 230, 253, 0.6);
+  border-radius: 9999px;
+}
+
+.neon-gold-ring {
+  background: rgba(240, 185, 11, 0.12);
+  border: 1.5px solid #f0b90b;
+  box-shadow: 0 0 12px rgba(240, 185, 11, 0.35);
+}
+
+.gold-metallic-text {
+  color: #f0b90b !important;
+  background: linear-gradient(135deg, #ffffff 0%, #fef08a 25%, #facc15 50%, #f59e0b 75%, #b45309 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: 0 0 20px rgba(250, 204, 21, 0.2);
+}
+
+.blue-metallic-text {
+  background: linear-gradient(135deg, #ffffff 0%, #bae6fd 30%, #38bdf8 65%, #0284c7 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.gold-sub-text {
+  color: #f0b90b;
+  letter-spacing: 0.08em;
+}
+
+/* Split Table Header Gradients */
+.split-header-blue {
+  background: linear-gradient(90deg, #002b66 0%, #004b99 50%, #026cb6 100%) !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.split-header-gold {
+  background: linear-gradient(90deg, #b45309 0%, #d97706 40%, #f59e0b 80%, #fbbf24 100%) !important;
+  color: #0b0e11 !important;
+  font-weight: 900 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.neon-row-border {
+  border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+}
+
+.neon-col-divider {
+  border-right: 1px solid rgba(56, 189, 248, 0.25);
+}

@@ -1269,3 +1269,68 @@ export const getMatrixTreeApi = async (params) => {
     };
   }
 };
+
+// ── NODEXAI TRADING PACKAGE APIS ──
+export const buyTradingPackageApi = async (payload) => {
+  try {
+    const response = await Axios.post(`${userApi}/trading-package/buy`, payload);
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getMyTradingPackagesApi = async () => {
+  try {
+    const response = await Axios.get(`${userApi}/trading-package/my-packages`);
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getMyTradingHistoryApi = async (params) => {
+  try {
+    const response = await Axios.get(`${userApi}/trading-package/history`, { params });
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+// ── NODEXAI NODE WONDER APIS ──
+export const buyNodeWonderApi = async (payload = {}) => {
+  try {
+    const response = await Axios.post(`${userApi}/node-wonder/buy`, payload);
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getMyNodeWonderStatusApi = async () => {
+  try {
+    const response = await Axios.get(`${userApi}/node-wonder/status`);
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getMyNodeWonderHistoryApi = async (params) => {
+  try {
+    const response = await Axios.get(`${userApi}/node-wonder/history`, { params });
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getGlobalNodeWonderQueueApi = async () => {
+  try {
+    const response = await Axios.get(`${userApi}/node-wonder/global-queue`);
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};

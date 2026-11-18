@@ -108,6 +108,8 @@ import SalaryWithdrawal from "../../screens/UserPanel/SalaryWithdrawal";
 import AdminSalaryIncome from "../../screens/AdminPanel/AdminSalaryIncome";
 import AdminSalaryWithdrawal from "../../screens/AdminPanel/AdminSalaryWithdrawal";
 import User3MatrixGenealogy from "../../screens/UserPanel/User3MatrixGenealogy";
+import TradingPackagePage from "../../screens/UserPanel/TradingPackagePage";
+import NodeWonderPage from "../../screens/UserPanel/NodeWonderPage";
 
 const Authenticated = () => {
   const role = useSelector((state) => state?.isLoggedUser?.role);
@@ -181,6 +183,14 @@ const Authenticated = () => {
             <Route
               path={AuthenticatedUserRouters.REINVEST}
               element={<ReinvestmentPage />}
+            />
+            <Route
+              path={AuthenticatedUserRouters.TRADING_PACKAGE}
+              element={<TradingPackagePage />}
+            />
+            <Route
+              path={AuthenticatedUserRouters.NODE_WONDER}
+              element={<NodeWonderPage />}
             />
             <Route
               path={AuthenticatedUserRouters.MY_EARNING}

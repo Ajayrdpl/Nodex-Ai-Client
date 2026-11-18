@@ -287,11 +287,11 @@ const Sidebar = ({ isOpen, onClose }) => {
               />
             </SidebarDropdown>
 
-            {/* 3. Deposit (NODEXAI $25 Package, Re-Invest) */}
+            {/* 3. Deposit (NODEXAI $25 Package, Trading Package, Node Wonder, Re-Invest) */}
             <SidebarDropdown
               id="deposit"
               icon="fa-solid fa-wallet"
-              text="Deposit"
+              text="Deposit & Packages"
               openDropdown={openDropdown}
               setOpenDropdown={setOpenDropdown}
             >
@@ -300,6 +300,26 @@ const Sidebar = ({ isOpen, onClose }) => {
                 icon="fa-solid fa-cubes"
                 text="NODEXAI Package"
                 badge="$25"
+                onClose={() => {
+                  onClose();
+                  setOpenDropdown(null);
+                }}
+              />
+              <NavLink
+                to={AuthenticatedUserRouters.TRADING_PACKAGE}
+                icon="fa-solid fa-chart-line"
+                text="Trading Profit (3%)"
+                badge="Min $50 / 2X"
+                onClose={() => {
+                  onClose();
+                  setOpenDropdown(null);
+                }}
+              />
+              <NavLink
+                to={AuthenticatedUserRouters.NODE_WONDER}
+                icon="fa-solid fa-bolt"
+                text="Node Wonder Queue"
+                badge="$100 / $150"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
@@ -325,7 +345,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               />
             </SidebarDropdown>
 
-            {/* 4. History (NODEXAI 5 Official Incomes: Direct 10%, Level 20%, Binary 50%, Club CTO 10%, Community 10%) */}
+            {/* 4. History (NODEXAI Incomes: Direct 10%, Level 20%, Binary 50%, Club CTO 10%, Trading 3%, Node Wonder) */}
             <SidebarDropdown
               id="history"
               icon="fa-solid fa-clock-rotate-left"
@@ -377,6 +397,26 @@ const Sidebar = ({ isOpen, onClose }) => {
                 icon="fa-solid fa-crown"
                 text="04. Club Income"
                 badge="10% CTO"
+                onClose={() => {
+                  onClose();
+                  setOpenDropdown(null);
+                }}
+              />
+              <NavLink
+                to={AuthenticatedUserRouters.TRADING_PACKAGE}
+                icon="fa-solid fa-arrow-trend-up"
+                text="05. Trading Profit"
+                badge="3% / 2X Cap"
+                onClose={() => {
+                  onClose();
+                  setOpenDropdown(null);
+                }}
+              />
+              <NavLink
+                to={AuthenticatedUserRouters.NODE_WONDER}
+                icon="fa-solid fa-arrows-split-up-and-left"
+                text="06. Node Wonder"
+                badge="$150 Queue"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);

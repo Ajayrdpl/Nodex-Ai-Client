@@ -187,7 +187,7 @@ const RankSalary = () => {
             {/* Quick View Summary Strip */}
             <div className="p-4 rounded-2xl bg-[#030919] border border-slate-800 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
-                <img src="/image/veltrion-logo.jpg" alt="Veltrion Capital" className="h-7 w-auto object-contain rounded" />
+                <img src="/NodexAI.jpeg" alt="NODEXAI" className="h-7 w-auto object-contain rounded" />
                 <span className="text-slate-400 font-mono">Principal Autonomy</span>
               </div>
               <span className="text-[10px] text-slate-400 font-mono">Standard 5% Platform Fee Applies</span>

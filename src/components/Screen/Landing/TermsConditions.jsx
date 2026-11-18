@@ -174,7 +174,7 @@ const TermsConditions = () => {
           {/* Footer Logo & Notice */}
           <div className="mt-7 pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <img src="/image/veltrion-logo.jpg" alt="Veltrion Capital" className="h-8 w-auto object-contain rounded" />
+              <img src="/NodexAI.jpeg" alt="NODEXAI" className="h-8 w-auto object-contain rounded" />
               <span className="text-xs font-mono text-slate-400">Always verify wallet and transaction details before confirming on-chain.</span>
             </div>
             <span className="text-xs font-mono text-amber-300 font-bold">

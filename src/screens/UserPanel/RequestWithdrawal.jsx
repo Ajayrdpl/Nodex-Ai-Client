@@ -38,8 +38,8 @@ import {
 import { setLoading } from "../../redux/slices/loadingSlice";
 import { maskWalletAddress } from "../../utils/additionalFunc";
 
-const MIN_WITHDRAWAL = 1;              // $1 Minimum Withdrawal (Official Veltrion Capital Rule)
-const WITHDRAWAL_FEE_PERCENT = 5;      // 5% Platform Fee (Official Veltrion Capital Rule)
+const MIN_WITHDRAWAL = 1;              // $1 Minimum Withdrawal (Official NODEXAI Rule)
+const WITHDRAWAL_FEE_PERCENT = 5;      // 5% Platform Fee (Official NODEXAI Rule)
 const MIN_DEPOSIT = 10;                // $10 Minimum Deposit
 const PRINCIPAL_EARLY_DAYS = 30;       // 30 Days threshold for Principal Withdrawal
 const PRINCIPAL_EARLY_DEDUCTION = 25;  // 25% Principal Deduction Before 30 Days
@@ -419,7 +419,7 @@ const RequestWithdrawal = () => {
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center gap-1.5 shadow-[0_0_12px_rgba(6,182,212,0.3)]">
-                <DollarSign className="w-3.5 h-3.5" /> Veltrion Capital Official Rules
+                <DollarSign className="w-3.5 h-3.5" /> NODEXAI Official Rules
               </span>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />

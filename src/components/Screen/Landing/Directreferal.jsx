@@ -184,7 +184,7 @@ const DirectReferralIncome = () => {
               {/* Footer Note with Logo */}
               <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <img src="/image/veltrion-logo.jpg" alt="Veltrion Capital" className="h-7 w-auto object-contain rounded" />
+                  <img src="/NodexAI.jpeg" alt="NODEXAI" className="h-7 w-auto object-contain rounded" />
                   <span className="text-[11px] text-slate-400 font-mono">Instant USDT Payouts</span>
                 </div>
                 <span className="text-[10px] text-slate-400 font-mono">BNB Smart Chain (BEP-20)</span>

@@ -353,7 +353,7 @@ const Dashboard1 = () => {
     setTimeout(() => setCopiedId(false), 2000);
   };
 
-  // 10 Official Cards strictly based on Veltrion Capital Income Plan:
+  // 10 Official Cards strictly based on NODEXAI Income Plan:
   // 1. Package, 2. Current Balance, 3. Daily ROI, 4. Direct Booster 12%, 5. Direct Referral 10%,
   // 6. 10-Level ROI, 7. 7-Days Booster, 8. Auto Compounding 0.5%, 9. Total Income (220% Cap), 10. Team Business
   const notebookCards = [
@@ -545,7 +545,7 @@ const Dashboard1 = () => {
               <div className="space-y-2 w-full lg:w-auto">
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   <span className="text-[10px] font-black uppercase tracking-wider text-[#f0b90b] bg-[#1e2329] border border-[#f0b90b]/40 px-2.5 py-0.5 rounded-full">
-                    Veltrion Capital
+                    NODEXAI
                   </span>
                   <span
                     className={`text-[10px] font-black px-2.5 py-0.5 rounded-full border shadow-sm ${
@@ -786,8 +786,8 @@ const Dashboard1 = () => {
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#1e2329] border border-[#f0b90b]/40 p-1.5 flex items-center justify-center shrink-0 shadow-md">
                   <img
-                    src={MainContent?.shortLogo || "/veltrion-icon.png"}
-                    alt="Veltrion Capital"
+                    src={MainContent?.shortLogo || "/NodexAI.jpeg"}
+                    alt="NODEXAI"
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -795,7 +795,7 @@ const Dashboard1 = () => {
                   <h3 className="text-sm sm:text-base font-black text-[#eaecef] tracking-tight">
                     Thank You for Trading with{" "}
                     <span className="text-[#f0b90b] font-['Orbitron',monospace]">
-                      Veltrion Capital
+                      NODEXAI
                     </span>
                   </h3>
                   <p className="text-[11px] text-[#848e9c]">

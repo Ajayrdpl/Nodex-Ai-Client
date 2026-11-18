@@ -227,7 +227,7 @@ const UserComprehensiveIncomePage = () => {
       {/* 🚀 Top Banner & Global Stats */}
       <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 rounded-3xl border border-slate-800 shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-white">
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-400">Veltrion Capital</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-indigo-400">NODEXAI</span>
           <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight mt-1">
             Welcome, {profileData?.user?.username || profileData?.username || "Investor"}
           </h1>

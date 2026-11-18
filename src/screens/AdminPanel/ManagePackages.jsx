@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../redux/slices/loadingSlice";
 import PlanCard from "../../components/Screen/UserPanel/PlanCard";
-import { VELTRION_PACKAGES } from "../UserPanel/InvestmentPage";
+import { NODEXAI_PACKAGES } from "../UserPanel/InvestmentPage";
 
 import {
   getAllPackageBuyers,
@@ -40,7 +40,7 @@ const ManagePackage = () => {
   });
   const [isCreateMode, setIsCreateMode] = useState(false);
 
-  const staticPlans = VELTRION_PACKAGES.map((p) => ({
+  const staticPlans = NODEXAI_PACKAGES.map((p) => ({
     _id: p._id,
     id: p.id,
     title: p.title,

@@ -682,7 +682,7 @@ import { motion } from "framer-motion";
 const pillars = [
   {
     title: "About Us",
-    body: "The Veltrion Capital Group brings over 20 years of experience in crafting bespoke digital trading and secure decentralized solutions across multiple industries, combining research, automation, and robust digital infrastructure.",
+    body: "The NODEXAI Group brings over 20 years of experience in crafting bespoke digital trading and secure decentralized solutions across multiple industries, combining research, automation, and robust digital infrastructure.",
     accent: "AI + Strategy",
     icon: "⚡",
   },
@@ -871,7 +871,7 @@ const MLSSection = () => {
 
                 <div>
                   <p className="text-cyan-300 font-bold tracking-widest text-xs uppercase mb-2">
-                    Introducing MLS powered by Veltrion Capital
+                    Introducing MLS powered by NODEXAI
                   </p>
                   <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
                     <span className="mls-title-gradient">AI Intelligence</span> with a fluid, future-ready experience.
@@ -1145,7 +1145,7 @@ const MLSSection = () => {
             <div className="relative z-10 max-w-2xl mx-auto space-y-4">
               <div className="mls-chip mx-auto">Ready to engage</div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                Thank you — let’s build a brighter, smarter future with Veltrion Capital.
+                Thank you — let’s build a brighter, smarter future with NODEXAI.
               </h3>
               <p className="text-white text-sm sm:text-base leading-relaxed font-normal">
                 From strategic AI storytelling to investment clarity and growth planning, this section brings your message together in a premium, modern experience.

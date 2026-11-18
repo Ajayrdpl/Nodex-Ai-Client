@@ -297,7 +297,7 @@ const QuickAction = () => {
               className="max-w-2xl mx-auto text-sm md:text-[15px] leading-relaxed"
               style={{ color: "rgba(255,255,255,0.7)" }}
             >
-              Jump straight into the Veltrion Capital ecosystem. Access documentation, research, community, and live platform features in one place.
+              Jump straight into the NODEXAI ecosystem. Access documentation, research, community, and live platform features in one place.
             </p>
           </div>
 

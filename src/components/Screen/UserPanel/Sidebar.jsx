@@ -206,7 +206,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         >
           <img
             src={MainContent.shortLogo}
-            alt="Veltrion Capital Logo"
+            alt="NODEXAI Logo"
             className="h-9 w-9 rounded-full object-cover border border-[#f0b90b]/50 shadow-[0_0_8px_rgba(240,185,11,0.3)]"
           />
           <div className="min-w-0 flex-1">
@@ -335,7 +335,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               />
             </SidebarDropdown>
 
-            {/* 4. History (All Incomes per Veltrion Plan: ROI 4.5%-7.5%, Direct Referral 12%, 10-Level 24%, 7-Days Booster, Auto Compounding 0.5%) */}
+            {/* 4. History (All Incomes per NODEXAI Plan: ROI 4.5%-7.5%, Direct Referral 12%, 10-Level 24%, 7-Days Booster, Auto Compounding 0.5%) */}
             <SidebarDropdown
               id="history"
               icon="fa-solid fa-clock-rotate-left"

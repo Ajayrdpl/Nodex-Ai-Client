@@ -103,7 +103,7 @@ const AboutSafealtCoin = () => {
           >
             <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]" />
             <span className="text-xs font-mono font-bold tracking-[0.2em] text-amber-300 uppercase">
-              ABOUT VELTRION CAPITAL • CORE VALUES
+              ABOUT NODEXAI • CORE VALUES
             </span>
           </motion.div>
 
@@ -125,7 +125,7 @@ const AboutSafealtCoin = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed"
           >
-            <strong className="text-amber-400 font-semibold">Veltrion Capital</strong> brings together blockchain technology, smart contracts, community participation, and a structured reward ecosystem in one unified decentralized platform.
+            <strong className="text-amber-400 font-semibold">NODEXAI</strong> brings together blockchain technology, smart contracts, community participation, and a structured reward ecosystem in one unified decentralized platform.
           </motion.p>
         </div>
 
@@ -197,7 +197,7 @@ const AboutSafealtCoin = () => {
           ))}
         </div>
 
-        {/* The Veltrion Approach Summary Banner */}
+        {/* The NODEXAI Approach Summary Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={visible ? { opacity: 1, y: 0 } : {}}
@@ -206,7 +206,7 @@ const AboutSafealtCoin = () => {
         >
           <div className="space-y-2 text-center md:text-left">
             <span className="text-xs font-mono tracking-[0.2em] uppercase text-amber-400 font-bold">
-              THE VELTRION CAPITAL APPROACH
+              THE NODEXAI APPROACH
             </span>
             <h4 className="text-lg sm:text-2xl font-bold font-['Orbitron',sans-serif] text-white">
               ACCESS • PARTICIPATE • CONNECT • BUILD • GROW

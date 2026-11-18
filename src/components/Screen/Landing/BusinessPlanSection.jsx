@@ -66,7 +66,7 @@ const BusinessPlanSection = () => {
           <Sparkles className="w-3.5 h-3.5" /> Official Business Plan & Income Structure
         </div>
         <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-          Veltrion Capital <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">Ecosystem</span>
+          NODEXAI <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">Ecosystem</span>
         </h2>
         <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
           Backed by <strong className="text-white">South Korea Crypto Trading</strong> algorithm. Explore transparent daily yields, booster rewards, 3-Matrix team genealogy, and 15 weekly salary ranks.

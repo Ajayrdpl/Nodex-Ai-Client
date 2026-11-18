@@ -156,7 +156,7 @@ const PackageSection = () => {
           </h2>
 
           <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
-            Veltrion Capital offers six flexible package tiers starting from just $10 up to $25,000 with daily returns up to 7.5% and a disciplined 220% maximum ROI capping.
+            NODEXAI offers six flexible package tiers starting from just $10 up to $25,000 with daily returns up to 7.5% and a disciplined 220% maximum ROI capping.
           </p>
         </div>
 

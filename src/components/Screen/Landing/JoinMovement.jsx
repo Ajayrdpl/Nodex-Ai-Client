@@ -9,7 +9,7 @@ const steps = [
   { step: "01", title: "Prepare Wallet", desc: "Use a compatible Web3 wallet (MetaMask, Trust Wallet, etc.) supporting BNB Smart Chain." },
   { step: "02", title: "Keep USDT Ready", desc: "Maintain the required USDT (BEP-20) balance in your wallet according to your chosen package." },
   { step: "03", title: "Keep BNB For Gas", desc: "Maintain a small amount of BNB for blockchain network gas fees." },
-  { step: "04", title: "Open Platform", desc: "Visit the official Veltrion Capital platform or use a verified partner referral link." },
+  { step: "04", title: "Open Platform", desc: "Visit the official NODEXAI platform or use a verified partner referral link." },
   { step: "05", title: "Connect Wallet", desc: "Click Connect Wallet and ensure BNB Smart Chain (BEP-20) network is selected." },
   { step: "06", title: "Select Package", desc: "Choose an eligible package tier from $10 up to $25,000 based on your preferred participation level." },
   { step: "07", title: "Verify & Confirm", desc: "Review network prompts, amount, and smart-contract details before approving." },
@@ -26,8 +26,8 @@ const roadmapPhases = [
 
 const faqs = [
   {
-    q: "What is Veltrion Capital?",
-    a: "Veltrion Capital is a community-focused decentralized finance ecosystem built around blockchain and smart contract technology on BNB Smart Chain.",
+    q: "What is NODEXAI?",
+    a: "NODEXAI is a community-focused decentralized finance ecosystem built around blockchain and smart contract technology on BNB Smart Chain.",
   },
   {
     q: "What packages are available and what is the Daily ROI?",
@@ -123,7 +123,7 @@ const JoinMovement = () => {
             </div>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Orbitron',sans-serif] tracking-tight">
-              Veltrion Capital{" "}
+              NODEXAI{" "}
               <span className="bg-gradient-to-r from-amber-400 via-yellow-200 to-cyan-300 bg-clip-text text-transparent">
                 Strategic Roadmap
               </span>
@@ -208,7 +208,7 @@ const JoinMovement = () => {
           </div>
         </div>
 
-        {/* ── FINAL CALL TO ACTION WITH OFFICIAL LOGO (veltrion-logo.jpg) ── */}
+        {/* ── FINAL CALL TO ACTION WITH OFFICIAL LOGO (NODEXAI-logo.jpg) ── */}
         <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#061836] via-[#092247] to-[#041026] border-2 border-amber-400/40 shadow-[0_0_60px_rgba(214,168,58,0.25)] flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
           <div className="space-y-4 max-w-xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-mono font-bold uppercase">
@@ -218,7 +218,7 @@ const JoinMovement = () => {
               Ready to Power Your Financial Freedom with USDT?
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Connect your Web3 wallet today, activate starting from $10, and begin earning daily automated returns with Veltrion Capital.
+              Connect your Web3 wallet today, activate starting from $10, and begin earning daily automated returns with NODEXAI.
             </p>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
               <button
@@ -226,7 +226,7 @@ const JoinMovement = () => {
                 className="px-7 py-3.5 rounded-xl font-bold font-['Orbitron',sans-serif] text-xs uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-400 to-yellow-300 shadow-[0_0_25px_rgba(245,158,11,0.5)] hover:scale-105 transition-all cursor-pointer flex items-center gap-2"
               >
                 <RiRobot2Fill className="text-base" />
-                <span>Join Veltrion Capital</span>
+                <span>Join NODEXAI</span>
                 <FiArrowRight />
               </button>
               <button
@@ -241,8 +241,8 @@ const JoinMovement = () => {
           <div className="shrink-0 flex flex-col items-center">
             <div className="p-3 rounded-2xl bg-[#020713]/80 border border-amber-400/40 shadow-xl">
               <img
-                src="/image/veltrion-logo.jpg"
-                alt="Veltrion Capital"
+                src="/NodexAI.jpeg"
+                alt="NODEXAI"
                 className="h-32 w-auto max-w-[280px] object-contain rounded-xl"
               />
             </div>

@@ -1605,7 +1605,7 @@ const WhyAIBlockchain = () => {
 
                 <img
                   src="/robo.png"
-                  alt="Veltrion Capital Engine"
+                  alt="NODEXAI Engine"
                   className="relative z-10 w-full object-contain mx-auto"
                   style={{
                     filter:
@@ -1653,7 +1653,7 @@ const WhyAIBlockchain = () => {
                   color: "rgba(56, 189, 248, 0.6)",
                 }}
               >
-                Veltrion Capital Engine
+                NODEXAI Engine
               </span>
             </div>
 

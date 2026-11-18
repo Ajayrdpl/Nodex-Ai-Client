@@ -235,7 +235,7 @@ const SideBar = () => {
       <div className="flex gap-3 items-center lg:my-2 mb-2 mt-4 justify-center relative after:h-[1px] after:w-full after:bg-black after:absolute after:bottom-0 after:left-0">
         <img
           src={MainContent.shortLogo}
-          alt="Veltrion Capital"
+          alt="NODEXAI"
           className={`rounded-full ${
             sideToggle ? "w-14 h-14 mb-2 object-cover" : "w-10 h-10 object-cover"
           } cursor-pointer border-2 border-cyan-400/50 shadow-[0_0_10px_rgba(0,210,255,0.4)]`}
@@ -243,7 +243,7 @@ const SideBar = () => {
         />
         <div className={`flex flex-col ${!sideToggle && "hidden"} text-sm`}>
           <p className="font-bold text-[--primary-color]">Hi, ADMIN</p>
-          <p className="font-medium text-xs text-amber-300">Veltrion Capital</p>
+          <p className="font-medium text-xs text-amber-300">NODEXAI</p>
         </div>
       </div>
 

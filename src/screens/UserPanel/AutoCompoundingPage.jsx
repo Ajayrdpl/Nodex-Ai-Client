@@ -222,7 +222,7 @@ const AutoCompoundingPage = () => {
 
   return (
     <div className="space-y-6 pb-12">
-      {/* ── HEADER BANNER (Veltrion Gold / Blue Theme) ── */}
+      {/* ── HEADER BANNER (NODEXAI Gold / Blue Theme) ── */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#071328] via-[#0b2149] to-[#081734] border border-amber-500/30 p-6 sm:p-8 shadow-[0_0_40px_rgba(245,158,11,0.15)]">
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />

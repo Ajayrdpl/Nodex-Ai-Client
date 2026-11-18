@@ -159,7 +159,7 @@ const BoosterIncome = () => {
           {/* Footer Ribbon with Logo */}
           <div className="mt-7 pt-5 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <img src="/image/veltrion-logo.jpg" alt="Veltrion Capital" className="h-8 w-auto object-contain rounded" />
+              <img src="/NodexAI.jpeg" alt="NODEXAI" className="h-8 w-auto object-contain rounded" />
               <span className="text-xs font-mono text-slate-300">BUILD • QUALIFY • ACHIEVE</span>
             </div>
             <span className="text-xs font-mono text-amber-300 font-bold">

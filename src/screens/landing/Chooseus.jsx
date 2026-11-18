@@ -91,7 +91,7 @@ const ChooseUs = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Orbitron',sans-serif] tracking-tight">
             Why Choose{" "}
             <span className="bg-gradient-to-r from-amber-400 via-yellow-200 to-cyan-300 bg-clip-text text-transparent">
-              Veltrion Capital?
+              NODEXAI?
             </span>
           </h2>
 
@@ -160,9 +160,9 @@ const ChooseUs = () => {
         {/* Brand Banner Box */}
         <div className="mt-12 p-6 rounded-3xl bg-[#030919] border border-amber-400/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <img src="/image/veltrion-logo.jpg" alt="Veltrion Capital" className="h-10 w-auto object-contain rounded-xl shadow-md" />
+            <img src="/NodexAI.jpeg" alt="NODEXAI" className="h-10 w-auto object-contain rounded-xl shadow-md" />
             <div>
-              <div className="text-sm font-bold font-['Orbitron',sans-serif] text-white">Veltrion Capital Ecosystem</div>
+              <div className="text-sm font-bold font-['Orbitron',sans-serif] text-white">NODEXAI Ecosystem</div>
               <div className="text-xs text-slate-400 font-mono">Invest • Grow • Earn — Powering Your Financial Freedom with USDT</div>
             </div>
           </div>

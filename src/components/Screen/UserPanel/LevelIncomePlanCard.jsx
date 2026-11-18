@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TrendingUp, BarChart3, ShieldCheck, Lock, Unlock, Sparkles, Award } from "lucide-react";
 
-// Official Veltrion Capital 10-Level Income Plan (Total 24%)
+// Official NODEXAI 10-Level Income Plan (Total 24%)
 export const LEVEL_INCOME_PLAN_DATA = [
   { level: 1, percentage: "8.0%", directs: 1 },
   { level: 2, percentage: "4.0%", directs: 2 },
@@ -152,7 +152,7 @@ const LevelIncomePlanCard = ({ levelInfo, directCount, showFooterBranding = true
         {/* Footer Brand Pillars */}
         {showFooterBranding && (
           <div className="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-            <span>Veltrion Capital Community System</span>
+            <span>NODEXAI Community System</span>
             <span className="text-cyan-400">Total Distribution: 24%</span>
           </div>
         )}

@@ -55,7 +55,7 @@ const LoginPage = () => {
         Swal.fire({
           icon: "success",
           title: "Login Success",
-          text: "You have logged in successfully to Veltrion Capital",
+          text: "You have logged in successfully to NODEXAI",
           timer: 2500,
         }).then(() => {
           navigate(AuthenticatedUserRouters.DASHBOARD);
@@ -104,8 +104,8 @@ const LoginPage = () => {
               <div className="relative">
                 <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-500 via-amber-400 to-cyan-500 rounded-2xl blur-md opacity-60 group-hover:opacity-100 transition duration-300" />
                 <img
-                  src="/image/veltrion-logo.jpg"
-                  alt="Veltrion Capital"
+                  src="/NodexAI.jpeg"
+                  alt="NODEXAI"
                   className="relative h-24 sm:h-28 w-auto max-w-[280px] rounded-xl object-contain border border-cyan-400/40 shadow-[0_0_25px_rgba(0,210,255,0.35)] group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -123,7 +123,7 @@ const LoginPage = () => {
               Welcome Back
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm">
-              Connect your decentralized Web3 wallet to access your Veltrion Capital dashboard
+              Connect your decentralized Web3 wallet to access your NODEXAI dashboard
             </p>
           </div>
 
@@ -146,7 +146,7 @@ const LoginPage = () => {
           {/* Sign Up Link */}
           <div className="text-xs pt-4 border-t border-cyan-500/15">
             <p className="text-slate-400">
-              New to Veltrion Capital?{" "}
+              New to NODEXAI?{" "}
               <Link
                 to={LandingRouters.USER_REGISTER}
                 className="font-bold text-cyan-400 hover:text-cyan-300 transition-colors ml-1"

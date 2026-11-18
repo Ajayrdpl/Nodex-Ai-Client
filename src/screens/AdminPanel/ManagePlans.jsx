@@ -12,7 +12,7 @@ import { getMoneySymbol } from "../../utils/additionalFunc";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import DataTable from "../../components/Screen/UserPanel/DataTable";
-import { VELTRION_PACKAGES } from "../UserPanel/InvestmentPage";
+import { NODEXAI_PACKAGES } from "../UserPanel/InvestmentPage";
 import {
   Sparkles,
   Rocket,
@@ -216,9 +216,9 @@ const ManagePlans = () => {
 
         setPlans(transformedPlans);
       } else {
-        // Fallback to the 6 Veltrion plans if database is currently empty
+        // Fallback to the 6 NODEXAI plans if database is currently empty
         setPlans(
-          VELTRION_PACKAGES.map((p) => ({
+          NODEXAI_PACKAGES.map((p) => ({
             ...p,
             planType: p.title,
             duration: p.title === "NOVA" ? 49 : p.title === "VANTAGE" ? 44 : p.title === "NEXUS" ? 40 : p.title === "PRIME" ? 37 : p.title === "TITAN" ? 34 : 30,
@@ -229,7 +229,7 @@ const ManagePlans = () => {
     } catch (error) {
       console.error("Error fetching plans:", error);
       toast.error("Failed to fetch plans from server");
-      setPlans(VELTRION_PACKAGES);
+      setPlans(NODEXAI_PACKAGES);
     } finally {
       dispatch(setLoading(false));
     }
@@ -371,7 +371,7 @@ const ManagePlans = () => {
     }
   };
 
-  // One-click batch sync of the 6 official Veltrion Capital plans to MongoDB
+  // One-click batch sync of the 6 official NODEXAI plans to MongoDB
   const handleBatchSyncPlans = async () => {
     const result = await Swal.fire({
       title: "Sync Official 6 Plans?",
@@ -432,7 +432,7 @@ const ManagePlans = () => {
             {row.title}
           </span>
           <span className="text-[10px] text-cyan-400 font-mono">
-            {row.category || "Veltrion Package"}
+            {row.category || "NODEXAI Package"}
           </span>
         </div>
       ),
@@ -541,7 +541,7 @@ const ManagePlans = () => {
           <button
             onClick={handleBatchSyncPlans}
             className="px-4 py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/40 text-amber-300 text-xs font-bold font-mono transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_15px_rgba(245,158,11,0.2)]"
-            title="Sync the 6 official Veltrion Capital plans to MongoDB"
+            title="Sync the 6 official NODEXAI plans to MongoDB"
           >
             <RefreshCw className="w-4 h-4" />
             <span>Sync Default Plans</span>
@@ -653,7 +653,7 @@ const ManagePlans = () => {
             <div className="flex justify-between items-start border-b border-cyan-500/15 pb-4">
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-400">
-                  Veltrion Capital Admin
+                  NODEXAI Admin
                 </span>
                 <h2 className="text-2xl font-black text-white font-['Orbitron',monospace]">
                   {isCreateMode ? "Create New Plan" : `Edit Plan: ${selectedPlan?.title}`}

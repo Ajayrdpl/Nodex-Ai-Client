@@ -88,14 +88,14 @@ const Header1 = () => {
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-amber-400 rounded-xl blur-sm opacity-60 group-hover:opacity-100 transition duration-300" />
               <img
-                src="/image/veltrion-logo.jpg"
-                alt="Veltrion Capital"
+                src="/NodexAI.jpeg"
+                alt="NODEXAI"
                 className="relative h-11 sm:h-12 w-auto max-w-[130px] rounded-lg object-contain border border-cyan-400/50 shadow-[0_0_15px_rgba(0,210,255,0.35)] group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             <div className="flex flex-col">
               <span className="font-extrabold text-base md:text-lg tracking-wider bg-gradient-to-r from-cyan-400 via-white to-amber-300 bg-clip-text text-transparent font-['Orbitron',sans-serif]">
-                Veltrion Capital
+                NODEXAI
               </span>
               <span className="text-[10px] tracking-[0.25em] uppercase text-cyan-300/80 font-mono font-semibold flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -168,13 +168,13 @@ const Header1 = () => {
             {/* Drawer Header Brand */}
             <div className="flex items-center gap-3 pb-3 border-b border-cyan-500/15">
               <img
-                src="/image/veltrion-logo.jpg"
-                alt="Veltrion Capital"
+                src="/NodexAI.jpeg"
+                alt="NODEXAI"
                 className="h-10 w-auto rounded-lg border border-cyan-500/30 shadow-[0_0_12px_rgba(0,210,255,0.25)]"
               />
               <div className="flex flex-col">
                 <span className="font-extrabold text-sm tracking-wider text-white font-['Orbitron',sans-serif]">
-                  Veltrion Capital
+                  NODEXAI
                 </span>
                 <span className="text-[9px] tracking-widest uppercase text-cyan-300/80 font-mono">
                   INVEST • GROW • EARN

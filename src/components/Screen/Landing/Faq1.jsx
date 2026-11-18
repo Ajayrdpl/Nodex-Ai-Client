@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const faqData = [
   {
-    question: "What is Veltrion Capital?",
+    question: "What is NODEXAI?",
     answer: [
-      "Veltrion Capital is a next-generation decentralized finance (DeFi) and digital asset trading platform.",
+      "NODEXAI is a next-generation decentralized finance (DeFi) and digital asset trading platform.",
       "It is designed to simplify market complexity using advanced technology and data-driven strategies.",
       "The platform focuses on transparency, sustainability, and long-term value creation.",
     ],
@@ -14,7 +14,7 @@ const faqData = [
     color: "from-blue-500 to-indigo-500",
   },
   {
-    question: "How do Veltrion Capital investment plans work?",
+    question: "How do NODEXAI investment plans work?",
     answer: [
       "Users choose from multiple growth plans based on duration and investment range.",
       "Each plan offers a fixed daily ROI for a defined number of days.",
@@ -65,7 +65,7 @@ const faqData = [
     color: "from-red-500 to-rose-500",
   },
   {
-    question: "Is Veltrion Capital safe to use?",
+    question: "Is NODEXAI safe to use?",
     answer: [
       "The platform follows predefined rules with transparent investment structures.",
       "All plans, ROI rates, and conditions are clearly disclosed.",
@@ -213,7 +213,7 @@ const Faq1 = () => {
 
         {/* Subtitle */}
         <p className="text-lg lg:text-xl text-secondary max-w-2xl">
-          Everything you need to know about <span className="text-gray-400 font-semibold">Veltrion Capital</span>. 
+          Everything you need to know about <span className="text-gray-400 font-semibold">NODEXAI</span>. 
           Can't find what you're looking for? <span className="text-accent cursor-pointer hover:underline">Contact us</span>
         </p>
 

@@ -43,7 +43,7 @@ import {
 } from "../../api/user.api";
 import { getIncomeTotal } from "../../api/auth.api";
 import { isToday } from "../../utils/helper";
-import { VELTRION_PACKAGES } from "./InvestmentPage";
+import { NODEXAI_PACKAGES } from "./InvestmentPage";
 
 const ROI_PACKAGES_DISPLAY = [
   {
@@ -291,7 +291,7 @@ const TradingIncomeHistory = () => {
     link.setAttribute("href", encodedUri);
     link.setAttribute(
       "download",
-      `veltrion_daily_roi_history_${new Date().toISOString().split("T")[0]}.csv`
+      `NODEXAI_daily_roi_history_${new Date().toISOString().split("T")[0]}.csv`
     );
     document.body.appendChild(link);
     link.click();
@@ -596,7 +596,7 @@ const TradingIncomeHistory = () => {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-400">
-                  Veltrion Capital Official
+                  NODEXAI Official
                 </span>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
                   Package-Based ROI

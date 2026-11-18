@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 const faqData = [
   {
-    question: "Why is Veltrion Capital a strong alternative for digital trading?",
+    question: "Why is NODEXAI a strong alternative for digital trading?",
     answer: [
       "The cryptocurrency rate has no effect on the sustainability of the rewards.",
       "The minimum entry threshold is equal to just a couple of cups of coffee.",
@@ -13,15 +13,15 @@ const faqData = [
     ],
   },
   {
-    question: "How does the Veltrion Capital platform work?",
+    question: "How does the NODEXAI platform work?",
     answer: [
-      "Veltrion Capital is built on smart contract technology, ensuring full automation and transparency.",
+      "NODEXAI is built on smart contract technology, ensuring full automation and transparency.",
       "Users participate in a decentralized system that redistributes rewards based on transparent contract logic.",
       "There are no intermediaries – the system runs on blockchain, and all funds are transferred securely.",
     ],
   },
   {
-    question: "What are the benefits of using Veltrion Capital?",
+    question: "What are the benefits of using NODEXAI?",
     answer: [
       "Full decentralization means no single entity controls your assets.",
       "Instant payouts are made directly to your crypto wallet.",
@@ -30,18 +30,18 @@ const faqData = [
     ],
   },
   {
-    question: "How to start using Veltrion Capital?",
+    question: "How to start using NODEXAI?",
     answer: [
       "Install a crypto wallet like MetaMask or Trust Wallet.",
       "Fund your wallet with the required cryptocurrency.",
-      "Use your wallet to connect to the Veltrion Capital platform and register.",
+      "Use your wallet to connect to the NODEXAI platform and register.",
       "Once registered, you can begin activating plans and building your team.",
     ],
   },
   {
-    question: "Is Veltrion Capital safe to use?",
+    question: "Is NODEXAI safe to use?",
     answer: [
-      "Yes, Veltrion Capital operates on open-source smart contracts that are permanently stored on the blockchain.",
+      "Yes, NODEXAI operates on open-source smart contracts that are permanently stored on the blockchain.",
       "There are no admins or centralized authorities that can alter the rules or control your funds.",
       "Users are in full control of their interactions through their own wallets.",
     ],
@@ -76,7 +76,7 @@ const Faq = () => {
           Frequently asked Questions
         </h2>
         <p className="text-sm lg:text-lg text-white-500 font-light">
-          Quick answers to help you make the most of Veltrion Capital
+          Quick answers to help you make the most of NODEXAI
         </p>
       </div>
 

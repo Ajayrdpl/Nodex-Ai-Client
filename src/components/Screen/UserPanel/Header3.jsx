@@ -124,18 +124,18 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
           </button>
         )}
 
-        {/* Brand Tag - Veltrion Capital */}
+        {/* Brand Tag - NODEXAI */}
         <Link
           to={role === "ADMIN" ? AuthenticatedAdminRouters.ADMIN_DASHBOARD : AuthenticatedUserRouters.DASHBOARD}
           className="flex items-center gap-2 hover:opacity-90 transition-opacity shrink-0"
         >
           <img
-            src="/veltrion-icon.png"
-            alt="Veltrion"
+            src="/NodexAI.jpeg"
+            alt="NODEXAI"
             className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover border border-[#f0b90b]/50 shadow-[0_0_8px_rgba(240,185,11,0.3)] shrink-0"
           />
           <span className="text-xs sm:text-sm font-black tracking-wider text-[#eaecef] font-['Orbitron',monospace]">
-            VELTRION <span className="text-[#f0b90b]">CAPITAL</span>
+            NODEX<span className="text-[#f0b90b]">AI</span>
           </span>
         </Link>
 
@@ -260,7 +260,7 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
             <div className="p-4 bg-[#1e2329]/70">
               <div className="flex items-center justify-between">
                 <p className="font-black text-sm text-[#f0b90b] uppercase tracking-wider truncate">
-                  {userInfo?.username || "Veltrion Trader"}
+                  {userInfo?.username || "NODEXAI Trader"}
                 </p>
                 <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-[#f0b90b]/15 text-[#f0b90b] border border-[#f0b90b]/30">
                   {access ? "ADMIN VIEW" : "TRADER"}

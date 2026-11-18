@@ -7,7 +7,7 @@ import { getPackageInfo } from "../../api/user.api";
 import { Rocket, Sparkles, Shield, Zap, Layers } from "lucide-react";
 
 // The exact 6 packages from the Global Package Plan & Advanced Package Options images
-export const VELTRION_PACKAGES = [
+export const NODEXAI_PACKAGES = [
   // ── 1. GLOBAL PACKAGE PLAN ──
   {
     _id: "pkg-nova",
@@ -143,7 +143,7 @@ const InvestmentPage = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [plans, setPlans] = useState(VELTRION_PACKAGES);
+  const [plans, setPlans] = useState(NODEXAI_PACKAGES);
   const [filterTab, setFilterTab] = useState("ALL"); // ALL, GLOBAL, ADVANCED
 
   const handleSelectPlan = (plan) => {
@@ -164,7 +164,7 @@ const InvestmentPage = () => {
 
       if (rawPlans && Array.isArray(rawPlans) && rawPlans.length > 0) {
         // Merge API packages with frontend tier definitions
-        const mapped = VELTRION_PACKAGES.map((vPkg) => {
+        const mapped = NODEXAI_PACKAGES.map((vPkg) => {
           const apiMatch = rawPlans.find(
             (p) =>
               (p.title && p.title.toUpperCase() === vPkg.title) ||
@@ -183,11 +183,11 @@ const InvestmentPage = () => {
         });
         setPlans(mapped);
       } else {
-        setPlans(VELTRION_PACKAGES);
+        setPlans(NODEXAI_PACKAGES);
       }
     } catch (error) {
-      console.warn("Using default Veltrion packages:", error);
-      setPlans(VELTRION_PACKAGES);
+      console.warn("Using default NODEXAI packages:", error);
+      setPlans(NODEXAI_PACKAGES);
     } finally {
       dispatch(setLoading(false));
     }

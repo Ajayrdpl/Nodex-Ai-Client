@@ -7,43 +7,43 @@ export const TRADING_HERO_SLIDES = [
   {
     id: "slide-1",
     image: "/image/banner2.png",
-    alt: "Veltrion Capital Yield Packages & Staking Pool",
+    alt: "NODEXAI Yield Packages & Staking Pool",
   },
   {
     id: "slide-2",
     image: "/image/banner3.png",
-    alt: "Veltrion Capital 3-Matrix Team Network System",
+    alt: "NODEXAI 3-Matrix Team Network System",
   },
   {
     id: "slide-3",
     image: "/image/banner4.png",
-    alt: "Veltrion Capital Institutional Trading & Liquidity",
+    alt: "NODEXAI Institutional Trading & Liquidity",
   },
   {
     id: "slide-4",
     image: "/image/banner5.png",
-    alt: "Veltrion Capital AI Trading Engine & Market Hub",
+    alt: "NODEXAI AI Trading Engine & Market Hub",
   },
   {
     id: "slide-5",
-    image: "/veltrion-logo.jpg",
-    alt: "Veltrion Capital Multi-Chain Institutional Trading Terminal",
+    image: "/NodexAI.jpeg",
+    alt: "NODEXAI Multi-Chain Institutional Trading Terminal",
   },
 ];
 
 // ─── INITIAL COINS LIST (PEH, BTC, ETH, BNB, SOL, SFP, XRP, TRX, DOGE) ─────
 export const INITIAL_COINS_LIST = [
   {
-    id: "veltrion-capital",
+    id: "nodex-ai",
     symbol: "VC",
-    name: "Veltrion Capital",
+    name: "NODEXAI",
     pair: "VC / USDT",
     price: 0.0602,
     change24h: 4.72,
     volume: "605.04K",
     high24h: 0.0642,
     low24h: 0.0571,
-    icon: "/veltrion-icon.png",
+    icon: "/NodexAI.jpeg",
     sparkline: [0.057, 0.058, 0.059, 0.060, 0.061, 0.0602],
   },
   {

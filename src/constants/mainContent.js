@@ -2,19 +2,19 @@ import axios from "axios";
 import store, { persistor } from "../redux/store";
 import { logoutUser } from "../redux/slices/authSlice";
 
-const logoImg = "/veltrion-icon.png";
-const fullLogo = "/veltrion-logo.png";
-const shortLogo = "/veltrion-icon.png";
+const logoImg = "/NodexAI.jpeg";
+const fullLogo = "/NodexAI.jpeg";
+const shortLogo = "/NodexAI.jpeg";
 
 export const MainContent = {
-  name: "Veltrion Capital",
+  name: "NODEXAI",
   appLogo: shortLogo,
   fullLogo: fullLogo,
   shortLogo: shortLogo,
   favIcon: shortLogo,
-  appName: "Veltrion Capital",
-  shortName: "VC",
-  tagline: "INVEST • GROW • EARN"
+  appName: "NODEXAI",
+  shortName: "NODEXAI",
+  tagline: "NEXT-GEN AI TRADING & DEFI ECOSYSTEM"
 };
 
 export const backendConfig = {

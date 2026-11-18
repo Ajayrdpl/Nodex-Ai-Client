@@ -228,11 +228,11 @@ const Hero = () => {
               {/* Main Headline */}
               <motion.div variants={fadeLeft} className="space-y-2">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08] font-['Orbitron',sans-serif]">
-                  <span className="bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(245,158,11,0.4)]">
-                    VELTRION
+                  <span className="bg-gradient-to-r from-cyan-400 via-sky-200 to-amber-400 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(6,182,212,0.4)]">
+                    NODEX
                   </span>{" "}
-                  <span className="bg-gradient-to-r from-white via-slate-100 to-cyan-300 bg-clip-text text-transparent">
-                    CAPITAL
+                  <span className="bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 bg-clip-text text-transparent">
+                    AI
                   </span>
                 </h1>
                 <p className="text-sm sm:text-base font-semibold tracking-[0.2em] uppercase text-cyan-300 font-mono">
@@ -386,25 +386,25 @@ const Hero = () => {
                   </div>
                 </motion.div>
 
-                {/* Official Veltrion Logo Card */}
+                {/* Official NODEXAI Logo Card */}
                 <motion.div
                   animate={{ y: [-8, 8, -8] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                   className="relative z-10 w-full p-4 flex items-center justify-center"
                 >
-                  <div className="relative w-full rounded-3xl bg-gradient-to-b from-[#091b3a]/90 via-[#040e21]/95 to-[#020817] border border-amber-400/40 p-4 sm:p-6 shadow-[0_0_60px_rgba(214,168,58,0.3)] flex flex-col items-center justify-center overflow-hidden group">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(214,168,58,0.18),transparent_70%)]" />
+                  <div className="relative w-full rounded-3xl bg-gradient-to-b from-[#091b3a]/90 via-[#040e21]/95 to-[#020817] border border-cyan-400/40 p-4 sm:p-6 shadow-[0_0_60px_rgba(6,182,212,0.3)] flex flex-col items-center justify-center overflow-hidden group">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(6,182,212,0.18),transparent_70%)]" />
                     
-                    {/* Official Veltrion Logo Image as specified */}
+                    {/* Official NODEXAI Logo Image */}
                     <img
-                      src="/image/veltrion-logo.jpg"
-                      alt="Veltrion Capital"
-                      className="relative z-10 w-full h-auto max-h-[260px] object-contain rounded-2xl filter drop-shadow-[0_0_35px_rgba(214,168,58,0.45)] group-hover:scale-105 transition-transform duration-500"
+                      src="/NodexAI.jpeg"
+                      alt="NODEXAI"
+                      className="relative z-10 w-full h-auto max-h-[260px] object-contain rounded-2xl filter drop-shadow-[0_0_35px_rgba(6,182,212,0.45)] group-hover:scale-105 transition-transform duration-500"
                     />
 
                     <div className="relative z-10 mt-4 text-center">
-                      <span className="text-xs font-mono font-bold tracking-widest text-amber-300 uppercase">
-                        Powering Your Financial Freedom with USDT
+                      <span className="text-xs font-mono font-bold tracking-widest text-cyan-300 uppercase">
+                        Powering Your Financial Freedom with AI & USDT
                       </span>
                     </div>
                   </div>

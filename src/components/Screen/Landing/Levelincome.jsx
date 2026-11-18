@@ -42,7 +42,7 @@ const LevelIncome = () => {
           </h2>
 
           <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
-            Veltrion Capital distributes a staggering 24% total across 10 deep generation levels to reward network builders and leaders.
+            NODEXAI distributes a staggering 24% total across 10 deep generation levels to reward network builders and leaders.
           </p>
         </div>
 
@@ -139,7 +139,7 @@ const LevelIncome = () => {
           {/* Footer Logo */}
           <div className="mt-7 pt-4 border-t border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src="/image/veltrion-logo.jpg" alt="Veltrion Capital" className="h-7 w-auto object-contain rounded" />
+              <img src="/NodexAI.jpeg" alt="NODEXAI" className="h-7 w-auto object-contain rounded" />
               <span className="text-xs font-mono text-slate-400">Decentralized Multi-Tier Generation Network</span>
             </div>
             <span className="text-[10px] font-mono text-slate-400">BNB Smart Chain (BEP-20)</span>

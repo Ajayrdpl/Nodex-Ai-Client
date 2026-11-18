@@ -243,7 +243,7 @@ const LiveTradingDashboard = () => {
         onDeployBot={() => {
           setSelectedCoin(coins[0]);
           setOrderType("ai");
-          toast.info("AI Quant Strategy loaded for Veltrion Capital (VC)");
+          toast.info("AI Quant Strategy loaded for NODEXAI (VC)");
         }}
       />
 

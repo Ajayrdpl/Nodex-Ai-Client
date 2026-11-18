@@ -635,7 +635,7 @@ const UserIncomeHistory = () => {
         </div>
       </div>
 
-      {/* ── 2. OFFICIAL VELTRION PLAN METRICS (220% MAX ROI CAP & 7-DAYS BOOSTER) ── */}
+      {/* ── 2. OFFICIAL NODEXAI PLAN METRICS (220% MAX ROI CAP & 7-DAYS BOOSTER) ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Card 1: 220% Max ROI Structure (Images 1 & 9) */}
         <div className="neon-glow-card p-4 sm:p-5 space-y-3">

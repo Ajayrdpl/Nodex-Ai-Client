@@ -220,7 +220,7 @@ const InvestmentModal = ({ plan, onClose }) => {
         <div className="flex justify-between items-start border-b border-cyan-500/15 pb-4">
           <div>
             <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-400">
-              Veltrion Capital • BNB Smart Chain
+              NODEXAI • BNB Smart Chain
             </span>
             <h2 className="text-2xl font-black text-white mt-0.5 font-['Orbitron',monospace]">
               {plan.title || "Investment Package"}

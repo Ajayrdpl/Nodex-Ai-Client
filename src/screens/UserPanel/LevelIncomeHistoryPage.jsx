@@ -29,7 +29,7 @@ import {
 import { getIncomeTotal } from "../../api/auth.api";
 import { isToday } from "../../utils/helper";
 
-// Official Veltrion Capital 10-Level Rates (Total 24%)
+// Official NODEXAI 10-Level Rates (Total 24%)
 const LEVEL_RATES_MAP = {
   1: { rate: "8.0%", color: "#00D2FF", badgeBg: "bg-cyan-500/20 text-cyan-300 border-cyan-500/40" },
   2: { rate: "4.0%", color: "#38bdf8", badgeBg: "bg-sky-500/20 text-sky-300 border-sky-500/40" },

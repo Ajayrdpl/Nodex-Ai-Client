@@ -121,14 +121,14 @@ const Header = ({ toggle }) => {
             <div className="relative p-0.5 rounded-full bg-gradient-to-tr from-cyan-400 via-purple-500 to-rose-500 shadow-[0_0_15px_rgba(0,210,255,0.4)] group-hover:shadow-[0_0_20px_rgba(255,42,84,0.6)] transition-all duration-300">
               <img
                 src={MainContent.shortLogo}
-                alt="Veltrion Capital"
+                alt="NODEXAI"
                 className="h-12 w-12 cursor-pointer rounded-full object-cover"
               />
             </div>
             <div className="flex flex-col">
               <div className="text-xl font-black tracking-wider leading-none">
-                <span className="text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]">VELTRION </span>
-                <span className="text-[#00D2FF] drop-shadow-[0_0_8px_rgba(0,210,255,0.6)]">CAPITAL</span>
+                <span className="text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]">NODEX</span>
+                <span className="text-[#00D2FF] drop-shadow-[0_0_8px_rgba(0,210,255,0.6)]">AI</span>
               </div>
               <div className="flex items-center gap-1.5 text-[9px] font-bold tracking-widest text-slate-400 mt-1">
                 <span className="text-amber-400/90">INVEST • GROW • EARN</span>
@@ -202,14 +202,14 @@ const Header = ({ toggle }) => {
           <div className="p-0.5 rounded-full bg-gradient-to-tr from-cyan-400 via-purple-500 to-rose-500 shadow-[0_0_10px_rgba(0,210,255,0.4)]">
             <img
               src={MainContent.shortLogo}
-              alt="Veltrion Capital"
+              alt="NODEXAI"
               className="h-9 w-9 rounded-full object-cover"
             />
           </div>
           <div className="flex flex-col">
             <div className="text-base font-black tracking-wider leading-none">
-              <span className="text-amber-400">VELTRION </span>
-              <span className="text-[#00D2FF]">CAPITAL</span>
+              <span className="text-amber-400">NODEX</span>
+              <span className="text-[#00D2FF]">AI</span>
             </div>
             <span className="text-[8px] font-bold tracking-widest text-amber-400/80">INVEST • GROW • EARN</span>
           </div>

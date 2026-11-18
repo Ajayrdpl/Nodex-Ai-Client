@@ -10,7 +10,7 @@ const HomeTop = () => {
     <div className="flex flex-col items-center space-y-[50px] mt-[50px]">
       {/* Title */}
       <p className="text-[var(--text)] font-bold text-2xl md:text-5xl text-center pb-4 font-['Orbitron',monospace]">
-        VELTRION CAPITAL BLOCKCHAIN EXPLORER
+        NODEXAI BLOCKCHAIN EXPLORER
       </p>
 
       {/* Top Stats & Search */}
@@ -35,8 +35,8 @@ const HomeTop = () => {
         <div className="grid grid-cols-5 gap-2 md:gap-6 w-full">
           <a className="flex items-center p-2 space-x-4" href="/tokens/pox">
             <img
-              src="/veltrion-icon.png"
-              alt="Veltrion Capital logo"
+              src="/NodexAI.jpeg"
+              alt="NODEXAI logo"
               className="w-12 h-12 rounded-full object-cover border border-cyan-400/40 p-0.5"
             />
           </a>
@@ -45,8 +45,8 @@ const HomeTop = () => {
             href="/tokendetails/PEmC2y95fNckYXPodRekgbgDQDZmDdw5T7"
           >
             <img
-              src="/veltrion-icon.png"
-              alt="Veltrion Capital logo"
+              src="/NodexAI.jpeg"
+              alt="NODEXAI logo"
               className="w-12 h-12 rounded-full object-cover border border-cyan-400/40 p-0.5"
             />
           </a>
@@ -55,8 +55,8 @@ const HomeTop = () => {
             href="/tokendetails/PApFeUXaX7jjHu3RQcwvgzy1tCwt3G9Q42"
           >
             <img
-              src="/veltrion-icon.png"
-              alt="Veltrion Capital logo"
+              src="/NodexAI.jpeg"
+              alt="NODEXAI logo"
               className="w-12 h-12 rounded-full object-cover border border-cyan-400/40 p-0.5"
             />
           </a>
@@ -65,8 +65,8 @@ const HomeTop = () => {
             href="/tokendetails/PQxhtJdzHi2ZFRoU4eUXfRY272FufZvc1P"
           >
             <img
-              src="/veltrion-icon.png"
-              alt="Veltrion Capital logo"
+              src="/NodexAI.jpeg"
+              alt="NODEXAI logo"
               className="w-12 h-12 rounded-full object-cover border border-cyan-400/40 p-0.5"
             />
           </a>
@@ -75,8 +75,8 @@ const HomeTop = () => {
             href="/tokendetails/PFZK5LUuhYQrieY4xmHN5xt9t4kuT4yuUq"
           >
             <img
-              src="/veltrion-icon.png"
-              alt="Veltrion Capital logo"
+              src="/NodexAI.jpeg"
+              alt="NODEXAI logo"
               className="w-12 h-12 rounded-full object-cover border border-cyan-400/40 p-0.5"
             />
           </a>

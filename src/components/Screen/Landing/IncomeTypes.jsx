@@ -128,7 +128,7 @@ const IncomeTypes = () => {
           </h2>
 
           <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
-            Veltrion Capital is engineered with five interconnected revenue pillars designed for maximum transparency, sustainable profitability, and fair community rewards.
+            NODEXAI is engineered with five interconnected revenue pillars designed for maximum transparency, sustainable profitability, and fair community rewards.
           </p>
         </div>
 

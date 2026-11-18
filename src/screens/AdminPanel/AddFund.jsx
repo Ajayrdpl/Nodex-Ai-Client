@@ -4,7 +4,7 @@ import { setLoading } from "../../redux/slices/loadingSlice";
 import { toast } from "react-toastify";
 import { AddUserFund, getAllUsersList, getPackageInfoAdmin } from "../../api/admin.api";
 import { maskWalletAddress } from "../../utils/additionalFunc";
-import { VELTRION_PACKAGES } from "../UserPanel/InvestmentPage";
+import { NODEXAI_PACKAGES } from "../UserPanel/InvestmentPage";
 import {
   DollarSign,
   User,
@@ -105,8 +105,8 @@ const AddFund = () => {
   const [amountError, setAmountError] = useState("");
   const [username, setUsername] = useState("");
   const [remark, setRemark] = useState("");
-  const [selectedPackage, setSelectedPackage] = useState(VELTRION_PACKAGES[0]); // default NOVA
-  const [packagesList, setPackagesList] = useState(VELTRION_PACKAGES);
+  const [selectedPackage, setSelectedPackage] = useState(NODEXAI_PACKAGES[0]); // default NOVA
+  const [packagesList, setPackagesList] = useState(NODEXAI_PACKAGES);
 
   // Searchable User Dropdown states
   const [usersList, setUsersList] = useState([]);
@@ -143,7 +143,7 @@ const AddFund = () => {
         // Merge DB packages if available
         const rawPackages = pkgRes?.data || pkgRes?.packages;
         if (Array.isArray(rawPackages) && rawPackages.length > 0) {
-          const merged = VELTRION_PACKAGES.map((vPkg) => {
+          const merged = NODEXAI_PACKAGES.map((vPkg) => {
             const dbMatch = rawPackages.find(
               (p) =>
                 (p.title && p.title.toUpperCase() === vPkg.title) ||
@@ -377,7 +377,7 @@ const AddFund = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-400">
-                Veltrion Capital Admin Console
+                NODEXAI Admin Console
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             </div>

@@ -116,14 +116,14 @@ const Footer1 = () => {
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-amber-400 rounded-xl blur-sm opacity-50 group-hover:opacity-100 transition duration-300" />
                 <img
-                  src="/image/veltrion-logo.jpg"
-                  alt="Veltrion Capital"
+                  src="/NodexAI.jpeg"
+                  alt="NODEXAI"
                   className="relative h-12 sm:h-14 w-auto rounded-lg object-contain border border-cyan-400/50 shadow-[0_0_15px_rgba(0,210,255,0.3)] group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="flex flex-col text-left">
                 <span className="font-extrabold text-lg tracking-wider bg-gradient-to-r from-cyan-400 via-white to-amber-300 bg-clip-text text-transparent font-['Orbitron',sans-serif]">
-                  Veltrion Capital
+                  NODEXAI
                 </span>
                 <span className="text-[9px] tracking-[0.25em] uppercase text-cyan-300/80 font-mono font-semibold">
                   INVEST • GROW • EARN
@@ -180,7 +180,7 @@ const Footer1 = () => {
         {/* Bottom Bar (Responsive) */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-            <span>© {currentYear} Veltrion Capital. All Rights Reserved.</span>
+            <span>© {currentYear} NODEXAI. All Rights Reserved.</span>
             <span className="hidden sm:inline-block text-slate-700">•</span>
             <span className="flex items-center gap-1.5 text-cyan-400/80 font-mono text-[11px]">
               <FiShield className="text-xs" />

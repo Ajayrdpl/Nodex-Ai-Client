@@ -159,13 +159,13 @@ const AdminLogin = () => {
                     <div className="p-1 rounded-full bg-gradient-to-tr from-cyan-400 via-blue-500 to-indigo-500 shadow-[0_0_25px_rgba(0,210,255,0.4)] transition-all duration-300 group-hover:shadow-[0_0_35px_rgba(0,210,255,0.6)]">
                       <img
                         src={MainContent.fullLogo}
-                        alt="Veltrion Capital Logo"
+                        alt="NODEXAI Logo"
                         className="w-20 h-20 rounded-full object-cover"
                       />
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-widest text-slate-400 mt-2">
-                    <span className="text-amber-400">VELTRION CAPITAL</span>
+                    <span className="text-amber-400">NODEXAI</span>
                     <span>•</span>
                     <span className="text-[#00D2FF]">INVEST • GROW • EARN</span>
                   </div>
@@ -190,7 +190,7 @@ const AdminLogin = () => {
                     <span className="text-white">Admin </span>
                     <span style={{ background: "linear-gradient(135deg, #00D2FF, #3B82F6)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", backgroundSize: "200% auto", animation: "adm-shimmer 4s linear infinite", filter: "drop-shadow(0 0 30px rgba(0,210,255,0.4))" }}>Portal</span>
                   </h1>
-                  <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>Sign in to manage Veltrion Capital platform</p>
+                  <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>Sign in to manage NODEXAI platform</p>
                 </div>
 
                 {/* Form */}
@@ -307,14 +307,14 @@ const AdminLogin = () => {
                   <div className="p-1 rounded-full bg-gradient-to-tr from-cyan-400 via-blue-500 to-indigo-500 shadow-[0_0_30px_rgba(0,210,255,0.5)]">
                     <img
                       src={MainContent.fullLogo}
-                      alt="Veltrion Capital"
+                      alt="NODEXAI"
                       className="w-48 h-auto rounded-xl object-contain"
                     />
                   </div>
                 </div>
 
                 <h3 className="text-xl font-bold font-['Orbitron',monospace] text-white">
-                  Veltrion <span className="text-amber-400">Capital</span>
+                  NODEX<span className="text-amber-400">AI</span>
                 </h3>
                 <p className="text-xs text-slate-400 mt-1 uppercase tracking-widest font-mono">
                   Autonomous Protocol Engine
@@ -346,7 +346,7 @@ const AdminLogin = () => {
                 <span style={{ background: "linear-gradient(135deg, #00D2FF, #3B82F6)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", backgroundSize: "200% auto", animation: "adm-shimmer 4s linear infinite", filter: "drop-shadow(0 0 30px rgba(0,210,255,0.4))" }}>Monitor</span>
               </h2>
               <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
-                Powerful administrative dashboard to manage and scale Veltrion Capital platform securely.
+                Powerful administrative dashboard to manage and scale NODEXAI platform securely.
               </p>
             </div>
           </div>

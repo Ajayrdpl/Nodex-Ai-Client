@@ -138,7 +138,7 @@ const AdminCompounding = () => {
     link.setAttribute("href", encodedUri);
     link.setAttribute(
       "download",
-      `veltrion_compounding_admin_${new Date().toISOString().slice(0, 10)}.csv`
+      `NODEXAI_compounding_admin_${new Date().toISOString().slice(0, 10)}.csv`
     );
     document.body.appendChild(link);
     link.click();
@@ -226,7 +226,7 @@ const AdminCompounding = () => {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-black uppercase tracking-wider text-[#f0b90b] bg-[#1e2329] border border-[#f0b90b]/40 px-2.5 py-0.5 rounded-full">
-              Veltrion Capital Incomes Engine
+              NODEXAI Incomes Engine
             </span>
             <span className="text-[10px] font-bold text-[#0ecb81] bg-[#0ecb81]/10 border border-[#0ecb81]/30 px-2 py-0.5 rounded-full">
               0.5% Auto Bonus

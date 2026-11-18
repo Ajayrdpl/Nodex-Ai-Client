@@ -60,7 +60,7 @@ const ecosystemPillars = [
     color: "#D6A83A",
     tagline: "Compound your eligible balance anytime with an additional 0.5% bonus",
     description:
-      "Re-invest your active earnings directly back into your balance anytime. Veltrion Capital adds an instant 0.5% Auto Compounding Bonus on every compounded transaction to accelerate your passive earnings.",
+      "Re-invest your active earnings directly back into your balance anytime. NODEXAI adds an instant 0.5% Auto Compounding Bonus on every compounded transaction to accelerate your passive earnings.",
     features: [
       "Compounding available 24/7 without lock-in delays",
       "Instant +0.5% bonus added to the compounded amount",
@@ -116,7 +116,7 @@ const VisionEcosystem = () => {
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Orbitron',sans-serif] tracking-tight">
-            The Veltrion Capital{" "}
+            The NODEXAI{" "}
             <span className="bg-gradient-to-r from-amber-400 via-yellow-200 to-cyan-300 bg-clip-text text-transparent">
               DeFi Architecture
             </span>
@@ -240,8 +240,8 @@ const VisionEcosystem = () => {
                 <div className="mt-8 pt-5 border-t border-slate-800/80 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <img
-                      src="/image/veltrion-logo.jpg"
-                      alt="Veltrion Capital"
+                      src="/NodexAI.jpeg"
+                      alt="NODEXAI"
                       className="h-9 w-auto object-contain rounded-lg border border-amber-400/40"
                     />
                     <span className="text-xs font-mono text-slate-400">BNB Smart Chain (BEP-20)</span>

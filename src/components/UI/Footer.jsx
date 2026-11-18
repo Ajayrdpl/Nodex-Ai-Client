@@ -29,7 +29,7 @@ const Footer = () => {
           <a href="/" data-discover="true">
             <img
               src={MainContent.shortLogo}
-              alt="Veltrion Capital Logo"
+              alt="NODEXAI Logo"
               className="w-16 h-16 rounded-full object-cover border border-cyan-400/40 mb-5"
             />
           </a>

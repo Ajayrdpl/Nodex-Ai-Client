@@ -58,9 +58,9 @@ const HomeSecond = () => {
       <div>
         {/* Logo + Name + Price */}
         <div className="flex flex-row items-center space-x-4 rounded-l-xl reusable-box px-2 py-2 md:w-fit w-full">
-          <img src="/veltrion-icon.png" alt="Veltrion Capital logo" className="w-10 h-10 rounded-full object-cover border border-cyan-400/40" />
+          <img src="/NodexAI.jpeg" alt="NODEXAI logo" className="w-10 h-10 rounded-full object-cover border border-cyan-400/40" />
           <div>
-            <p className="font-semibold text-xl font-['Orbitron',monospace]">VELTRION CAPITAL</p>
+            <p className="font-semibold text-xl font-['Orbitron',monospace]">NODEXAI</p>
             <p className="font-medium text-base">$0.060397</p>
           </div>
         </div>

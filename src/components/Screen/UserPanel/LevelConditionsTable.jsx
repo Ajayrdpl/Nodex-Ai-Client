@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ShieldCheck, Lock, Unlock, Users, Award, Sparkles, LayoutGrid, FileText, CheckCircle2 } from "lucide-react";
 import LevelIncomePlanCard from "./LevelIncomePlanCard";
 
-// Official Veltrion Capital 10-Level Income Structure (Total: 24%)
+// Official NODEXAI 10-Level Income Structure (Total: 24%)
 export const LEVEL_RATES = [
   { level: 1, percentage: 8.0, directsRequired: 1 },
   { level: 2, percentage: 4.0, directsRequired: 2 },

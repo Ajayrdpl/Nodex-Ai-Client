@@ -6,14 +6,14 @@ import PlanCard from "../../components/Screen/UserPanel/PlanCard";
 import { getPackageInfo } from "../../api/user.api";
 import { getMoneySymbol } from "../../utils/additionalFunc";
 import DataTable from "../../components/Screen/UserPanel/DataTable";
-import { VELTRION_PACKAGES } from "./InvestmentPage";
+import { NODEXAI_PACKAGES } from "./InvestmentPage";
 import { Zap, ShieldCheck, TrendingUp, Sparkles, Rocket, Calendar, Trophy } from "lucide-react";
 
 const InvestmentPlans = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [plans, setPlans] = useState(VELTRION_PACKAGES);
+  const [plans, setPlans] = useState(NODEXAI_PACKAGES);
   const [viewType, setViewType] = useState("grid"); // 'grid' or 'table'
   const [activeTab, setActiveTab] = useState("ALL");
 
@@ -24,7 +24,7 @@ const InvestmentPlans = () => {
       const rawPlans = response?.data || response?.packages || response;
 
       if (rawPlans && Array.isArray(rawPlans) && rawPlans.length > 0) {
-        const mapped = VELTRION_PACKAGES.map((vPkg) => {
+        const mapped = NODEXAI_PACKAGES.map((vPkg) => {
           const apiMatch = rawPlans.find(
             (p) =>
               (p.title && p.title.toUpperCase() === vPkg.title) ||
@@ -43,11 +43,11 @@ const InvestmentPlans = () => {
         });
         setPlans(mapped);
       } else {
-        setPlans(VELTRION_PACKAGES);
+        setPlans(NODEXAI_PACKAGES);
       }
     } catch (error) {
-      console.warn("Using default Veltrion packages:", error);
-      setPlans(VELTRION_PACKAGES);
+      console.warn("Using default NODEXAI packages:", error);
+      setPlans(NODEXAI_PACKAGES);
     } finally {
       dispatch(setLoading(false));
     }
@@ -158,7 +158,7 @@ const InvestmentPlans = () => {
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <span className="px-3 py-1 bg-cyan-500/10 text-cyan-300 rounded-full text-[10px] font-black uppercase tracking-widest border border-cyan-500/30 flex items-center gap-1.5 font-mono">
-              <Sparkles className="w-3 h-3 text-amber-400" /> VELTRION CAPITAL
+              <Sparkles className="w-3 h-3 text-amber-400" /> NODEXAI
             </span>
             <span className="px-3 py-1 bg-amber-500/10 text-amber-300 rounded-full text-[10px] font-black uppercase tracking-widest border border-amber-500/30 font-mono">
               4.5% – 7.5% DAILY ROI • 220% CAP

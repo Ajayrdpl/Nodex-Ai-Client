@@ -159,7 +159,7 @@ const RegisterPage = () => {
         Swal.fire({
           icon: "success",
           title: "Registration Successful",
-          text: "Welcome to Veltrion Capital! Your account has been activated.",
+          text: "Welcome to NODEXAI! Your account has been activated.",
           timer: 2500,
         }).then(() => {
           navigate(AuthenticatedUserRouters.DASHBOARD);
@@ -254,8 +254,8 @@ const RegisterPage = () => {
                 <div className="relative">
                   <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-500 via-amber-400 to-cyan-500 rounded-2xl blur-md opacity-60 group-hover:opacity-100 transition duration-300" />
                   <img
-                    src="/image/veltrion-logo.jpg"
-                    alt="Veltrion Capital"
+                    src="/NodexAI.jpeg"
+                    alt="NODEXAI"
                     className="relative h-22 sm:h-26 w-auto max-w-[260px] rounded-xl object-contain border border-cyan-400/40 shadow-[0_0_25px_rgba(0,210,255,0.35)] group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
@@ -271,7 +271,7 @@ const RegisterPage = () => {
               Create Your Account
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm">
-              Join Veltrion Capital ecosystem and start earning 4.5% - 7.5% daily ROI
+              Join NODEXAI ecosystem and start earning 4.5% - 7.5% daily ROI
             </p>
           </div>
 
@@ -369,7 +369,7 @@ const RegisterPage = () => {
                 className="w-full py-3.5 rounded-xl text-center text-xs sm:text-sm font-bold tracking-wider uppercase text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-cyan-400 hover:brightness-110 shadow-[0_0_25px_rgba(0,210,255,0.35)] flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] active:scale-95 font-['Orbitron',monospace]"
               >
                 <UserPlus className="w-4 h-4" />
-                <span>Create Veltrion Account</span>
+                <span>Create NODEXAI Account</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

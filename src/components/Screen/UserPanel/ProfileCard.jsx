@@ -34,14 +34,14 @@ const ProfileCard = ({ user: propUser }) => {
     <div className="card hero-glass mt-10 border border-slate-800 rounded-3xl p-6 flex flex-col items-center h-full bg-slate-900/60 shadow-xl backdrop-blur-md">
       <img
         src={
-          user?.picture || "https://api.dicebear.com/8.x/lorelei/svg?seed=VeltrionTrader"
+          user?.picture || "https://api.dicebear.com/8.x/lorelei/svg?seed=NodexAiTrader"
         }
         alt="User Avatar"
         className="w-24 h-24 rounded-full border-4 border-cyan-500/50 -mt-16 shadow-xl shadow-cyan-500/20 bg-slate-950 object-cover"
       />
       <h3 className="text-xl font-black text-white mt-4 font-mono">{user?.id || "VLT000001"}</h3>
       <h4 className="text-base font-bold text-cyan-400 mb-1 capitalize">
-        {user?.username || "Veltrion Capital Trader"}
+        {user?.username || "NODEXAI Trader"}
       </h4>
       <p className="text-xs text-slate-400">Personal Trader Account</p>
 

@@ -2,149 +2,46 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../redux/slices/loadingSlice";
 import InvestmentModal from "../../components/Screen/UserPanel/InvestmentModal";
-import PlanCard from "../../components/Screen/UserPanel/PlanCard";
 import { getPackageInfo } from "../../api/user.api";
-import { Rocket, Sparkles, Shield, Zap, Layers } from "lucide-react";
+import { Rocket, Sparkles, Shield, Zap, Layers, CheckCircle2, ArrowRight } from "lucide-react";
 
-// The exact 6 packages from the Global Package Plan & Advanced Package Options images
+// Official NODEXAI $25 Business Plan Package
 export const NODEXAI_PACKAGES = [
-  // ── 1. GLOBAL PACKAGE PLAN ──
   {
-    _id: "pkg-nova",
-    id: "pkg-nova",
-    category: "GLOBAL",
-    categoryTitle: "GLOBAL PACKAGE PLAN",
-    title: "NOVA",
-    min: 10,
-    max: 200,
-    minAmount: 10,
-    maxAmount: 200,
-    dailyRoi: 4.5,
-    thirtyDaysRoi: 135,
-    monthlyRoi: 135,
-    totalRoi: 220,
-    maxRoiCap: 220,
-    iconType: "star",
-    color: "#F59E0B",
-    badgeText: "ENTRY TIER",
-    presetAmounts: [10, 50, 100, 150, 200],
-    status: true,
-  },
-  {
-    _id: "pkg-vantage",
-    id: "pkg-vantage",
-    category: "GLOBAL",
-    categoryTitle: "GLOBAL PACKAGE PLAN",
-    title: "VANTAGE",
-    min: 250,
-    max: 500,
-    minAmount: 250,
-    maxAmount: 500,
-    dailyRoi: 5.0,
-    thirtyDaysRoi: 150,
-    monthlyRoi: 150,
-    totalRoi: 220,
-    maxRoiCap: 220,
-    iconType: "diamond",
-    color: "#38BDF8",
-    badgeText: "POPULAR TIER",
-    presetAmounts: [250, 300, 400, 500],
-    status: true,
-  },
-  {
-    _id: "pkg-nexus",
-    id: "pkg-nexus",
-    category: "GLOBAL",
-    categoryTitle: "GLOBAL PACKAGE PLAN",
-    title: "NEXUS",
-    min: 550,
-    max: 2000,
-    minAmount: 550,
-    maxAmount: 2000,
-    dailyRoi: 5.5,
-    thirtyDaysRoi: 165,
-    monthlyRoi: 165,
-    totalRoi: 220,
-    maxRoiCap: 220,
+    _id: "NODEX_PKG_25",
+    id: "NODEX_PKG_25",
+    category: "OFFICIAL",
+    categoryTitle: "NODEXAI BUSINESS PACKAGE",
+    title: "NODEXAI PACKAGE",
+    amount: 25,
+    min: 25,
+    max: 25,
+    minAmount: 25,
+    maxAmount: 25,
+    percentage: 100,
+    dailyRoi: 0,
     iconType: "gem",
     color: "#00D2FF",
-    badgeText: "VIP GROWTH",
-    presetAmounts: [550, 800, 1200, 1600, 2000],
-    status: true,
-  },
-
-  // ── 2. ADVANCED PACKAGE OPTIONS ──
-  {
-    _id: "pkg-prime",
-    id: "pkg-prime",
-    category: "ADVANCED",
-    categoryTitle: "ADVANCED PACKAGE OPTIONS",
-    title: "PRIME",
-    min: 2500,
-    max: 5000,
-    minAmount: 2500,
-    maxAmount: 5000,
-    dailyRoi: 6.0,
-    thirtyDaysRoi: 180,
-    monthlyRoi: 180,
-    totalRoi: 220,
-    maxRoiCap: 220,
-    iconType: "crown",
-    color: "#EAB308",
-    badgeText: "ADVANCED",
-    presetAmounts: [2500, 3000, 4000, 5000],
-    status: true,
-  },
-  {
-    _id: "pkg-titan",
-    id: "pkg-titan",
-    category: "ADVANCED",
-    categoryTitle: "ADVANCED PACKAGE OPTIONS",
-    title: "TITAN",
-    min: 5500,
-    max: 10000,
-    minAmount: 5500,
-    maxAmount: 10000,
-    dailyRoi: 6.5,
-    thirtyDaysRoi: 195,
-    monthlyRoi: 195,
-    totalRoi: 220,
-    maxRoiCap: 220,
-    iconType: "flame",
-    color: "#F97316",
-    badgeText: "HIGH YIELD",
-    presetAmounts: [5500, 6500, 8000, 10000],
-    status: true,
-  },
-  {
-    _id: "pkg-infinity",
-    id: "pkg-infinity",
-    category: "ADVANCED",
-    categoryTitle: "ADVANCED PACKAGE OPTIONS",
-    title: "INFINITY",
-    min: 10500,
-    max: 25000,
-    minAmount: 10500,
-    maxAmount: 25000,
-    dailyRoi: 7.5,
-    thirtyDaysRoi: 220,
-    monthlyRoi: 220,
-    totalRoi: 220,
-    maxRoiCap: 220,
-    iconType: "infinity",
-    color: "#A855F7",
-    badgeText: "MAXIMUM RETURN",
-    presetAmounts: [10500, 15000, 20000, 25000],
+    badgeText: "$25 JOINING PACKAGE",
+    presetAmounts: [25],
+    features: [
+      "10% Direct Income ($2.50 instant)",
+      "20% 10-Level Matrix Income ($5.00)",
+      "50% Binary 1:1 Matching Bonus ($12.50)",
+      "10% Club Income (Puma, Pajero, Panther CTO)",
+      "10% Community Development Support ($2.50)",
+    ],
     status: true,
   },
 ];
 
+export const VELTRION_PACKAGES = NODEXAI_PACKAGES;
+
 const InvestmentPage = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState(NODEXAI_PACKAGES[0]);
   const [plans, setPlans] = useState(NODEXAI_PACKAGES);
-  const [filterTab, setFilterTab] = useState("ALL"); // ALL, GLOBAL, ADVANCED
 
   const handleSelectPlan = (plan) => {
     setSelectedPlan(plan);
@@ -153,7 +50,6 @@ const InvestmentPage = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedPlan(null);
   };
 
   const fetchPackageInfo = async () => {
@@ -163,30 +59,13 @@ const InvestmentPage = () => {
       const rawPlans = response?.data || response?.packages || response;
 
       if (rawPlans && Array.isArray(rawPlans) && rawPlans.length > 0) {
-        // Merge API packages with frontend tier definitions
-        const mapped = NODEXAI_PACKAGES.map((vPkg) => {
-          const apiMatch = rawPlans.find(
-            (p) =>
-              (p.title && p.title.toUpperCase() === vPkg.title) ||
-              (p.id && p.id === vPkg.id) ||
-              (p.minAmount === vPkg.min && p.maxAmount === vPkg.max)
-          );
-          if (apiMatch) {
-            return {
-              ...vPkg,
-              _id: apiMatch._id || vPkg._id,
-              id: apiMatch.id || apiMatch._id || vPkg.id,
-              status: apiMatch.status !== false,
-            };
-          }
-          return vPkg;
-        });
-        setPlans(mapped);
+        setPlans(rawPlans);
+        if (rawPlans[0]) setSelectedPlan(rawPlans[0]);
       } else {
         setPlans(NODEXAI_PACKAGES);
       }
     } catch (error) {
-      console.warn("Using default NODEXAI packages:", error);
+      console.warn("Using default NODEXAI package:", error);
       setPlans(NODEXAI_PACKAGES);
     } finally {
       dispatch(setLoading(false));
@@ -197,8 +76,7 @@ const InvestmentPage = () => {
     fetchPackageInfo();
   }, []);
 
-  const globalPlans = plans.filter((p) => p.category === "GLOBAL");
-  const advancedPlans = plans.filter((p) => p.category === "ADVANCED");
+  const pkg = plans[0] || NODEXAI_PACKAGES[0];
 
   return (
     <div className="space-y-10 pt-4 pb-12 text-white">
@@ -210,141 +88,87 @@ const InvestmentPage = () => {
             <span>USDT (BEP-20) ON BNB SMART CHAIN</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white font-['Orbitron',monospace] tracking-wider">
-            Investment Plans
+            NODEXAI Package Activation
           </h1>
           <p className="text-slate-400 text-sm mt-1 max-w-2xl">
-            Choose a verified trading package to earn between 4.5% and 7.5% daily ROI with instant decentralized USDT settlements.
+            Activate the official $25 NODEXAI Package to unlock all 5 income streams: Direct Referral, 10-Level Team Matrix, 1:1 Binary Matching, and Daily Company Turnover Club Pools!
           </p>
         </div>
-
-        {/* Filter Tabs */}
-        <div className="inline-flex p-1 rounded-2xl bg-[#030d1d] border border-cyan-500/20 backdrop-blur-md">
-          <button
-            onClick={() => setFilterTab("ALL")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
-              filterTab === "ALL"
-                ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(0,210,255,0.4)]"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            All (6)
-          </button>
-          <button
-            onClick={() => setFilterTab("GLOBAL")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
-              filterTab === "GLOBAL"
-                ? "bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 shadow-[0_0_15px_rgba(245,158,11,0.4)]"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            Global ($10 - $2K)
-          </button>
-          <button
-            onClick={() => setFilterTab("ADVANCED")}
-            className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
-              filterTab === "ADVANCED"
-                ? "bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            Advanced ($2.5K - $25K)
-          </button>
-        </div>
       </div>
 
-      {/* Top Banner: MAXIMUM ROI CAP 220% */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#071938] via-[#05142f] to-[#041026] border border-cyan-500/30 p-5 sm:p-6 shadow-[0_0_30px_rgba(0,210,255,0.15)] flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-amber-400 p-0.5 shadow-[0_0_20px_rgba(0,210,255,0.5)] shrink-0">
-            <div className="w-full h-full rounded-2xl bg-[#030d1d] flex items-center justify-center">
-              <Rocket className="w-7 h-7 text-amber-300" />
+      {/* Main $25 Package Card Showcase */}
+      <div className="max-w-4xl mx-auto p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-[#0a1936] via-[#041026] to-[#020817] border-2 border-cyan-500/40 shadow-[0_0_50px_rgba(0,210,255,0.25)] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="space-y-5 text-center lg:text-left flex-1">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-mono font-bold tracking-widest uppercase">
+              100% DISTRIBUTED PLAN
             </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl sm:text-2xl font-black text-white font-['Orbitron',monospace] tracking-wider">
-                MAXIMUM ROI CAP
-              </span>
-              <span className="px-2.5 py-0.5 rounded-lg bg-amber-400/20 border border-amber-400/40 text-amber-300 font-mono text-base font-black">
-                220%
-              </span>
-            </div>
-            <p className="text-xs text-slate-300 mt-1 max-w-xl">
-              All packages earn daily ROI until reaching the 220% total return ceiling. Any package of $500 or higher automatically unlocks all 10 Level Community Income tiers.
+
+            <h2 className="text-3xl sm:text-4xl font-black font-['Orbitron',monospace] text-white">
+              NODEXAI PACKAGE — <span className="text-cyan-400">$25 USDT</span>
+            </h2>
+
+            <p className="text-sm text-slate-300 leading-relaxed max-w-xl">
+              One simple $25 package empowers you with five comprehensive income streams, instant wallet earnings, and binary matching commissions.
             </p>
-          </div>
-        </div>
 
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="text-right hidden sm:block">
-            <p className="text-[10px] text-slate-400 font-mono uppercase">Minimum Investment</p>
-            <p className="text-lg font-black text-cyan-300 font-mono">$10 USDT</p>
-          </div>
-        </div>
-      </div>
-
-      {/* ═══════════ SECTION 1: GLOBAL PACKAGE PLAN ═══════════ */}
-      {(filterTab === "ALL" || filterTab === "GLOBAL") && (
-        <section className="space-y-6">
-          <div className="flex items-center gap-3 border-b border-cyan-500/15 pb-3">
-            <span className="w-2.5 h-7 rounded-full bg-gradient-to-b from-amber-400 to-cyan-400" />
-            <div>
-              <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider font-['Orbitron',monospace]">
-                GLOBAL PACKAGE PLAN
-              </h2>
-              <p className="text-xs text-slate-400">
-                Accessible entry plans from $10 to $2,000 with 4.5% – 5.5% daily yields.
-              </p>
+            {/* 5 Incomes List */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#030d22] border border-cyan-500/20 text-xs text-slate-200 font-mono">
+                <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span>10% Direct ($2.50)</span>
+              </div>
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#030d22] border border-amber-500/20 text-xs text-slate-200 font-mono">
+                <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                <span>20% 10-Level ($5.00)</span>
+              </div>
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#030d22] border border-emerald-500/20 text-xs text-slate-200 font-mono">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>50% Binary 1:1 ($12.50)</span>
+              </div>
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#030d22] border border-purple-500/20 text-xs text-slate-200 font-mono">
+                <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
+                <span>10% Club CTO Pool ($2.50)</span>
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {globalPlans.map((plan) => (
-              <PlanCard key={plan.id} plan={plan} onSelect={handleSelectPlan} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ═══════════ SECTION 2: ADVANCED PACKAGE OPTIONS ═══════════ */}
-      {(filterTab === "ALL" || filterTab === "ADVANCED") && (
-        <section className="space-y-6 pt-4">
-          <div className="flex items-center gap-3 border-b border-cyan-500/15 pb-3">
-            <span className="w-2.5 h-7 rounded-full bg-gradient-to-b from-amber-400 via-orange-500 to-purple-500" />
-            <div>
-              <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider font-['Orbitron',monospace]">
-                ADVANCED PACKAGE OPTIONS
-              </h2>
-              <p className="text-xs text-slate-400">
-                High-yield institutional packages from $2,500 to $25,000 with 6.0% – 7.5% daily yields.
-              </p>
+          {/* Pricing & CTA Action */}
+          <div className="p-8 rounded-3xl bg-[#040e24]/90 border border-cyan-400/30 text-center w-full lg:w-80 shrink-0 shadow-xl space-y-5">
+            <span className="text-xs font-mono uppercase text-slate-400 tracking-widest block">
+              Package Cost
+            </span>
+            <div className="text-5xl font-black font-['Orbitron',monospace] text-amber-400">
+              $25<span className="text-base text-slate-400 font-normal">.00</span>
             </div>
-          </div>
+            <span className="text-xs text-cyan-300 font-mono block">USDT (BEP-20)</span>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {advancedPlans.map((plan) => (
-              <PlanCard key={plan.id} plan={plan} onSelect={handleSelectPlan} />
-            ))}
-          </div>
-        </section>
-      )}
+            <button
+              onClick={() => handleSelectPlan(pkg)}
+              className="w-full py-4 rounded-xl text-center text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-cyan-400 hover:brightness-110 shadow-[0_0_25px_rgba(0,210,255,0.4)] flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 hover:scale-105 font-['Orbitron',monospace]"
+            >
+              <Rocket className="w-4 h-4" />
+              <span>Activate Package Now</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
 
-      {/* Bottom Floating Rocket Badge matching Image 2 */}
-      <div className="pt-4 flex justify-center">
-        <div className="inline-flex items-center gap-4 px-6 sm:px-10 py-3.5 rounded-full bg-gradient-to-r from-[#031533] via-[#05214d] to-[#031533] border-2 border-cyan-400/50 shadow-[0_0_35px_rgba(0,210,255,0.35)]">
-          <Rocket className="w-6 h-6 text-amber-300 animate-bounce" />
-          <span className="font-['Orbitron',monospace] font-black text-sm sm:text-base tracking-widest text-white uppercase">
-            MAXIMUM ROI CAP
-          </span>
-          <span className="text-xl sm:text-2xl font-mono font-black text-amber-400 drop-shadow-[0_0_10px_rgba(251,191,36,0.6)]">
-            220%
-          </span>
+            <span className="text-[10px] text-slate-500 block font-mono">
+              Non-custodial smart contract activation
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Investment Modal */}
-      {isModalOpen && (
-        <InvestmentModal plan={selectedPlan} onClose={handleCloseModal} />
+      {isModalOpen && selectedPlan && (
+        <InvestmentModal
+          plan={selectedPlan}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          refresh={fetchPackageInfo}
+        />
       )}
     </div>
   );

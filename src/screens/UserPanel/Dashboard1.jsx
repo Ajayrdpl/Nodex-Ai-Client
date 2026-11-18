@@ -202,98 +202,94 @@ const Dashboard1 = () => {
     0
   );
 
-  // 3. DAILY R.O.I (1% / Day)
-  const totalDailyRoi = Number(
-    stats?.dailyRoi?.total ??
-    incomes?.dailyRoi?.total ??
-    stats?.totalDailyRoi ??
-    stats?.totalTrading ??
-    stats?.dailyRoi ??
-    0
-  );
-  const todayDailyRoi = Number(
-    stats?.dailyRoi?.today ??
-    incomes?.dailyRoi?.today ??
-    stats?.todayDailyRoi ??
-    stats?.todayTrading ??
-    0
-  );
-
-  // 4. DIRECT BOOSTER INCOME (12% within 24 hours)
-  const totalDirectBooster = Number(
-    stats?.totalDirectBooster ??
-    incomes?.directBooster?.total ??
-    stats?.directBoosterIncome ??
-    0
-  );
-  const todayDirectBooster = Number(
-    stats?.todayDirectBooster ??
-    incomes?.directBooster?.today ??
-    0
-  );
-
-  // 5. DIRECT REFERRAL INCOME (10% after 24 hours)
-  const totalReferral = Number(
+  // ── NODEXAI.IO 5 OFFICIAL INCOME STREAMS ──
+  // 1. DIRECT INCOME (10% = $2.50 per Direct)
+  const totalDirectIncome = Number(
+    stats?.directIncome?.total ??
+    incomes?.directIncome?.total ??
     stats?.totalReferral ??
     incomes?.referral?.total ??
+    userObj?.earnings?.referralIncome ??
     0
   );
-  const todayReferral = Number(
+  const todayDirectIncome = Number(
+    stats?.directIncome?.today ??
+    incomes?.directIncome?.today ??
     stats?.todayReferral ??
     incomes?.referral?.today ??
     0
   );
 
-  // 6. 10-LEVEL ROI INCOME (24% Total)
-  const totalLevelRoi = Number(
+  // 2. 10-LEVEL INCOME (20% = $5.00 across 10 levels)
+  const totalLevelIncome = Number(
+    stats?.levelIncome?.total ??
+    incomes?.levelIncome?.total ??
     stats?.totalLevelRoi ??
     stats?.totalLevel ??
     incomes?.levelRoi?.total ??
     0
   );
-  const todayLevelRoi = Number(
+  const todayLevelIncome = Number(
+    stats?.levelIncome?.today ??
+    incomes?.levelIncome?.today ??
     stats?.todayLevelRoi ??
     stats?.todayLevel ??
     incomes?.levelRoi?.today ??
     0
   );
 
-  // 7. 7-DAYS TEAM BOOSTER BONUS ($20 - $5,000)
-  const totalTeamBooster = Number(
-    stats?.totalTeamBooster ??
-    incomes?.teamBooster?.total ??
-    stats?.teamBoosterIncome ??
+  // 3. BINARY MATCHING INCOME (50% = $12.50, 1:1 Matching Bonus)
+  const totalBinaryIncome = Number(
+    userObj?.binary?.totalBinaryEarned ??
+    stats?.binaryIncome?.total ??
+    incomes?.binaryIncome?.total ??
+    stats?.totalMatching ??
+    incomes?.matching?.total ??
     0
   );
-  const todayTeamBooster = Number(
-    stats?.todayTeamBooster ??
-    incomes?.teamBooster?.today ??
+  const todayBinaryIncome = Number(
+    userObj?.binary?.todayBinaryEarned ??
+    stats?.binaryIncome?.today ??
+    incomes?.binaryIncome?.today ??
+    0
+  );
+  const leftVolume = Number(userObj?.binary?.leftVolume ?? stats?.leftVolume ?? 0);
+  const rightVolume = Number(userObj?.binary?.rightVolume ?? stats?.rightVolume ?? 0);
+  const carryLeft = Number(userObj?.binary?.carryLeft ?? stats?.carryLeft ?? 0);
+  const carryRight = Number(userObj?.binary?.carryRight ?? stats?.carryRight ?? 0);
+
+  // 4. CLUB INCOME (10% C.T.O Pool + Milestone Rewards: Puma $150, Pajero $300, Panther $500)
+  const totalClubIncome = Number(
+    stats?.clubIncome?.total ??
+    incomes?.clubIncome?.total ??
+    userObj?.club?.rewardsPaid ??
+    stats?.totalRoyalty ??
+    incomes?.royalty?.total ??
+    0
+  );
+  const isPuma = Boolean(userObj?.club?.pumaAchieved);
+  const isPajero = Boolean(userObj?.club?.pajeroAchieved);
+  const isPanther = Boolean(userObj?.club?.pantherAchieved);
+  const activeClubTier = isPanther ? "Panther ($500+2% CTO)" : isPajero ? "Pajero ($300+3% CTO)" : isPuma ? "Puma ($150+5% CTO)" : "No Club Yet";
+
+  // 5. COMMUNITY DEVELOPMENT & BONANZA (10%)
+  const totalCommunity = Number(
+    stats?.communitySupport?.total ??
+    incomes?.communitySupport?.total ??
+    stats?.totalBonanza ??
     0
   );
 
-  // 8. AUTO COMPOUNDING BONUS (0.5% added to active balance)
-  const totalCompoundingBonus = Number(
-    stats?.totalCompoundingBonus ??
-    incomes?.compoundingBonus?.total ??
-    userObj?.compounding?.totalBonusEarned ??
-    0
-  );
-  const totalCompounded = Number(
-    stats?.totalCompounded ??
-    userObj?.compounding?.totalCompounded ??
-    0
-  );
-
-  // 9. TOTAL INCOME (Combined Aggregate, 220% Max ROI Cap)
+  // Aggregate Total Income
   const totalIncomeAmount = Number(
     stats?.totalIncome ??
     incomes?.total ??
-    (totalDailyRoi + totalDirectBooster + totalReferral + totalLevelRoi + totalTeamBooster + totalCompoundingBonus)
+    (totalDirectIncome + totalLevelIncome + totalBinaryIncome + totalClubIncome + totalCommunity)
   );
   const todayIncomeAmount = Number(
     stats?.todayIncome ??
     incomes?.today ??
-    (todayDailyRoi + todayDirectBooster + todayReferral + todayLevelRoi + todayTeamBooster)
+    (todayDirectIncome + todayLevelIncome + todayBinaryIncome)
   );
 
   // 10. TOTAL TEAM SIZE & BUSINESS
@@ -317,6 +313,7 @@ const Dashboard1 = () => {
     stats?.totalTeamBusiness ??
     stats?.totalTeamTransaction ??
     userObj?.totalTeamBusiness ??
+    (leftVolume + rightVolume) ??
     0
   );
 
@@ -326,15 +323,15 @@ const Dashboard1 = () => {
   );
 
   const isActiveId = Boolean(
-    userObj?.active?.isActive ?? userObj?.isActive ?? activeInvestment >= 10
+    userObj?.active?.isActive ?? userObj?.isActive ?? activeInvestment >= 25
   );
 
-  // Unlocked levels
-  const isAllLevelsUnlocked = activeInvestment >= 500 || Boolean(userObj?.isAllLevelsUnlocked);
-  const unlockedLevelsCount = isAllLevelsUnlocked ? 10 : Math.min(10, partnerActive);
+  // Unlocked levels: 5 directs compulsory for all 10 levels
+  const isAllLevelsUnlocked = partnerActive >= 5 || Boolean(userObj?.isAllLevelsUnlocked);
+  const unlockedLevelsCount = isAllLevelsUnlocked ? 10 : Math.min(10, partnerActive * 2);
 
   // Referral URL Setup (User's Own Member ID is their Referral Code)
-  const userOwnId = userObj?.id || userInfo?.id || userObj?.username || userInfo?.username || "PEH000000";
+  const userOwnId = userObj?.id || userInfo?.id || userObj?.username || userInfo?.username || "NODEX000000";
   const sponsorCode = userObj?.sponsor?.id || userObj?.sponsor || userObj?.referralCode || userObj?.referral || null;
   const origin = window.location.origin;
   const referralLink = `${origin}/register?referral=${encodeURIComponent(userOwnId)}`;
@@ -353,19 +350,17 @@ const Dashboard1 = () => {
     setTimeout(() => setCopiedId(false), 2000);
   };
 
-  // 10 Official Cards strictly based on NODEXAI Income Plan:
-  // 1. Package, 2. Current Balance, 3. Daily ROI, 4. Direct Booster 12%, 5. Direct Referral 10%,
-  // 6. 10-Level ROI, 7. 7-Days Booster, 8. Auto Compounding 0.5%, 9. Total Income (220% Cap), 10. Team Business
+  // 10 Official Cards strictly based on NODEXAI $25 Income Plan:
   const notebookCards = [
     // 1. PACKAGE
     {
-      title: "Package",
+      title: "NODEXAI Package",
       value: `$ ${activeInvestment.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://img.icons8.com/3d-fluency/94/exchange.png",
       path: AuthenticatedUserRouters.INVEST,
       theme: "cyan",
-      badge: isActiveId ? "ACTIVE $10+" : "INACTIVE",
-      subText: activeInvestment >= 500 ? "VIP All 10 Levels Unlocked" : `Staked: $ ${activeInvestment.toFixed(2)}`,
+      badge: isActiveId ? "ACTIVE $25" : "INACTIVE",
+      subText: isActiveId ? "Official $25 Plan Active" : "Activate $25 Package",
     },
     // 2. CURRENT BALANCE
     {
@@ -375,68 +370,68 @@ const Dashboard1 = () => {
       path: AuthenticatedUserRouters.WITHDRAW,
       theme: "blue",
       badge: "WITHDRAWABLE",
-      subText: fundWallet > 0 ? `Fund Wallet: $ ${fundWallet.toFixed(2)}` : "Available Balance",
+      subText: fundWallet > 0 ? `Fund Wallet: $ ${fundWallet.toFixed(2)}` : "Available for Payout",
     },
-    // 3. DAILY ROI (4.5% - 7.5%)
+    // 3. DIRECT INCOME (10% = $2.50)
     {
-      title: "Package Daily ROI",
-      value: `$ ${totalDailyRoi.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-      icon: "https://img.icons8.com/3d-fluency/94/candle-sticks.png",
-      path: AuthenticatedUserRouters.TRADING_INCOME_HISTORY,
-      highlight: true,
-      theme: "emerald",
-      badge: "4.5%-7.5% / DAY",
-      subText: `Today: +$ ${todayDailyRoi.toFixed(2)}`,
-    },
-    // 4. DIRECT REFERRAL (12%)
-    {
-      title: "Direct Referral (12%)",
-      value: `$ ${((totalReferral || 0) + (totalDirectBooster || 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      title: "01. Direct Income",
+      value: `$ ${totalDirectIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://img.icons8.com/3d-plastilina/69/share--v1.png",
       path: AuthenticatedUserRouters.REFERRAL_INCOME_HISTORY,
       theme: "amber",
-      badge: "12% DIRECT",
-      subText: `Today: +$ ${((todayReferral || 0) + (todayDirectBooster || 0)).toFixed(2)} • ${partnerActive} Active`,
+      badge: "10% ($2.50 / Direct)",
+      subText: `Today: +$ ${todayDirectIncome.toFixed(2)} • ${partnerActive} Active Directs`,
     },
-    // 5. 10-LEVEL ROI (24%)
+    // 4. LEVEL INCOME (20% = $5.00)
     {
-      title: "10-Level ROI (24%)",
-      value: `$ ${totalLevelRoi.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      title: "02. 10-Level Income",
+      value: `$ ${totalLevelIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://cdn-icons-png.flaticon.com/512/10102/10102408.png",
       path: AuthenticatedUserRouters.LEVEL_INCOME_HISTORY,
       theme: "purple",
       badge: isAllLevelsUnlocked ? "ALL 10 UNLOCKED" : `${unlockedLevelsCount}/10 LEVELS`,
-      subText: isAllLevelsUnlocked ? "Auto-Unlocked ($500+)" : `${partnerActive} Active Directs`,
+      subText: isAllLevelsUnlocked ? "5 Directs Rule Met" : "5 Directs for All Levels",
     },
-    // 6. 10-LEVEL ROI (24%)
+    // 5. BINARY MATCHING (50% = $12.50, 1:1)
     {
-      title: "10-Level ROI (24%)",
-      value: `$ ${totalLevelRoi.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-      icon: "https://cdn-icons-png.flaticon.com/512/10102/10102408.png",
-      path: AuthenticatedUserRouters.LEVEL_INCOME_HISTORY,
-      theme: "purple",
-      badge: isAllLevelsUnlocked ? "ALL 10 UNLOCKED" : `${unlockedLevelsCount}/10 LEVELS`,
-      subText: isAllLevelsUnlocked ? "Auto-Unlocked ($500+)" : `${partnerActive} Active Directs`,
-    },
-    // 7. 7-DAYS TEAM BOOSTER
-    {
-      title: "7-Days Team Booster",
-      value: `$ ${totalTeamBooster.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-      icon: "https://img.icons8.com/3d-fluency/94/trophy.png",
-      path: AuthenticatedUserRouters.TEAM_BOOSTER_INCOME,
-      theme: "amber",
-      badge: "SLABS $20–$5K",
-      subText: "Monday Weekly Distribution",
-    },
-    // 8. AUTO COMPOUNDING (0.5% BONUS)
-    {
-      title: "Auto Compounding",
-      value: `$ ${totalCompoundingBonus.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-      icon: "https://img.icons8.com/3d-fluency/94/refresh.png",
-      path: AuthenticatedUserRouters.AUTO_COMPOUNDING,
+      title: "03. Binary Matching",
+      value: `$ ${totalBinaryIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      icon: "https://img.icons8.com/3d-fluency/94/candle-sticks.png",
+      path: AuthenticatedUserRouters.MATCHING_INCOME_HISTORY,
+      highlight: true,
       theme: "emerald",
-      badge: "+0.5% BONUS",
-      subText: `Compounded: $ ${totalCompounded.toFixed(2)}`,
+      badge: "50% (1:1 / $12.50)",
+      subText: `Left: $${leftVolume} | Right: $${rightVolume}`,
+    },
+    // 6. CLUB CTO POOL (10%)
+    {
+      title: "04. Club CTO Income",
+      value: `$ ${totalClubIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      icon: "https://img.icons8.com/3d-fluency/94/trophy.png",
+      path: AuthenticatedUserRouters.ROYALTY_CLUB_INCOME,
+      theme: "amber",
+      badge: activeClubTier,
+      subText: "Puma (5%) • Pajero (3%) • Panther (2%)",
+    },
+    // 7. COMMUNITY & BONANZA (10%)
+    {
+      title: "05. Community Bonanza",
+      value: `$ ${totalCommunity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      icon: "https://img.icons8.com/3d-fluency/94/conference-call.png",
+      path: AuthenticatedUserRouters.GLOBAL_ACHIEVERS,
+      theme: "cyan",
+      badge: "10% ALLOCATED",
+      subText: "Development & Leader Rewards",
+    },
+    // 8. BINARY CARRY FORWARD
+    {
+      title: "Binary Volumes (L / R)",
+      value: `$${carryLeft} / $${carryRight}`,
+      icon: "https://img.icons8.com/pulsar-gradient/48/refund-2.png",
+      path: AuthenticatedUserRouters.MATRIX_TREE,
+      theme: "purple",
+      badge: "CARRY FORWARD",
+      subText: `Total Vol: $${(leftVolume + rightVolume).toFixed(2)}`,
     },
     // 9. TOTAL INCOME
     {
@@ -446,19 +441,18 @@ const Dashboard1 = () => {
       path: AuthenticatedUserRouters.INCOME_HISTORY,
       highlight: true,
       theme: "emerald",
-      badge: "MAX 220% ROI",
+      badge: "100% DISTRIBUTED",
       subText: `Today: +$ ${todayIncomeAmount.toFixed(2)}`,
     },
-    // 10. TEAM BUSINESS
+    // 10. DIRECT PARTNERS
     {
-      title: "Team Business",
-      value: `$ ${totalTeamTransaction.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-      icon: "https://img.icons8.com/pulsar-gradient/48/refund-2.png",
-      path: AuthenticatedUserRouters.MY_TEAM_DIVISION,
-      highlight: true,
-      theme: "purple",
-      badge: "NETWORK VOL",
-      subText: `${partnersCount} Team Members`,
+      title: "Direct Partners",
+      value: `${partnersCount}`,
+      icon: "https://img.icons8.com/3d-fluency/94/group--v2.png",
+      path: AuthenticatedUserRouters.MY_REFERRALS,
+      theme: "blue",
+      badge: `${partnerActive} ACTIVE`,
+      subText: partnerActive >= 5 ? "All 10 Levels Unlocked" : `${Math.max(0, 5 - partnerActive)} more for all levels`,
     },
   ];
 
@@ -471,7 +465,7 @@ const Dashboard1 = () => {
       path: AuthenticatedAdminRouters.ALL_USERS,
     },
     {
-      title: "Active Users",
+      title: "Active Users ($25)",
       value: `${Number(totalIncome?.userActive ?? 0)}`,
       icon: "https://img.icons8.com/3d-fluency/94/group.png",
       path: AuthenticatedAdminRouters.ACTIVE_USERS,
@@ -483,34 +477,34 @@ const Dashboard1 = () => {
       path: AuthenticatedAdminRouters.INACTIVE_USERS,
     },
     {
-      title: "Total Income",
+      title: "Total Distributed Income",
       value: `$ ${Number(totalIncome?.totalIncome ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://img.icons8.com/3d-fluency/94/stack-of-coins.png",
       path: AuthenticatedAdminRouters.INCOME_HISTORY,
     },
     {
-      title: "Direct & Booster Incomes",
+      title: "01. Direct Income (10%)",
       value: `$ ${Number(totalIncome?.totalReferral ?? totalIncome?.incomes?.referral?.total ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://img.icons8.com/3d-plastilina/69/share--v1.png",
-      path: AuthenticatedAdminRouters.DIRECT_BOOSTER_INCOME,
+      path: AuthenticatedAdminRouters.REFERRAL_INCOME_HISTORY,
     },
     {
-      title: "Daily Package ROI",
-      value: `$ ${Number(totalIncome?.totalTrading ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      title: "02. Level Income (20%)",
+      value: `$ ${Number(totalIncome?.totalLevel ?? totalIncome?.incomes?.levelRoi?.total ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      icon: "https://cdn-icons-png.flaticon.com/512/10102/10102408.png",
+      path: AuthenticatedAdminRouters.LEVEL_INCOME_HISTORY,
+    },
+    {
+      title: "03. Binary Matching (50%)",
+      value: `$ ${Number(totalIncome?.totalMatching ?? totalIncome?.incomes?.matching?.total ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://img.icons8.com/3d-fluency/94/candle-sticks.png",
-      path: AuthenticatedAdminRouters.ROI_INCOME,
+      path: AuthenticatedAdminRouters.MATCHING_INCOME_HISTORY,
     },
     {
-      title: "7-Days Team Booster",
-      value: `$ ${Number(totalIncome?.totalTeamBooster ?? totalIncome?.incomes?.teamBooster?.total ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      title: "04. Club CTO Pool (10%)",
+      value: `$ ${Number(totalIncome?.totalRoyalty ?? totalIncome?.incomes?.royalty?.total ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://img.icons8.com/3d-fluency/94/trophy.png",
-      path: AuthenticatedAdminRouters.TEAM_BOOSTER_INCOME,
-    },
-    {
-      title: "Auto Compounding",
-      value: `$ ${Number(totalIncome?.totalCompounded ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-      icon: "https://img.icons8.com/3d-fluency/94/refresh.png",
-      path: AuthenticatedAdminRouters.ADMIN_COMPOUNDING,
+      path: AuthenticatedAdminRouters.ADMIN_ROYALTY_INCOME,
     },
     {
       title: "Total Withdrawals",
@@ -554,7 +548,7 @@ const Dashboard1 = () => {
                         : "bg-[#f0b90b]/15 text-[#f0b90b] border-[#f0b90b]/40"
                     }`}
                   >
-                    {isActiveId ? "● Active ID ($50+)" : "○ Inactive ($50 to Activate)"}
+                    {isActiveId ? "● Active ID ($25)" : "○ Inactive ($25 to Activate)"}
                   </span>
                 </div>
 
@@ -682,7 +676,7 @@ const Dashboard1 = () => {
                     Deposit
                   </div>
                   <div className="text-[8px] text-[#848e9c] truncate">
-                    $10 - $1000
+                    $25 Package
                   </div>
                 </div>
               </button>
@@ -705,9 +699,9 @@ const Dashboard1 = () => {
                 </div>
               </button>
 
-              {/* 3. Income Report */}
+              {/* 3. Binary Matching */}
               <button
-                onClick={() => navigate(AuthenticatedUserRouters.INCOME_HISTORY)}
+                onClick={() => navigate(AuthenticatedUserRouters.MATCHING_INCOME_HISTORY)}
                 className="group px-2 py-1.5 rounded-xl bg-[#181a20] border border-[#2b313a] hover:border-[#0ecb81] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
               >
                 <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#1e2329] border border-[#0ecb81]/40 flex items-center justify-center text-[#0ecb81] font-black shadow-sm shrink-0">
@@ -715,10 +709,10 @@ const Dashboard1 = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="font-black text-[10px] text-[#eaecef] group-hover:text-[#0ecb81] transition truncate font-['Orbitron',monospace]">
-                    Income Report
+                    Binary 1:1
                   </div>
                   <div className="text-[8px] text-[#848e9c] truncate">
-                    Ledger & Breakdown
+                    50% ($12.50)
                   </div>
                 </div>
               </button>
@@ -741,27 +735,27 @@ const Dashboard1 = () => {
                 </div>
               </button>
 
-              {/* 5. Re-Invest */}
+              {/* 5. Club Status */}
               <button
-                onClick={() => navigate(AuthenticatedUserRouters.REINVEST)}
+                onClick={() => navigate(AuthenticatedUserRouters.ROYALTY_CLUB_INCOME)}
                 className="group px-2 py-1.5 rounded-xl bg-[#181a20] border border-[#2b313a] hover:border-[#f0b90b] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
               >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#1e2329] border border-[#2b313a] flex items-center justify-center text-[#eaecef] font-black shadow-sm shrink-0">
-                  <RefreshCw size={11} />
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#1e2329] border border-[#f0b90b]/40 flex items-center justify-center text-[#eaecef] font-black shadow-sm shrink-0">
+                  <Crown size={11} className="text-[#f0b90b]" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="font-black text-[10px] text-[#eaecef] group-hover:text-[#f0b90b] transition truncate font-['Orbitron',monospace]">
-                    Re-Invest
+                    Club Status
                   </div>
                   <div className="text-[8px] text-[#848e9c] truncate">
-                    Self 100% / New 50%
+                    10% CTO Pool
                   </div>
                 </div>
               </button>
 
-              {/* 6. Trading Income Records */}
+              {/* 6. Level Income */}
               <button
-                onClick={() => navigate(AuthenticatedUserRouters.TRADING_INCOME_HISTORY)}
+                onClick={() => navigate(AuthenticatedUserRouters.LEVEL_INCOME_HISTORY)}
                 className="group px-2 py-1.5 rounded-xl bg-[#181a20] border border-[#2b313a] hover:border-[#0ecb81] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
               >
                 <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#1e2329] border border-[#2b313a] flex items-center justify-center text-[#0ecb81] font-black shadow-sm shrink-0">
@@ -769,10 +763,10 @@ const Dashboard1 = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="font-black text-[10px] text-[#eaecef] group-hover:text-[#0ecb81] transition truncate font-['Orbitron',monospace]">
-                    Trading ROI
+                    10-Level
                   </div>
                   <div className="text-[8px] text-[#848e9c] truncate">
-                    Daily & Booster
+                    20% ($5.00)
                   </div>
                 </div>
               </button>

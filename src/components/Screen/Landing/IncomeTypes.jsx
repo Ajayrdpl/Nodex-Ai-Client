@@ -1,91 +1,91 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FiTrendingUp, FiZap, FiLayers, FiAward, FiRepeat, FiCheck } from "react-icons/fi";
+import { FiTrendingUp, FiZap, FiLayers, FiAward, FiGlobe, FiCheck } from "react-icons/fi";
 
 const INCOME_STREAMS = [
   {
-    key: "roi",
+    key: "direct",
     num: "01",
-    title: "Daily Package ROI",
-    tag: "Passive Cashflow",
-    highlight: "4.5% - 7.5%",
-    highlightLabel: "Daily Credited 24/7",
-    desc: "Earn consistent automated daily yields according to your active package tier, capped at 220% maximum total ROI.",
+    title: "Direct Referral Income",
+    tag: "Instant Payout",
+    highlight: "10%",
+    highlightLabel: "$2.50 Per Direct",
+    desc: "Earn $2.50 instantly in your wallet for every direct member joining with the $25 package. No limits on sponsoring.",
     color: "#00D2FF",
-    icon: <FiTrendingUp className="w-6 h-6" />,
-    points: [
-      "Nova: 4.5% | Vantage: 5.0% | Nexus: 5.5%",
-      "Prime: 6.0% | Titan: 6.5% | Infinity: 7.5%",
-      "Overall Maximum ROI Cap up to 220%",
-      "30-day estimated yields from 135% to 195%",
-    ],
-  },
-  {
-    key: "direct-booster",
-    num: "02",
-    title: "Direct Booster Income",
-    tag: "24-Hour Fast Track",
-    highlight: "12%",
-    highlightLabel: "Direct Booster Rate",
-    desc: "Members who complete the required direct business or referral criteria within 24 hours of activation receive an accelerated 12% reward.",
-    color: "#D6A83A",
     icon: <FiZap className="w-6 h-6" />,
     points: [
-      "12% Direct Booster Income rate",
-      "Qualify within the first 24 hours of activation",
-      "Instant reward credited directly to your wallet",
-      "High acceleration for proactive team leaders",
+      "10% Direct Referral Commission ($2.50)",
+      "Instant real-time wallet settlement",
+      "Unlimited direct sponsoring allowed",
+      "Qualifies you for 10-Level Income & Club Tiers",
     ],
   },
   {
     key: "level",
-    num: "03",
-    title: "10-Level Community Income",
-    tag: "Total 24% Distribution",
-    highlight: "10 Levels",
-    highlightLabel: "Network Generation",
-    desc: "Build community and expand your network depth across 10 structured levels distributing a generous 24% total team volume.",
-    color: "#38bdf8",
+    num: "02",
+    title: "10-Level Generation Income",
+    tag: "20% Total Allocation",
+    highlight: "20%",
+    highlightLabel: "$5.00 Across 10 Levels",
+    desc: "Earn multi-tier residual bonuses from your entire network across 10 generations. 5 Directs opens all 10 levels.",
+    color: "#fbbf24",
     icon: <FiLayers className="w-6 h-6" />,
     points: [
-      "Level 1: 8% | Level 2: 4% | Level 3: 3%",
-      "Level 4: 2% | Level 5: 1.5% | Level 6: 1.5%",
-      "Level 7 to Level 10: 1.0% each level",
-      "All 10 levels auto-unlocked with $500+ package",
+      "Level 1: 10% ($2.50 - Direct Income)",
+      "Level 2: 5% ($1.25) | Level 3: 3% ($0.75)",
+      "Level 4 to 8: 2% ($0.50 each level)",
+      "Level 9 to 10: 1% ($0.25 each level)",
     ],
   },
   {
-    key: "team-booster",
+    key: "binary",
+    num: "03",
+    title: "Binary Matching Income",
+    tag: "1:1 Matching Bonus",
+    highlight: "50%",
+    highlightLabel: "$12.50 Per Matched Pair",
+    desc: "Build Left and Right teams. Every 1:1 volume match of $25 packages pays a massive 50% matching commission.",
+    color: "#10b981",
+    icon: <FiTrendingUp className="w-6 h-6" />,
+    points: [
+      "1:1 Matching Bonus ($25 Left : $25 Right)",
+      "Generous $12.50 payout per matched pair",
+      "Unmatched stronger leg carries forward",
+      "Daily capping for sustainable long-term returns",
+    ],
+  },
+  {
+    key: "club",
     num: "04",
-    title: "7-Day Team Business Booster",
-    tag: "Weekly Team Milestones",
-    highlight: "Up to $5,000",
-    highlightLabel: "Every 7-Day Cycle",
-    desc: "Achieve team business milestones within a 7-day cycle to unlock lump-sum cash bonuses ranging from $20 up to $5,000.",
-    color: "#f59e0b",
+    title: "Club Income & CTO Pool",
+    tag: "Daily Turnover Share",
+    highlight: "10%",
+    highlightLabel: "Puma • Pajero • Panther",
+    desc: "Unlock milestone cash rewards ($150 to $500) plus a permanent daily share of global company turnover (CTO).",
+    color: "#a855f7",
     icon: <FiAward className="w-6 h-6" />,
     points: [
-      "$1K Team: $20 | $2.5K Team: $60 | $5K Team: $150",
-      "$10K Team: $350 | $25K Team: $1,000",
-      "$50K Team: $2,250 | $100K Team: $5,000",
-      "Every 7 days a new booster cycle starts",
+      "Puma Club: 5 Directs (7 Days) → $150 + 5% Daily CTO",
+      "Pajero Club: 10 Directs (15 Days) → $300 + 3% Daily CTO",
+      "Panther Club: 15 Directs (30 Days) → $500 + 2% Daily CTO",
+      "Equally shared daily among all qualified achievers",
     ],
   },
   {
-    key: "compounding",
+    key: "community",
     num: "05",
-    title: "Auto-Compounding Bonus",
-    tag: "Compound Anytime",
-    highlight: "+0.5%",
-    highlightLabel: "Extra Bonus Added",
-    desc: "Reinvest your eligible balance anytime and receive an additional 0.5% bonus automatically added to your new active capital.",
-    color: "#10b981",
-    icon: <FiRepeat className="w-6 h-6" />,
+    title: "Community Support & Bonanza",
+    tag: "Global Expansion",
+    highlight: "10%",
+    highlightLabel: "$2.50 Fund Pool",
+    desc: "Reserved for international marketing, platform development, leader incentives, and special bonanza rewards.",
+    color: "#f43f5e",
+    icon: <FiGlobe className="w-6 h-6" />,
     points: [
-      "Compounding available anytime without waiting",
-      "+0.5% bonus added automatically to principal",
-      "Compounded amount becomes active balance",
-      "Continues earning package daily ROI up to 220%",
+      "$2.50 allocated from every $25 package",
+      "Exciting seasonal & festival bonanza rewards",
+      "Community leadership and promotional bonuses",
+      "Decentralized ecosystem growth and adoption",
     ],
   },
 ];
@@ -97,38 +97,26 @@ const IncomeTypes = () => {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
 
-      {/* Grid */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-20"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(0, 210, 255, 0.08) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 210, 255, 0.08) 1px, transparent 1px)
-          `,
-          backgroundSize: "48px 48px",
-        }}
-      />
-
       <div className="relative z-10 max-w-7xl mx-auto">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-amber-400/25 mb-4">
-            <FiZap className="text-amber-400 text-sm" />
-            <span className="text-xs font-mono font-bold tracking-[0.2em] text-amber-300 uppercase">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-400/25 mb-4">
+            <FiZap className="text-cyan-400 text-sm" />
+            <span className="text-xs font-mono font-bold tracking-[0.2em] text-cyan-300 uppercase">
               FIVE MULTI-TIER EARNING STREAMS
             </span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Orbitron',sans-serif] tracking-tight">
-            Multiple Avenues of{" "}
-            <span className="bg-gradient-to-r from-amber-400 via-yellow-200 to-cyan-300 bg-clip-text text-transparent">
-              Wealth Generation
+            100% Distributed{" "}
+            <span className="bg-gradient-to-r from-cyan-400 via-sky-200 to-amber-300 bg-clip-text text-transparent">
+              Income Ecosystem
             </span>
           </h2>
 
           <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
-            NODEXAI is engineered with five interconnected revenue pillars designed for maximum transparency, sustainable profitability, and fair community rewards.
+            Every $25 joining package in NODEXAI is 100% allocated across five high-yield revenue streams designed for instant payouts and passive long-term growth.
           </p>
         </div>
 
@@ -141,13 +129,13 @@ const IncomeTypes = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className="p-7 rounded-3xl bg-gradient-to-b from-[#071630]/90 to-[#030d1f]/95 border border-slate-800 hover:border-amber-400/50 backdrop-blur-xl shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group"
+              className="p-7 rounded-3xl bg-gradient-to-b from-[#071630]/90 to-[#030d1f]/95 border border-slate-800 hover:border-cyan-400/50 backdrop-blur-xl shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group"
             >
               <div>
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-mono font-bold tracking-widest text-slate-400">
-                    STREAM {stream.num}
+                    STREAM #{stream.num}
                   </span>
                   <span
                     className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase border"

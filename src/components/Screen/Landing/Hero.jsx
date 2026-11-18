@@ -245,12 +245,12 @@ const Hero = () => {
                 variants={fadeLeft}
                 className="mt-5 text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl"
               >
-                Discover a next-generation DeFi ecosystem designed around blockchain technology with{" "}
+                Discover a revolutionary decentralized ecosystem with a single{" "}
                 <span className="text-amber-300 font-semibold underline decoration-amber-500/40 underline-offset-4">
-                  4.5% to 7.5% Daily ROI
+                  $25 Joining Package
                 </span>
-                , 10-Level Affiliate Rewards, Auto Compounding, and up to{" "}
-                <span className="text-cyan-300 font-semibold">220% Maximum Return Cap</span>.
+                , 100% transparent distribution across 5 income streams:{" "}
+                <span className="text-cyan-300 font-semibold">10% Direct, 20% Level, 50% 1:1 Binary, 10% Club CTO Pool & 10% Community Support</span>.
               </motion.p>
 
               {/* Key Metric Highlights */}
@@ -258,37 +258,37 @@ const Hero = () => {
                 variants={fadeLeft}
                 className="mt-7 grid grid-cols-3 gap-3 sm:gap-4 w-full max-w-lg"
               >
-                <div className="p-3.5 sm:p-4 rounded-2xl bg-[#08152c]/70 border border-amber-500/20 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)] group hover:border-amber-400/50 transition-all duration-300">
-                  <div className="flex items-center justify-between text-amber-400 mb-1">
-                    <FiTrendingUp className="text-sm sm:text-base" />
-                    <span className="text-[9px] font-mono text-amber-400/80 uppercase">Daily ROI</span>
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-[#08152c]/70 border border-cyan-500/20 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)] group hover:border-cyan-400/50 transition-all duration-300">
+                  <div className="flex items-center justify-between text-cyan-400 mb-1">
+                    <FiZap className="text-sm sm:text-base" />
+                    <span className="text-[9px] font-mono text-cyan-400/80 uppercase">Package</span>
                   </div>
-                  <div className="text-lg sm:text-2xl font-black font-['Orbitron',sans-serif] bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">
-                    4.5% - 7.5%
+                  <div className="text-lg sm:text-2xl font-black font-['Orbitron',sans-serif] bg-gradient-to-r from-cyan-300 to-amber-300 bg-clip-text text-transparent">
+                    $25 USDT
                   </div>
-                  <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5">6 Package Tiers</div>
+                  <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5">BEP-20 Network</div>
                 </div>
 
-                <div className="p-3.5 sm:p-4 rounded-2xl bg-[#08152c]/70 border border-cyan-500/15 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)] group hover:border-cyan-400/40 transition-all duration-300">
-                  <div className="flex items-center justify-between text-cyan-400 mb-1">
-                    <FiShield className="text-sm sm:text-base" />
-                    <span className="text-[9px] font-mono text-cyan-400/70 uppercase">Max Cap</span>
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-[#08152c]/70 border border-amber-500/15 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)] group hover:border-amber-400/40 transition-all duration-300">
+                  <div className="flex items-center justify-between text-amber-400 mb-1">
+                    <FiTrendingUp className="text-sm sm:text-base" />
+                    <span className="text-[9px] font-mono text-amber-400/70 uppercase">Binary</span>
                   </div>
-                  <div className="text-lg sm:text-2xl font-black font-['Orbitron',sans-serif] text-cyan-300">
-                    220%
+                  <div className="text-lg sm:text-2xl font-black font-['Orbitron',sans-serif] text-amber-300">
+                    50% ($12.50)
                   </div>
-                  <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5">Overall ROI Limit</div>
+                  <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5">1:1 Matching Bonus</div>
                 </div>
 
                 <div className="p-3.5 sm:p-4 rounded-2xl bg-[#08152c]/70 border border-emerald-500/20 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)] group hover:border-emerald-400/40 transition-all duration-300">
                   <div className="flex items-center justify-between text-emerald-400 mb-1">
-                    <FiZap className="text-sm sm:text-base" />
-                    <span className="text-[9px] font-mono text-emerald-400/80 uppercase">Min Start</span>
+                    <FiShield className="text-sm sm:text-base" />
+                    <span className="text-[9px] font-mono text-emerald-400/80 uppercase">Distribution</span>
                   </div>
                   <div className="text-lg sm:text-2xl font-black font-['Orbitron',sans-serif] text-white">
-                    $10
+                    100%
                   </div>
-                  <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5">USDT (BEP-20)</div>
+                  <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5">5 Incomes Total</div>
                 </div>
               </motion.div>
 
@@ -302,7 +302,7 @@ const Hero = () => {
                   className="relative group px-7 py-3.5 rounded-xl text-sm font-bold tracking-wider uppercase text-slate-950 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.4)] hover:shadow-[0_0_45px_rgba(245,158,11,0.6)] hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center gap-2 cursor-pointer font-['Orbitron',sans-serif]"
                 >
                   <RiRobot2Fill className="text-lg text-slate-950" />
-                  <span>Start Participating</span>
+                  <span>Activate $25 Package</span>
                   <FiArrowRight className="text-base group-hover:translate-x-1 transition-transform" />
                 </button>
 
@@ -310,7 +310,7 @@ const Hero = () => {
                   onClick={() => navigate(LandingRouters.USER_LOGIN)}
                   className="px-6 py-3.5 rounded-xl text-sm font-bold tracking-wider uppercase text-slate-200 hover:text-amber-300 border border-slate-700 hover:border-amber-400/50 bg-[#0a172e]/60 hover:bg-amber-500/10 backdrop-blur-md transition-all duration-300 flex items-center gap-2 cursor-pointer"
                 >
-                  <span>Connect Wallet</span>
+                  <span>Member Login</span>
                 </button>
               </motion.div>
 
@@ -321,11 +321,15 @@ const Hero = () => {
               >
                 <div className="flex items-center gap-1.5">
                   <FiCheckCircle className="text-emerald-400" />
-                  <span>Min Start: $10</span>
+                  <span>Joining Package: $25</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <FiCheckCircle className="text-emerald-400" />
                   <span>BNB Smart Chain (BEP-20)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <FiCheckCircle className="text-emerald-400" />
+                  <span>1:1 Binary Matching Bonus</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <FiCheckCircle className="text-emerald-400" />

@@ -287,7 +287,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               />
             </SidebarDropdown>
 
-            {/* 3. Deposit (Packages $10-$25,000, Auto Compounding 0.5%, Re-Invest) */}
+            {/* 3. Deposit (NODEXAI $25 Package, Re-Invest) */}
             <SidebarDropdown
               id="deposit"
               icon="fa-solid fa-wallet"
@@ -298,18 +298,8 @@ const Sidebar = ({ isOpen, onClose }) => {
               <NavLink
                 to={AuthenticatedUserRouters.INVEST}
                 icon="fa-solid fa-cubes"
-                text="Packages ($10 - $25k)"
-                badge="4.5%-7.5%"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-              <NavLink
-                to={AuthenticatedUserRouters.AUTO_COMPOUNDING}
-                icon="fa-solid fa-arrows-rotate"
-                text="Auto Compounding"
-                badge="0.5%"
+                text="NODEXAI Package"
+                badge="$25"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
@@ -335,11 +325,11 @@ const Sidebar = ({ isOpen, onClose }) => {
               />
             </SidebarDropdown>
 
-            {/* 4. History (All Incomes per NODEXAI Plan: ROI 4.5%-7.5%, Direct Referral 12%, 10-Level 24%, 7-Days Booster, Auto Compounding 0.5%) */}
+            {/* 4. History (NODEXAI 5 Official Incomes: Direct 10%, Level 20%, Binary 50%, Club CTO 10%, Community 10%) */}
             <SidebarDropdown
               id="history"
               icon="fa-solid fa-clock-rotate-left"
-              text="History"
+              text="History & Incomes"
               openDropdown={openDropdown}
               setOpenDropdown={setOpenDropdown}
             >
@@ -355,38 +345,8 @@ const Sidebar = ({ isOpen, onClose }) => {
               <NavLink
                 to={AuthenticatedUserRouters.REFERRAL_INCOME_HISTORY}
                 icon="fa-solid fa-share-nodes"
-                text="Direct Referral (12%)"
-                badge="12%"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-              <NavLink
-                to={AuthenticatedUserRouters.DIRECT_BOOSTER_INCOME}
-                icon="fa-solid fa-rocket"
-                text="Direct Booster (12%)"
-                badge="24H"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-              <NavLink
-                to={AuthenticatedUserRouters.TEAM_BOOSTER_INCOME}
-                icon="fa-solid fa-trophy"
-                text="Booster Bonus ($20–$5k)"
-                badge="7D"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-              <NavLink
-                to={AuthenticatedUserRouters.TRADING_INCOME_HISTORY}
-                icon="fa-solid fa-bolt"
-                text="Daily Trading ROI"
-                badge="4.5%-7.5%"
+                text="01. Direct Income"
+                badge="10% ($2.50)"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
@@ -395,18 +355,28 @@ const Sidebar = ({ isOpen, onClose }) => {
               <NavLink
                 to={AuthenticatedUserRouters.LEVEL_INCOME_HISTORY}
                 icon="fa-solid fa-diagram-next"
-                text="Level Income (1-10)"
-                badge="24%"
+                text="02. Level Income"
+                badge="20% (10 Lvl)"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
                 }}
               />
               <NavLink
-                to={AuthenticatedUserRouters.COMPOUNDING_HISTORY}
-                icon="fa-solid fa-arrows-rotate"
-                text="Compounding History"
-                badge="0.5%"
+                to={AuthenticatedUserRouters.MATCHING_INCOME_HISTORY}
+                icon="fa-solid fa-scale-balanced"
+                text="03. Binary Matching"
+                badge="50% (1:1)"
+                onClose={() => {
+                  onClose();
+                  setOpenDropdown(null);
+                }}
+              />
+              <NavLink
+                to={AuthenticatedUserRouters.ROYALTY_CLUB_INCOME}
+                icon="fa-solid fa-crown"
+                text="04. Club Income"
+                badge="10% CTO"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
@@ -578,38 +548,8 @@ const Sidebar = ({ isOpen, onClose }) => {
               <NavLink
                 to={AuthenticatedAdminRouters.REFERRAL_INCOME_HISTORY}
                 icon="fa-solid fa-share-nodes"
-                text="01. Direct Referral (12%)"
-                badge="12%"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-              <NavLink
-                to={AuthenticatedAdminRouters.DIRECT_BOOSTER_INCOME}
-                icon="fa-solid fa-rocket"
-                text="01b. Direct Booster (12%)"
-                badge="24H"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-              <NavLink
-                to={AuthenticatedAdminRouters.TEAM_BOOSTER_INCOME}
-                icon="fa-solid fa-trophy"
-                text="01c. Booster Bonus (7-Days)"
-                badge="MON"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-              <NavLink
-                to={AuthenticatedAdminRouters.ROI_INCOME}
-                icon="fa-solid fa-chart-line"
-                text="02. Daily Trading ROI"
-                badge="4.5%-7.5%"
+                text="01. Direct Income (10%)"
+                badge="$2.50"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
@@ -618,18 +558,28 @@ const Sidebar = ({ isOpen, onClose }) => {
               <NavLink
                 to={AuthenticatedAdminRouters.LEVEL_INCOME_HISTORY}
                 icon="fa-solid fa-layer-group"
-                text="03. 10-Level Income"
-                badge="24%"
+                text="02. 10-Level Income (20%)"
+                badge="$5.00"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
                 }}
               />
               <NavLink
-                to={AuthenticatedAdminRouters.ADMIN_COMPOUNDING}
-                icon="fa-solid fa-arrows-rotate"
-                text="04. Auto Compounding (0.5%)"
-                badge="0.5%"
+                to={AuthenticatedAdminRouters.MATCHING_INCOME_HISTORY}
+                icon="fa-solid fa-scale-balanced"
+                text="03. Binary Matching (50%)"
+                badge="1:1 / $12.50"
+                onClose={() => {
+                  onClose();
+                  setOpenDropdown(null);
+                }}
+              />
+              <NavLink
+                to={AuthenticatedAdminRouters.ADMIN_ROYALTY_INCOME}
+                icon="fa-solid fa-crown"
+                text="04. Club Income (10% CTO)"
+                badge="Puma/Pajero/Panther"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);

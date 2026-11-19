@@ -10,9 +10,7 @@ import {
   LandingRouters,
 } from "../../../constants/routes";
 import { MainContent } from "../../../constants/mainContent";
-import { loginUser, logoutUser } from "../../../redux/slices/authSlice";
-import { getUserDashboardAccess } from "../../../api/admin.api";
-import { setLoading } from "../../../redux/slices/loadingSlice";
+import { logoutUser } from "../../../redux/slices/authSlice";
 
 const NavLink = ({ to, icon, text, badge, hasNotification = false, onClose }) => {
   return (
@@ -104,64 +102,12 @@ const Sidebar = ({ isOpen, onClose }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const role = useSelector((state) => state?.isLoggedUser?.role);
   const userInfo = useSelector((state) => state?.userInfo?.userInfo);
-  const access = localStorage.getItem("access");
-  const adminId = localStorage.getItem("adminId");
 
   const handleNavigate = () => {
     if (role === "ADMIN") {
       navigate(AuthenticatedAdminRouters.ADMIN_DASHBOARD);
     } else if (role === "USER") {
       navigate(AuthenticatedUserRouters.DASHBOARD);
-    }
-  };
-
-  const handleSubmit = async (id) => {
-    dispatch(setLoading(true));
-    try {
-      const response = await getUserDashboardAccess({ id });
-      if (response?.success) {
-        await dispatch(
-          loginUser({
-            token: response?.token,
-            userId: response?.data?._id,
-            role: response?.data?.role,
-            data: response?.data,
-          })
-        );
-        localStorage.removeItem("access");
-        navigate(AuthenticatedAdminRouters.ADMIN_DASHBOARD);
-        Swal.fire({
-          icon: "success",
-          text: response?.message || "Access granted successfully",
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          text: response?.message || "Failed to grant access",
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        text: "Something went wrong while granting access!",
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 
@@ -734,19 +680,6 @@ const Sidebar = ({ isOpen, onClose }) => {
             {role || "USER"}
           </span>
         </div>
-
-        {access && (
-          <button
-            onClick={() => {
-              if (onClose) onClose();
-              handleSubmit(adminId);
-            }}
-            className="w-full flex items-center justify-center gap-2 py-2 px-3.5 rounded-xl font-bold text-xs tracking-wider transition-all duration-200 cursor-pointer shadow-md bg-amber-500/15 hover:bg-amber-500/25 text-[#f0b90b] border border-[#f0b90b]/40 shadow-[0_0_10px_rgba(240,185,11,0.2)]"
-          >
-            <i className="fa-solid fa-arrow-left text-xs"></i>
-            <span>RETURN TO ADMIN</span>
-          </button>
-        )}
 
         <button
           onClick={() => {

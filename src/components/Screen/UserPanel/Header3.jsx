@@ -10,13 +10,9 @@ import {
   AuthenticatedUserRouters,
   LandingRouters,
 } from "../../../constants/routes";
-import { loginUser, logoutUser } from "../../../redux/slices/authSlice";
-import { getUserDashboardAccess } from "../../../api/admin.api";
-import { setLoading } from "../../../redux/slices/loadingSlice";
+import { logoutUser } from "../../../redux/slices/authSlice";
 
 const Header3 = ({ onMenuClick, hideSidebar = false }) => {
-  const access = localStorage.getItem("access");
-  const adminId = localStorage.getItem("adminId");
   const userInfo = useSelector((state) => state?.userInfo?.userInfo);
   const role = useSelector((state) => state?.isLoggedUser?.role);
   //   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -42,56 +38,6 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const handleSubmit = async (id) => {
-    dispatch(setLoading(true))
-    try {
-      const response = await getUserDashboardAccess({ id });
-      if (response?.success) {
-        await dispatch(
-          loginUser({
-            token: response?.token,
-            userId: response?.data?._id,
-            role: response?.data?.role,
-            data: response?.data,
-          })
-        );
-        localStorage.removeItem("access");
-        navigate(AuthenticatedAdminRouters.ADMIN_DASHBOARD);
-        Swal.fire({
-          icon: "success",
-          text: response?.message || "Access granted successfully",
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          text: response?.message || "Failed to grant access",
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        text: "Something went wrong while granting access!",
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
 
   const logoutHandler = () => {
     Swal.fire({
@@ -148,57 +94,9 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
             className="w-full bg-[#1e2329] border border-[#2b313a] rounded-xl py-2 pl-9 pr-3 text-xs text-[#eaecef] placeholder-[#848e9c] focus:outline-none focus:border-[#f0b90b] transition-colors"
           />
         </div>
-
-        {/* User Desktop Top Navigation Links */}
-        {role === "USER" && (
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-            <Link
-              to={AuthenticatedUserRouters.DASHBOARD}
-              className="px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#eaecef] hover:text-[#f0b90b] hover:bg-[#1e2329] transition-all flex items-center gap-1.5"
-            >
-              <i className="fa-solid fa-gauge-high text-xs text-[#f0b90b]"></i>
-              <span>Dashboard</span>
-            </Link>
-            <Link
-              to={AuthenticatedUserRouters.INVESTMENT_PACKAGES}
-              className="px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#eaecef] hover:text-[#f0b90b] hover:bg-[#1e2329] transition-all flex items-center gap-1.5"
-            >
-              <i className="fa-solid fa-cubes text-xs text-[#0ecb81]"></i>
-              <span>Packages</span>
-            </Link>
-            <Link
-              to={AuthenticatedUserRouters.WITHDRAW}
-              className="px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#eaecef] hover:text-[#f0b90b] hover:bg-[#1e2329] transition-all flex items-center gap-1.5"
-            >
-              <i className="fa-solid fa-wallet text-xs text-[#f0b90b]"></i>
-              <span>Withdraw</span>
-            </Link>
-            <Link
-              to={AuthenticatedUserRouters.INCOME_HISTORY}
-              className="px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#eaecef] hover:text-[#f0b90b] hover:bg-[#1e2329] transition-all flex items-center gap-1.5"
-            >
-              <i className="fa-solid fa-chart-line text-xs text-[#0ecb81]"></i>
-              <span>Incomes</span>
-            </Link>
-            <Link
-              to={AuthenticatedUserRouters.MY_TEAM}
-              className="px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#eaecef] hover:text-[#f0b90b] hover:bg-[#1e2329] transition-all flex items-center gap-1.5"
-            >
-              <i className="fa-solid fa-users text-xs text-[#848e9c]"></i>
-              <span>Team</span>
-            </Link>
-            <Link
-              to={AuthenticatedUserRouters.MATRIX_TREE}
-              className="px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#eaecef] hover:text-[#f0b90b] hover:bg-[#1e2329] transition-all flex items-center gap-1.5"
-            >
-              <i className="fa-solid fa-sitemap text-xs text-[#f0b90b]"></i>
-              <span>Matrix</span>
-            </Link>
-          </nav>
-        )}
       </div>
 
-      {/* Right: Actions, Admin Switch, Profile & Logout */}
+      {/* Right: Actions, Profile & Logout */}
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         {/* Telegram Community (Desktop) */}
         <a
@@ -216,18 +114,6 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
           <div className="w-2 h-2 rounded-full bg-[#0ecb81] animate-pulse"></div>
           <span className="text-[11px] font-bold text-[#0ecb81] uppercase tracking-wider">Online</span>
         </div>
-
-        {/* Admin Switch Mode (if impersonating/granted user access) */}
-        {access && (
-          <button
-            onClick={() => handleSubmit(adminId)}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-[#f0b90b] border border-[#f0b90b]/40 shadow-[0_0_10px_rgba(240,185,11,0.2)] font-bold text-xs shrink-0 cursor-pointer transition-all"
-            title="Return to Admin Console"
-          >
-            <i className="fa-solid fa-arrow-left text-xs"></i>
-            <span className="hidden sm:inline">Admin Return</span>
-          </button>
-        )}
 
         {/* User Profile Avatar with Dropdown */}
         <div className="relative shrink-0">
@@ -263,7 +149,7 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
                   {userInfo?.username || "NODEXAI Trader"}
                 </p>
                 <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-[#f0b90b]/15 text-[#f0b90b] border border-[#f0b90b]/30">
-                  {access ? "ADMIN VIEW" : "TRADER"}
+                  TRADER
                 </span>
               </div>
               <p className="text-xs text-[#eaecef] font-mono mt-1 font-semibold">
@@ -296,19 +182,6 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
 
             {/* Dropdown Action Buttons */}
             <div className="p-3 space-y-2 bg-[#12161c]/60">
-              {access && (
-                <button
-                  onClick={() => {
-                    setProfileMenuOpen(false);
-                    handleSubmit(adminId);
-                  }}
-                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-[#f0b90b] border border-[#f0b90b]/40 font-bold text-xs transition-colors cursor-pointer"
-                >
-                  <i className="fa-solid fa-arrow-left text-xs"></i>
-                  <span>Switch Back to Admin</span>
-                </button>
-              )}
-
               <button
                 onClick={() => {
                   setProfileMenuOpen(false);

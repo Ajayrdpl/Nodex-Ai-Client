@@ -105,8 +105,18 @@ const NodeWonderPage = () => {
         });
       }
 
-      if (queueRes?.success && queueRes?.data) {
-        setGlobalQueue(queueRes.data || []);
+      if (queueRes?.success) {
+        const qData = queueRes.data;
+        const list = Array.isArray(qData)
+          ? qData
+          : Array.isArray(qData?.activeQueue)
+          ? qData.activeQueue
+          : Array.isArray(queueRes?.queue)
+          ? queueRes.queue
+          : [];
+        setGlobalQueue(list);
+      } else {
+        setGlobalQueue([]);
       }
     } catch (err) {
       console.error("fetchData error:", err);
@@ -122,9 +132,11 @@ const NodeWonderPage = () => {
         limit: 10,
       });
       if (res?.success) {
-        setHistoryList(res.data || []);
+        setHistoryList(Array.isArray(res.data) ? res.data : []);
         setHistoryTotalPages(res.pagination?.totalPages || 1);
         setHistoryTotalRecords(res.pagination?.total || 0);
+      } else {
+        setHistoryList([]);
       }
     } catch (err) {
       console.error("fetchHistory error:", err);
@@ -276,6 +288,16 @@ const NodeWonderPage = () => {
   const totalEarnedFromCycles = Number(statusData?.totalEarnedFromCycles ?? statusData?.totalQueueEarned ?? 0);
   const totalReferralIncome = Number(statusData?.totalReferralIncome ?? statusData?.totalReferralEarned ?? 0);
   const subsequentCount = activePackage?.subsequentIdsCount || 0;
+
+  const queueList = Array.isArray(globalQueue)
+    ? globalQueue
+    : Array.isArray(globalQueue?.activeQueue)
+    ? globalQueue.activeQueue
+    : Array.isArray(globalQueue?.queue)
+    ? globalQueue.queue
+    : [];
+
+  const safeHistoryList = Array.isArray(historyList) ? historyList : [];
 
   return (
     <div className="space-y-8 pt-4 pb-12 text-white">
@@ -555,14 +577,14 @@ const NodeWonderPage = () => {
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold text-white font-['Orbitron',monospace] flex items-center gap-2">
             <Layers className="w-4 h-4 text-purple-400" />
-            <span>Live Global Node Wonder Queue ({globalQueue.length})</span>
+            <span>Live Global Node Wonder Queue ({queueList.length})</span>
           </h3>
           <span className="text-xs text-slate-400 font-mono">
             Company-wide sequential queue
           </span>
         </div>
 
-        {globalQueue.length === 0 ? (
+        {queueList.length === 0 ? (
           <div className="py-12 text-center text-slate-500 font-mono text-xs">
             No entries in the global queue yet. Be the first to join!
           </div>
@@ -580,7 +602,7 @@ const NodeWonderPage = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60">
-                {globalQueue.map((item) => (
+                {queueList.map((item) => (
                   <tr key={item._id} className="hover:bg-purple-950/20 transition-colors">
                     <td className="py-3 px-4 font-bold text-purple-300">
                       #{item.queueNumber}
@@ -625,7 +647,7 @@ const NodeWonderPage = () => {
           <span>My Node Wonder Earnings History</span>
         </h3>
 
-        {historyList.length === 0 ? (
+        {safeHistoryList.length === 0 ? (
           <div className="py-12 text-center text-slate-500 font-mono text-xs">
             No Node Wonder income credited yet.
           </div>
@@ -642,7 +664,7 @@ const NodeWonderPage = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60">
-                {historyList.map((item) => (
+                {safeHistoryList.map((item) => (
                   <tr key={item._id} className="hover:bg-purple-950/20 transition-colors">
                     <td className="py-3 px-4 text-slate-400">
                       {new Date(item.createdAt).toLocaleString()}

@@ -188,7 +188,7 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
                   <Link
                     to={AuthenticatedUserRouters.PROFILE}
                     onClick={() => setProfileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#eaecef] hover:bg-[#1e2329] hover:text-[#f0b90b] transition-colors"
+                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-white hover:bg-[#1e2329] hover:text-[#f0b90b] transition-colors"
                   >
                     <i className="fa-solid fa-user-gear w-4 text-center text-[#f0b90b]"></i>
                     <span>My Profile & Security</span>
@@ -196,10 +196,10 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
                   <Link
                     to={AuthenticatedUserRouters.DASHBOARD}
                     onClick={() => setProfileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#eaecef] hover:bg-[#1e2329] hover:text-[#0ecb81] transition-colors"
+                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-white hover:bg-[#1e2329] hover:text-[#0ecb81] transition-colors"
                   >
-                    <i className="fa-solid fa-chart-line w-4 text-center text-[#0ecb81]"></i>
-                    <span>Trading Terminal</span>
+                    <i className="fa-solid fa-gauge-high w-4 text-center text-[#0ecb81]"></i>
+                    <span>My Dashboard</span>
                   </Link>
                 </>
               )}

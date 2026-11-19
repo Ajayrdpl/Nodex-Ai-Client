@@ -55,7 +55,6 @@ import {
   LiveMarketTickerMarquee,
   INITIAL_COINS_LIST,
 } from "../../components/Screen/UserPanel/LiveTradingHeroSlider";
-import DashboardTradingTerminal from "../../components/Screen/UserPanel/DashboardTradingTerminal";
 import { MainContent } from "../../constants/mainContent";
 
 const Dashboard1 = () => {
@@ -73,15 +72,10 @@ const Dashboard1 = () => {
 
   const handleSelectTradingCoin = (coin) => {
     setSelectedTradingCoin(coin);
-    const elem = document.getElementById("live-trading-terminal-section");
-    if (elem) {
-      elem.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   const role = useSelector((state) => state?.isLoggedUser?.role);
   const userInfo = useSelector((state) => state?.isLoggedUser?.data);
-  const access = localStorage.getItem("access");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -556,21 +550,13 @@ const Dashboard1 = () => {
       {/* ── USER PANEL HERO & OVERVIEW ── */}
       {role === "USER" && (
         <div className="space-y-4 sm:space-y-5 animate-fadeIn">
-          {/* ⚡ 1. Live 24/7 Infinite-Scrolling Market Ticker Marquee Line (Above Terminal) */}
+          {/* ⚡ 1. Live 24/7 Infinite-Scrolling Market Ticker Marquee Line */}
           <LiveMarketTickerMarquee
             onSelectCoin={handleSelectTradingCoin}
             activeCoinId={selectedTradingCoin?.id}
           />
 
-          {/* ⚡ 3. INSTITUTIONAL TRADING ENGINE & MULTI-CHAIN MARKET TERMINAL */}
-          <div id="live-trading-terminal-section">
-            <DashboardTradingTerminal
-              selectedCoinState={selectedTradingCoin}
-              onCoinChange={(c) => setSelectedTradingCoin(c)}
-            />
-          </div>
-
-          {/* ── 4. Binance Pro Top User Banner with ID, Status & Referral Hub ── */}
+          {/* ── 2. Top User Banner with ID, Status & Referral Hub ── */}
           <div className="bg-[#181a20] border border-[#2b313a] rounded-2xl p-3.5 sm:p-5 relative overflow-hidden shadow-xl">
             <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 sm:gap-5">
               <div className="space-y-2 w-full lg:w-auto">

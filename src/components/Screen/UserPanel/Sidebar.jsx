@@ -20,10 +20,10 @@ const NavLink = ({ to, icon, text, badge, hasNotification = false, onClose }) =>
       onClick={onClose}
       className={({ isActive }) => `
         flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl relative
-        transition-all duration-200 ease-in-out cursor-pointer text-xs font-semibold
+        transition-all duration-200 ease-in-out cursor-pointer text-xs font-bold
         ${isActive
-          ? "text-[#f0b90b] bg-[#1e2329] border border-[#f0b90b]/30 shadow-sm"
-          : "text-[#848e9c] hover:text-[#eaecef] hover:bg-[#1e2329]/60"
+          ? "text-[#f0b90b] bg-[#1e2329] border border-[#f0b90b]/40 shadow-sm"
+          : "text-white hover:text-[#f0b90b] hover:bg-[#1e2329]/80"
         }
       `}
     >
@@ -33,11 +33,11 @@ const NavLink = ({ to, icon, text, badge, hasNotification = false, onClose }) =>
             <span className="absolute left-0 top-2 bottom-2 w-1 bg-[#f0b90b] rounded-r-full shadow-[0_0_8px_rgba(240,185,11,0.5)]" />
           )}
 
-          <i className={`${icon} w-4 text-center text-xs transition-colors ${isActive ? "text-[#f0b90b]" : "text-[#848e9c]"}`} />
-          <span className="truncate">{text}</span>
+          <i className={`${icon} w-4 text-center text-xs transition-colors ${isActive ? "text-[#f0b90b]" : "text-white/80"}`} />
+          <span className="truncate text-white font-medium">{text}</span>
 
           {badge && (
-            <span className="ml-auto px-1.5 py-0.2 rounded text-[9px] font-extrabold bg-[#f0b90b]/15 text-[#f0b90b] border border-[#f0b90b]/30 tracking-wider font-mono">
+            <span className="ml-auto px-1.5 py-0.5 rounded text-[9px] font-extrabold bg-[#f0b90b]/20 text-white border border-[#f0b90b]/40 tracking-wider font-mono">
               {badge}
             </span>
           )}
@@ -73,17 +73,17 @@ const SidebarDropdown = ({
         onClick={toggleDropdown}
         className={`
           flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold text-nowrap
-          text-left text-[#848e9c] hover:text-[#eaecef] hover:bg-[#1e2329]/60
+          text-left text-white hover:text-[#f0b90b] hover:bg-[#1e2329]/80
           transition-all cursor-pointer border border-transparent hover:border-[#2b313a]
-          ${isOpen ? "text-[#eaecef] bg-[#1e2329]/40 border-[#2b313a]" : ""}
+          ${isOpen ? "text-[#f0b90b] bg-[#1e2329] border-[#2b313a]" : ""}
         `}
       >
         <span className="flex items-center gap-3.5">
-          <i className={`${icon} w-4 text-center text-xs text-[#848e9c]`}></i>
-          {text}
+          <i className={`${icon} w-4 text-center text-xs ${isOpen ? "text-[#f0b90b]" : "text-white/80"}`}></i>
+          <span className="text-white font-medium">{text}</span>
         </span>
         <i
-          className={`fa-solid fa-chevron-${isOpen ? "up" : "down"} text-[10px] text-[#848e9c]`}
+          className={`fa-solid fa-chevron-${isOpen ? "up" : "down"} text-[10px] ${isOpen ? "text-[#f0b90b]" : "text-white/70"}`}
         ></i>
       </button>
       <div
@@ -156,7 +156,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             className="h-9 w-9 rounded-full object-cover border border-[#f0b90b]/50 shadow-[0_0_8px_rgba(240,185,11,0.3)]"
           />
           <div className="min-w-0 flex-1">
-            <span className="text-xs font-black text-[#eaecef] font-['Orbitron',monospace] tracking-wider block truncate">
+            <span className="text-xs font-black text-white font-['Orbitron',monospace] tracking-wider block truncate">
               {MainContent.appName}
             </span>
             <span className="text-[9px] text-[#f0b90b] font-mono block">
@@ -166,7 +166,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         </div>
         <button
           onClick={onClose}
-          className="lg:hidden text-[#848e9c] hover:text-white text-xl p-1.5 hover:bg-[#1e2329] rounded-lg ml-2 cursor-pointer"
+          className="lg:hidden text-white hover:text-[#f0b90b] text-xl p-1.5 hover:bg-[#1e2329] rounded-lg ml-2 cursor-pointer"
         >
           ×
         </button>
@@ -669,14 +669,14 @@ const Sidebar = ({ isOpen, onClose }) => {
             className="w-8 h-8 rounded-full border border-[#f0b90b]/50 object-cover shrink-0"
           />
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold text-[#eaecef] truncate uppercase">
+            <p className="text-xs font-bold text-white truncate uppercase">
               {userInfo?.username || (role === "ADMIN" ? "ADMIN" : "TRADER")}
             </p>
-            <p className="text-[10px] text-[#848e9c] font-mono truncate">
+            <p className="text-[10px] text-slate-200 font-mono truncate">
               {maskWalletAddress(userInfo?.account)}
             </p>
           </div>
-          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-[#f0b90b]/15 text-[#f0b90b] border border-[#f0b90b]/30">
+          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-[#f0b90b]/20 text-white border border-[#f0b90b]/40">
             {role || "USER"}
           </span>
         </div>

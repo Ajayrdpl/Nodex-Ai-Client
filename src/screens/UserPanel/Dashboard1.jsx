@@ -589,7 +589,7 @@ const Dashboard1 = () => {
                   </span>
                 </div>
 
-                <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-[#eaecef] tracking-tight">
+                <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-white tracking-tight">
                   Welcome back,{" "}
                   <span className="text-[#f0b90b] font-['Orbitron',monospace]">
                     {userObj?.username || userOwnId}
@@ -597,26 +597,26 @@ const Dashboard1 = () => {
                   !
                 </h1>
 
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-[#848e9c] pt-0.5">
-                  <span className="flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[11px]">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-slate-100 pt-0.5">
+                  <span className="flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[11px] text-white">
                     User ID: <strong className="text-[#f0b90b] font-bold">{userOwnId}</strong>
                     <button onClick={copyUserId} className="hover:text-[#f0b90b] transition ml-1 cursor-pointer" title="Copy User ID">
-                      {copiedId ? <Check size={12} className="text-[#0ecb81]" /> : <Copy size={12} className="text-[#848e9c]" />}
+                      {copiedId ? <Check size={12} className="text-[#0ecb81]" /> : <Copy size={12} className="text-white" />}
                     </button>
                   </span>
                   {sponsorCode && (
-                    <span className="flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[11px]">
+                    <span className="flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[11px] text-white">
                       Sponsor: <strong className="text-[#0ecb81]">{sponsorCode}</strong>
                     </span>
                   )}
                   {userObj?.account && (
-                    <span className="flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[11px]">
-                      Wallet: <strong className="text-[#eaecef]">{maskWalletAddress(userObj.account)}</strong>
+                    <span className="flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[11px] text-white">
+                      Wallet: <strong className="text-white">{maskWalletAddress(userObj.account)}</strong>
                     </span>
                   )}
                   {userObj?.email && (
-                    <span className="hidden sm:flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[#848e9c] text-[11px]">
-                      Email: <strong className="text-[#eaecef]">{userObj.email}</strong>
+                    <span className="hidden sm:flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-white text-[11px]">
+                      Email: <strong className="text-white">{userObj.email}</strong>
                     </span>
                   )}
                 </div>
@@ -627,7 +627,7 @@ const Dashboard1 = () => {
                 {/* 1. Direct Referral Code */}
                 <div className="flex items-center justify-between bg-[#181a20] border border-[#2b313a] rounded-xl px-3 py-1.5 gap-2">
                   <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-                    <span className="text-[10px] font-bold text-[#848e9c] uppercase tracking-wider shrink-0">Your Referral Code:</span>
+                    <span className="text-[10px] font-bold text-white uppercase tracking-wider shrink-0">Your Referral Code:</span>
                     <span className="text-xs sm:text-sm font-black font-mono text-[#f0b90b] tracking-wider truncate">{userOwnId}</span>
                   </div>
                   <button
@@ -641,7 +641,7 @@ const Dashboard1 = () => {
 
                 {/* 2. Full Referral Link */}
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold text-[#848e9c] uppercase tracking-wider flex items-center gap-1">
+                  <span className="text-[10px] font-bold text-white uppercase tracking-wider flex items-center gap-1">
                     <Share2 size={11} className="text-[#f0b90b]" /> Your Referral Link
                   </span>
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-1.5">
@@ -667,7 +667,7 @@ const Dashboard1 = () => {
           {/* ── 5. ALL 10 FINANCIAL & TEAM INCOME CARDS ── */}
           <div className="space-y-2">
             <div className="flex items-center justify-between px-1">
-              <span className="text-[11px] font-black uppercase tracking-wider text-[#848e9c] font-['Orbitron',monospace] flex items-center gap-1.5">
+              <span className="text-[11px] font-black uppercase tracking-wider text-white font-['Orbitron',monospace] flex items-center gap-1.5">
                 <Sparkles size={12} className="text-[#f0b90b]" /> Financial Overview & Income Streams
               </span>
               <span className="text-[10px] text-[#0ecb81] font-mono font-bold">● Live Synced</span>
@@ -693,10 +693,10 @@ const Dashboard1 = () => {
           {/* ── 🚀 FAST ACTION COMMAND CENTER ── */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between px-1">
-              <span className="text-[10px] font-black uppercase tracking-wider text-[#848e9c] font-['Orbitron',monospace] flex items-center gap-1.5">
+              <span className="text-[10px] font-black uppercase tracking-wider text-white font-['Orbitron',monospace] flex items-center gap-1.5">
                 <Zap size={11} className="text-[#f0b90b]" /> Fast Action Command Center
               </span>
-              <span className="text-[9px] text-[#848e9c] font-mono">1-Click Quick Access</span>
+              <span className="text-[9px] text-white/90 font-mono">1-Click Quick Access</span>
             </div>
 
             <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-1.5 sm:gap-2">
@@ -709,10 +709,10 @@ const Dashboard1 = () => {
                   <Zap size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="font-black text-[10px] text-[#eaecef] group-hover:text-[#f0b90b] transition truncate font-['Orbitron',monospace]">
+                  <div className="font-black text-[10.5px] text-white group-hover:text-[#f0b90b] transition truncate font-['Orbitron',monospace]">
                     Deposit
                   </div>
-                  <div className="text-[8px] text-[#848e9c] truncate">
+                  <div className="text-[8.5px] text-slate-100 font-medium truncate">
                     $25 Package
                   </div>
                 </div>
@@ -727,10 +727,10 @@ const Dashboard1 = () => {
                   <ArrowDownLeft size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="font-black text-[10px] text-[#eaecef] group-hover:text-[#0ecb81] transition truncate font-['Orbitron',monospace]">
+                  <div className="font-black text-[10.5px] text-white group-hover:text-[#0ecb81] transition truncate font-['Orbitron',monospace]">
                     Withdrawal
                   </div>
-                  <div className="text-[8px] text-[#848e9c] truncate">
+                  <div className="text-[8.5px] text-slate-100 font-medium truncate">
                     5% Fee
                   </div>
                 </div>
@@ -745,10 +745,10 @@ const Dashboard1 = () => {
                   <DollarSign size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="font-black text-[10px] text-[#eaecef] group-hover:text-[#0ecb81] transition truncate font-['Orbitron',monospace]">
+                  <div className="font-black text-[10.5px] text-white group-hover:text-[#0ecb81] transition truncate font-['Orbitron',monospace]">
                     Binary 1:1
                   </div>
-                  <div className="text-[8px] text-[#848e9c] truncate">
+                  <div className="text-[8.5px] text-slate-100 font-medium truncate">
                     50% ($12.50)
                   </div>
                 </div>
@@ -763,10 +763,10 @@ const Dashboard1 = () => {
                   <Users size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="font-black text-[10px] text-[#eaecef] group-hover:text-[#f0b90b] transition truncate font-['Orbitron',monospace]">
+                  <div className="font-black text-[10.5px] text-white group-hover:text-[#f0b90b] transition truncate font-['Orbitron',monospace]">
                     Tree
                   </div>
-                  <div className="text-[8px] text-[#848e9c] truncate">
+                  <div className="text-[8.5px] text-slate-100 font-medium truncate">
                     Genealogy
                   </div>
                 </div>
@@ -781,10 +781,10 @@ const Dashboard1 = () => {
                   <Crown size={11} className="text-[#f0b90b]" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="font-black text-[10px] text-[#eaecef] group-hover:text-[#f0b90b] transition truncate font-['Orbitron',monospace]">
+                  <div className="font-black text-[10.5px] text-white group-hover:text-[#f0b90b] transition truncate font-['Orbitron',monospace]">
                     Club Status
                   </div>
-                  <div className="text-[8px] text-[#848e9c] truncate">
+                  <div className="text-[8.5px] text-slate-100 font-medium truncate">
                     10% CTO Pool
                   </div>
                 </div>
@@ -799,10 +799,10 @@ const Dashboard1 = () => {
                   <BarChart3 size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="font-black text-[10px] text-[#eaecef] group-hover:text-[#0ecb81] transition truncate font-['Orbitron',monospace]">
+                  <div className="font-black text-[10.5px] text-white group-hover:text-[#0ecb81] transition truncate font-['Orbitron',monospace]">
                     10-Level
                   </div>
-                  <div className="text-[8px] text-[#848e9c] truncate">
+                  <div className="text-[8.5px] text-slate-100 font-medium truncate">
                     20% ($5.00)
                   </div>
                 </div>

@@ -11,9 +11,9 @@ const THEME_CONFIG = {
     glow: "bg-[#0ecb81]/15 group-hover:bg-[#0ecb81]/25",
     shadow: "hover:shadow-[0_4px_16px_rgba(14,203,129,0.2)]",
     iconPod: "bg-[#1e2329] border-[#2b313a] text-[#0ecb81] group-hover:border-[#0ecb81] group-hover:scale-105",
-    titleColor: "text-[#848e9c] group-hover:text-[#eaecef]",
+    titleColor: "text-white font-bold group-hover:text-white",
     valueGradient: "text-[#0ecb81]",
-    badgeBg: "bg-[#0ecb81]/15 text-[#0ecb81] border-[#0ecb81]/30",
+    badgeBg: "bg-[#0ecb81]/25 text-white font-extrabold border-[#0ecb81]/40",
     actionColor: "text-[#0ecb81] group-hover:text-emerald-300",
     beacon: "bg-[#0ecb81]",
   },
@@ -23,9 +23,9 @@ const THEME_CONFIG = {
     glow: "bg-[#f0b90b]/15 group-hover:bg-[#f0b90b]/25",
     shadow: "hover:shadow-[0_4px_16px_rgba(240,185,11,0.2)]",
     iconPod: "bg-[#1e2329] border-[#2b313a] text-[#f0b90b] group-hover:border-[#f0b90b] group-hover:scale-105",
-    titleColor: "text-[#848e9c] group-hover:text-[#eaecef]",
+    titleColor: "text-white font-bold group-hover:text-white",
     valueGradient: "text-[#f0b90b]",
-    badgeBg: "bg-[#2b313a] text-[#f0b90b] border-[#363d45]",
+    badgeBg: "bg-[#2b313a] text-white font-extrabold border-[#363d45]",
     actionColor: "text-[#f0b90b] group-hover:text-[#fcd535]",
     beacon: "bg-[#f0b90b]",
   },
@@ -35,9 +35,9 @@ const THEME_CONFIG = {
     glow: "bg-[#f0b90b]/10 group-hover:bg-[#f0b90b]/20",
     shadow: "hover:shadow-[0_4px_16px_rgba(240,185,11,0.2)]",
     iconPod: "bg-[#1e2329] border-[#2b313a] text-[#f0b90b] group-hover:border-[#f0b90b] group-hover:scale-105",
-    titleColor: "text-[#848e9c] group-hover:text-[#eaecef]",
-    valueGradient: "text-[#eaecef]",
-    badgeBg: "bg-[#2b313a] text-[#f0b90b] border-[#363d45]",
+    titleColor: "text-white font-bold group-hover:text-white",
+    valueGradient: "text-white font-black",
+    badgeBg: "bg-[#2b313a] text-white font-extrabold border-[#363d45]",
     actionColor: "text-[#f0b90b] group-hover:text-[#fcd535]",
     beacon: "bg-[#f0b90b]",
   },
@@ -47,9 +47,9 @@ const THEME_CONFIG = {
     glow: "bg-[#f0b90b]/20 group-hover:bg-[#f0b90b]/30",
     shadow: "hover:shadow-[0_4px_16px_rgba(240,185,11,0.3)]",
     iconPod: "bg-[#1e2329] border-[#2b313a] text-[#f0b90b] shadow-sm group-hover:border-[#f0b90b] group-hover:scale-105",
-    titleColor: "text-[#848e9c] group-hover:text-[#eaecef]",
+    titleColor: "text-white font-bold group-hover:text-white",
     valueGradient: "text-[#f0b90b]",
-    badgeBg: "bg-[#f0b90b]/15 text-[#f0b90b] border-[#f0b90b]/30",
+    badgeBg: "bg-[#f0b90b]/25 text-white font-extrabold border-[#f0b90b]/40",
     actionColor: "text-[#f0b90b] group-hover:text-[#fcd535]",
     beacon: "bg-[#f0b90b]",
   },
@@ -59,9 +59,9 @@ const THEME_CONFIG = {
     glow: "bg-[#f6465d]/15 group-hover:bg-[#f6465d]/25",
     shadow: "hover:shadow-[0_4px_16px_rgba(246,70,93,0.2)]",
     iconPod: "bg-[#1e2329] border-[#2b313a] text-[#f6465d] group-hover:border-[#f6465d] group-hover:scale-105",
-    titleColor: "text-[#848e9c] group-hover:text-[#eaecef]",
+    titleColor: "text-white font-bold group-hover:text-white",
     valueGradient: "text-[#f6465d]",
-    badgeBg: "bg-[#f6465d]/15 text-[#f6465d] border-[#f6465d]/30",
+    badgeBg: "bg-[#f6465d]/25 text-white font-extrabold border-[#f6465d]/40",
     actionColor: "text-[#f6465d] group-hover:text-rose-400",
     beacon: "bg-[#f6465d]",
   },
@@ -70,10 +70,10 @@ const THEME_CONFIG = {
     border: "border-[#2b313a] hover:border-[#f0b90b]",
     glow: "bg-[#f0b90b]/15 group-hover:bg-[#f0b90b]/25",
     shadow: "hover:shadow-[0_4px_16px_rgba(240,185,11,0.25)]",
-    iconPod: "bg-[#1e2329] border-[#2b313a] text-[#eaecef] group-hover:border-[#f0b90b] group-hover:scale-105",
-    titleColor: "text-[#848e9c] group-hover:text-[#eaecef]",
-    valueGradient: "text-[#eaecef]",
-    badgeBg: "bg-[#2b313a] text-[#eaecef] border-[#363d45]",
+    iconPod: "bg-[#1e2329] border-[#2b313a] text-white group-hover:border-[#f0b90b] group-hover:scale-105",
+    titleColor: "text-white font-bold group-hover:text-white",
+    valueGradient: "text-white",
+    badgeBg: "bg-[#2b313a] text-white font-extrabold border-[#363d45]",
     actionColor: "text-[#f0b90b] group-hover:text-[#fcd535]",
     beacon: "bg-[#f0b90b]",
   },
@@ -104,14 +104,14 @@ const StatCard = ({
     (highlight
       ? "emerald"
       : title?.toLowerCase().includes("investment") || title?.toLowerCase().includes("balance")
-      ? "cyan"
-      : title?.toLowerCase().includes("referral")
-      ? "amber"
-      : title?.toLowerCase().includes("booster") || title?.toLowerCase().includes("withdraw")
-      ? "rose"
-      : title?.toLowerCase().includes("salary") || title?.toLowerCase().includes("turnover")
-      ? "purple"
-      : "blue");
+        ? "cyan"
+        : title?.toLowerCase().includes("referral")
+          ? "amber"
+          : title?.toLowerCase().includes("booster") || title?.toLowerCase().includes("withdraw")
+            ? "rose"
+            : title?.toLowerCase().includes("salary") || title?.toLowerCase().includes("turnover")
+              ? "purple"
+              : "blue");
 
   const cfg = THEME_CONFIG[activeThemeKey] || THEME_CONFIG.cyan;
 
@@ -122,11 +122,9 @@ const StatCard = ({
   return (
     <div
       onClick={handleNavigate}
-      className={`relative overflow-hidden rounded-xl p-2 sm:p-2.5 transition-all duration-200 group select-none border backdrop-blur-md shadow-sm hover:shadow-md ${
-        cfg.cardBg
-      } ${cfg.border} ${cfg.shadow} ${
-        path ? "cursor-pointer hover:-translate-y-0.5 active:scale-[0.99]" : ""
-      }`}
+      className={`relative overflow-hidden rounded-xl p-2 sm:p-2.5 transition-all duration-200 group select-none border backdrop-blur-md shadow-sm hover:shadow-md ${cfg.cardBg
+        } ${cfg.border} ${cfg.shadow} ${path ? "cursor-pointer hover:-translate-y-0.5 active:scale-[0.99]" : ""
+        }`}
     >
       {/* Background Ambient Radial Glow */}
       <div
@@ -138,13 +136,13 @@ const StatCard = ({
           {/* Header Title + Badge */}
           <div className="flex items-center gap-1 flex-wrap min-w-0">
             <span
-              className={`text-[8px] sm:text-[9.5px] font-bold uppercase tracking-wider truncate transition-colors ${cfg.titleColor}`}
+              className="text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider truncate text-white transition-colors"
             >
               {title}
             </span>
             {badge && (
               <span
-                className={`text-[6.5px] sm:text-[7.5px] font-black uppercase tracking-wider px-1 py-0.2 rounded border shrink-0 ${cfg.badgeBg}`}
+                className={`text-[6.5px] sm:text-[7.5px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded border shrink-0 ${cfg.badgeBg}`}
               >
                 {badge}
               </span>
@@ -179,22 +177,21 @@ const StatCard = ({
       {/* Subtext & Live / Action Strip (Tight Compact Footer) */}
       <div className="relative z-10 flex items-center justify-between pt-0.5 mt-1 border-t border-slate-800/60 text-[7.5px] sm:text-[8.5px] gap-1 min-w-0">
         {subText ? (
-          <span className="text-slate-400 font-medium truncate max-w-[70%]">
+          <span className="text-white font-semibold truncate max-w-[70%]">
             {subText}
           </span>
         ) : change ? (
           <span
-            className={`flex items-center gap-0.5 font-bold font-mono px-1 py-0.2 rounded text-[7px] sm:text-[7.5px] shrink-0 ${
-              isPositive
+            className={`flex items-center gap-0.5 font-bold font-mono px-1 py-0.2 rounded text-[7px] sm:text-[7.5px] shrink-0 ${isPositive
                 ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
                 : "bg-rose-500/15 text-rose-400 border border-rose-500/30"
-            }`}
+              }`}
           >
             {isPositive ? <ArrowUpRight size={8} /> : <ArrowDownRight size={8} />}
             {change}
           </span>
         ) : (
-          <span className="text-slate-500 font-medium flex items-center gap-1 shrink-0">
+          <span className="text-slate-200 font-medium flex items-center gap-1 shrink-0">
             <span className={`w-1.5 h-1.5 rounded-full ${cfg.beacon}`} />
             <span>Verified</span>
           </span>

@@ -338,7 +338,7 @@ const NodeWonderPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 rounded-2xl bg-gradient-to-br from-[#130b29] to-[#080414] border border-purple-500/20 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono text-slate-400 uppercase">Queue Status</span>
+            <span className="text-xs font-mono text-white font-bold uppercase">Queue Status</span>
             <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400">
               <Clock className="w-4 h-4" />
             </div>
@@ -346,14 +346,14 @@ const NodeWonderPage = () => {
           <div className="text-2xl font-black font-['Orbitron',monospace] text-white mt-2">
             {hasActivePackage ? `QUEUE #${activePackage?.queueNumber}` : "IDLE"}
           </div>
-          <div className="text-[11px] text-purple-300 mt-1 font-mono">
+          <div className="text-[11px] text-slate-200 font-semibold mt-1 font-mono">
             {hasActivePackage ? `${subsequentCount} / 2 Global IDs Joined` : "No Active Queue Position"}
           </div>
         </div>
 
         <div className="p-5 rounded-2xl bg-gradient-to-br from-[#130b29] to-[#080414] border border-emerald-500/20 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono text-slate-400 uppercase">Cycle Payouts</span>
+            <span className="text-xs font-mono text-white font-bold uppercase">Cycle Payouts</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
               <TrendingUp className="w-4 h-4" />
             </div>
@@ -361,14 +361,14 @@ const NodeWonderPage = () => {
           <div className="text-2xl font-black font-['Orbitron',monospace] text-emerald-400 mt-2">
             ${Number(totalEarnedFromCycles || 0).toFixed(2)}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1 font-mono">
+          <div className="text-[11px] text-slate-200 font-semibold mt-1 font-mono">
             {totalCyclesCompleted} Complete Cycles ($150 each)
           </div>
         </div>
 
         <div className="p-5 rounded-2xl bg-gradient-to-br from-[#130b29] to-[#080414] border border-amber-500/20 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono text-slate-400 uppercase">5% Referral Bonus</span>
+            <span className="text-xs font-mono text-white font-bold uppercase">5% Referral Bonus</span>
             <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
               <Users className="w-4 h-4" />
             </div>
@@ -376,14 +376,14 @@ const NodeWonderPage = () => {
           <div className="text-2xl font-black font-['Orbitron',monospace] text-amber-400 mt-2">
             ${Number(totalReferralIncome || 0).toFixed(2)}
           </div>
-          <div className="text-[11px] text-amber-400/80 mt-1 font-mono">
+          <div className="text-[11px] text-amber-300 font-semibold mt-1 font-mono">
             $5.00 per direct buyer (Unconditional)
           </div>
         </div>
 
         <div className="p-5 rounded-2xl bg-gradient-to-br from-[#130b29] to-[#080414] border border-cyan-500/20 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono text-slate-400 uppercase">Total Node Wonder</span>
+            <span className="text-xs font-mono text-white font-bold uppercase">Total Node Wonder</span>
             <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400">
               <Award className="w-4 h-4" />
             </div>
@@ -391,7 +391,7 @@ const NodeWonderPage = () => {
           <div className="text-2xl font-black font-['Orbitron',monospace] text-cyan-300 mt-2">
             ${(Number(totalEarnedFromCycles || 0) + Number(totalReferralIncome || 0)).toFixed(2)}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1 font-mono">
+          <div className="text-[11px] text-slate-200 font-semibold mt-1 font-mono">
             Cycles + Referral Earnings
           </div>
         </div>

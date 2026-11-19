@@ -568,11 +568,10 @@ const Dashboard1 = () => {
                     NODEXAI
                   </span>
                   <span
-                    className={`text-[10px] font-black px-2.5 py-0.5 rounded-full border shadow-sm font-mono ${
-                      isActiveId
-                        ? "bg-emerald-950/60 text-emerald-300 border-emerald-500/40"
-                        : "bg-amber-950/60 text-amber-300 border-amber-500/40"
-                    }`}
+                    className={`text-[10px] font-black px-2.5 py-0.5 rounded-full border shadow-sm font-mono ${isActiveId
+                      ? "bg-emerald-950/60 text-emerald-300 border-emerald-500/40"
+                      : "bg-amber-950/60 text-amber-300 border-amber-500/40"
+                      }`}
                   >
                     {isActiveId ? "● Active ID ($25)" : "○ Inactive ($25 to Activate)"}
                   </span>
@@ -587,41 +586,41 @@ const Dashboard1 = () => {
                 </h1>
 
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-slate-100 pt-0.5">
-                  <span className="flex items-center gap-1 font-mono bg-[#060e1d] px-2.5 py-1 rounded-xl border border-cyan-500/25 text-[11px] text-white">
-                    User ID: <strong className="text-amber-300 font-bold">{userOwnId}</strong>
+                  <span className="flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[11px] text-white">
+                    User ID: <strong className="text-[#f0b90b] font-bold">{userOwnId}</strong>
                     <button onClick={copyUserId} className="hover:text-[#f0b90b] transition ml-1 cursor-pointer" title="Copy User ID">
                       {copiedId ? <Check size={12} className="text-[#0ecb81]" /> : <Copy size={12} className="text-white" />}
                     </button>
                   </span>
                   {sponsorCode && (
-                    <span className="flex items-center gap-1 font-mono bg-[#060e1d] px-2.5 py-1 rounded-xl border border-cyan-500/25 text-[11px] text-white">
-                      Sponsor: <strong className="text-emerald-400">{sponsorCode}</strong>
+                    <span className="flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[11px] text-white">
+                      Sponsor: <strong className="text-[#0ecb81]">{sponsorCode}</strong>
                     </span>
                   )}
                   {userObj?.account && (
-                    <span className="flex items-center gap-1 font-mono bg-[#060e1d] px-2.5 py-1 rounded-xl border border-cyan-500/25 text-[11px] text-white">
-                      Wallet: <strong className="text-cyan-300/90">{maskWalletAddress(userObj.account)}</strong>
+                    <span className="flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-[11px] text-white">
+                      Wallet: <strong className="text-white">{maskWalletAddress(userObj.account)}</strong>
                     </span>
                   )}
                   {userObj?.email && (
                     <span className="hidden sm:flex items-center gap-1 font-mono bg-[#1e2329] px-2.5 py-1 rounded-xl border border-[#2b313a] text-white text-[11px]">
-                      Email: <strong className="text-slate-200">{userObj.email}</strong>
+                      Email: <strong className="text-white">{userObj.email}</strong>
                     </span>
                   )}
                 </div>
               </div>
 
               {/* Binance Style Referral Box */}
-              <div className="w-full lg:w-auto bg-[#060e1d]/90 border border-cyan-500/25 rounded-2xl p-3.5 space-y-2.5 shadow-lg">
+              <div className="w-full lg:w-auto bg-[#1e2329] border border-[#2b313a] rounded-2xl p-3 space-y-2 shadow-lg">
                 {/* 1. Direct Referral Code */}
-                <div className="flex items-center justify-between bg-[#030814] border border-cyan-500/30 rounded-xl px-3 py-1.5 gap-2">
+                <div className="flex items-center justify-between bg-[#181a20] border border-[#2b313a] rounded-xl px-3 py-1.5 gap-2">
                   <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-                    <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider shrink-0 font-mono">Your Referral Code:</span>
-                    <span className="text-xs sm:text-sm font-black font-mono text-amber-300 tracking-wider truncate">{userOwnId}</span>
+                    <span className="text-[10px] font-bold text-white uppercase tracking-wider shrink-0">Your Referral Code:</span>
+                    <span className="text-xs sm:text-sm font-black font-mono text-[#f0b90b] tracking-wider truncate">{userOwnId}</span>
                   </div>
                   <button
                     onClick={copyUserId}
-                    className="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-[10px] font-bold transition flex items-center gap-1 cursor-pointer shrink-0"
+                    className="px-2.5 py-1 rounded-lg bg-[#f0b90b]/15 hover:bg-[#f0b90b]/25 border border-[#f0b90b]/40 text-[#f0b90b] text-[10px] font-bold transition flex items-center gap-1 cursor-pointer shrink-0"
                   >
                     {copiedId ? <Check size={11} className="text-[#0ecb81]" /> : <Copy size={11} />}
                     {copiedId ? "Copied" : "Copy Code"}
@@ -630,19 +629,19 @@ const Dashboard1 = () => {
 
                 {/* 2. Full Referral Link */}
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1 font-mono">
-                    <Share2 size={11} className="text-amber-400" /> Your Referral Link
+                  <span className="text-[10px] font-bold text-white uppercase tracking-wider flex items-center gap-1">
+                    <Share2 size={11} className="text-[#f0b90b]" /> Your Referral Link
                   </span>
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-1.5">
                     <input
                       type="text"
                       readOnly
                       value={referralLink}
-                      className="bg-[#030814] border border-cyan-500/30 focus:border-amber-400 rounded-xl px-2.5 py-1.5 text-[11px] text-cyan-200 w-full lg:w-64 font-mono outline-none min-w-0 truncate select-all"
+                      className="bg-[#181a20] border border-[#2b313a] focus:border-[#f0b90b] rounded-xl px-2.5 py-1.5 text-[11px] text-[#eaecef] w-full lg:w-64 font-mono outline-none min-w-0 truncate select-all"
                     />
                     <button
                       onClick={copyReferral}
-                      className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:from-amber-300 hover:to-yellow-200 text-slate-950 text-[10.5px] font-black transition flex items-center justify-center gap-1 whitespace-nowrap active:scale-95 cursor-pointer shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.35)]"
+                      className="px-3 py-1.5 rounded-xl bg-[#f0b90b] hover:bg-[#fcd535] text-[#181a20] text-[10.5px] font-black transition flex items-center justify-center gap-1 whitespace-nowrap active:scale-95 cursor-pointer shrink-0"
                     >
                       {copiedLink ? <Check size={12} className="text-[#181a20]" /> : <Copy size={12} />}
                       {copiedLink ? "Copied" : "Copy Link"}
@@ -657,7 +656,7 @@ const Dashboard1 = () => {
           <div className="space-y-2">
             <div className="flex items-center justify-between px-1">
               <span className="text-[11px] font-black uppercase tracking-wider text-white font-['Orbitron',monospace] flex items-center gap-1.5">
-                <Sparkles size={12} className="text-amber-400" /> Financial Overview & Income Streams
+                <Sparkles size={12} className="text-[#f0b90b]" /> Financial Overview & Income Streams
               </span>
               <span className="text-[10px] text-[#0ecb81] font-mono font-bold">● Live Synced</span>
             </div>
@@ -683,7 +682,7 @@ const Dashboard1 = () => {
           <div className="space-y-1.5">
             <div className="flex items-center justify-between px-1">
               <span className="text-[10px] font-black uppercase tracking-wider text-white font-['Orbitron',monospace] flex items-center gap-1.5">
-                <Zap size={11} className="text-amber-400" /> Fast Action Command Center
+                <Zap size={11} className="text-[#f0b90b]" /> Fast Action Command Center
               </span>
               <span className="text-[9px] text-white/90 font-mono">1-Click Quick Access</span>
             </div>
@@ -692,9 +691,9 @@ const Dashboard1 = () => {
               {/* 1. Deposit Packages */}
               <button
                 onClick={() => navigate(AuthenticatedUserRouters.INVEST)}
-                className="group px-2 py-1.5 rounded-2xl bg-gradient-to-br from-[#08152c]/90 to-[#040c1a]/90 border border-cyan-500/20 hover:border-amber-400/60 hover:bg-[#0c1f40] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
+                className="group px-2 py-1.5 rounded-xl bg-[#181a20] border border-[#2b313a] hover:border-[#f0b90b] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
               >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center text-slate-950 font-black shadow-[0_0_10px_rgba(245,158,11,0.3)] shrink-0">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#f0b90b] flex items-center justify-center text-[#181a20] font-black shadow-sm shrink-0">
                   <Zap size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -710,9 +709,9 @@ const Dashboard1 = () => {
               {/* 2. Withdrawal */}
               <button
                 onClick={() => navigate(AuthenticatedUserRouters.WITHDRAW)}
-                className="group px-2 py-1.5 rounded-2xl bg-gradient-to-br from-[#08152c]/90 to-[#040c1a]/90 border border-cyan-500/20 hover:border-emerald-400/60 hover:bg-[#0c1f40] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
+                className="group px-2 py-1.5 rounded-xl bg-[#181a20] border border-[#2b313a] hover:border-[#0ecb81] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
               >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-slate-950 font-black shadow-[0_0_10px_rgba(16,185,129,0.3)] shrink-0">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#0ecb81] flex items-center justify-center text-white font-black shadow-sm shrink-0">
                   <ArrowDownLeft size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -728,9 +727,9 @@ const Dashboard1 = () => {
               {/* 3. Binary Matching */}
               <button
                 onClick={() => navigate(AuthenticatedUserRouters.MATCHING_INCOME_HISTORY)}
-                className="group px-2 py-1.5 rounded-2xl bg-gradient-to-br from-[#08152c]/90 to-[#040c1a]/90 border border-cyan-500/20 hover:border-emerald-400/60 hover:bg-[#0c1f40] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
+                className="group px-2 py-1.5 rounded-xl bg-[#181a20] border border-[#2b313a] hover:border-[#0ecb81] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
               >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-xl bg-[#06181f] border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)] font-black shadow-sm shrink-0">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#1e2329] border border-[#0ecb81]/40 flex items-center justify-center text-[#0ecb81] font-black shadow-sm shrink-0">
                   <DollarSign size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -746,9 +745,9 @@ const Dashboard1 = () => {
               {/* 4. Genealogy Tree */}
               <button
                 onClick={() => navigate(AuthenticatedUserRouters.MATRIX_TREE)}
-                className="group px-2 py-1.5 rounded-2xl bg-gradient-to-br from-[#08152c]/90 to-[#040c1a]/90 border border-cyan-500/20 hover:border-amber-400/60 hover:bg-[#0c1f40] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
+                className="group px-2 py-1.5 rounded-xl bg-[#181a20] border border-[#2b313a] hover:border-[#f0b90b] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
               >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-xl bg-[#0a1e3f] border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-[0_0_10px_rgba(0,210,255,0.2)] font-black shadow-sm shrink-0">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#1e2329] border border-[#f0b90b]/40 flex items-center justify-center text-[#f0b90b] font-black shadow-sm shrink-0">
                   <Users size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -764,9 +763,9 @@ const Dashboard1 = () => {
               {/* 5. Club Status */}
               <button
                 onClick={() => navigate(AuthenticatedUserRouters.ROYALTY_CLUB_INCOME)}
-                className="group px-2 py-1.5 rounded-2xl bg-gradient-to-br from-[#08152c]/90 to-[#040c1a]/90 border border-cyan-500/20 hover:border-amber-400/60 hover:bg-[#0c1f40] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
+                className="group px-2 py-1.5 rounded-xl bg-[#181a20] border border-[#2b313a] hover:border-[#f0b90b] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
               >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-xl bg-[#211705] border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)] font-black shadow-sm shrink-0">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#1e2329] border border-[#f0b90b]/40 flex items-center justify-center text-[#eaecef] font-black shadow-sm shrink-0">
                   <Crown size={11} className="text-[#f0b90b]" />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -782,9 +781,9 @@ const Dashboard1 = () => {
               {/* 6. Level Income */}
               <button
                 onClick={() => navigate(AuthenticatedUserRouters.LEVEL_INCOME_HISTORY)}
-                className="group px-2 py-1.5 rounded-2xl bg-gradient-to-br from-[#08152c]/90 to-[#040c1a]/90 border border-cyan-500/20 hover:border-emerald-400/60 hover:bg-[#0c1f40] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
+                className="group px-2 py-1.5 rounded-xl bg-[#181a20] border border-[#2b313a] hover:border-[#0ecb81] text-left transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5"
               >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-xl bg-[#0a1e3f] border border-cyan-500/30 flex items-center justify-center text-cyan-300 shadow-[0_0_10px_rgba(0,210,255,0.15)] font-black shadow-sm shrink-0">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-[#1e2329] border border-[#2b313a] flex items-center justify-center text-[#0ecb81] font-black shadow-sm shrink-0">
                   <BarChart3 size={11} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -807,11 +806,11 @@ const Dashboard1 = () => {
           />
 
           {/* ── 🌟 THANK YOU & PLATFORM LOGO FOOTER ── */}
-          <div className="mt-5 sm:mt-6 rounded-3xl bg-gradient-to-r from-[#08152c] to-[#040c1a] border border-cyan-500/25 p-4 sm:p-5 relative overflow-hidden shadow-lg">
+          <div className="mt-5 sm:mt-6 rounded-2xl bg-[#181a20] border border-[#2b313a] p-3.5 sm:p-4 relative overflow-hidden shadow-lg">
             <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
               {/* Logo + Thank You */}
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-[#09172f] border border-cyan-500/30 p-1.5 shadow-[0_0_10px_rgba(0,210,255,0.2)] flex items-center justify-center shrink-0 shadow-md">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#1e2329] border border-[#f0b90b]/40 p-1.5 flex items-center justify-center shrink-0 shadow-md">
                   <img
                     src={MainContent?.shortLogo || "/NodexAI.jpeg"}
                     alt="NODEXAI"
@@ -820,8 +819,8 @@ const Dashboard1 = () => {
                 </div>
                 <div>
                   <h3 className="text-sm sm:text-base font-black text-[#eaecef] tracking-tight">
-                    Welcome to{" "}
-                    <span className="bg-gradient-to-r from-cyan-400 via-white to-amber-300 bg-clip-text text-transparent font-['Orbitron',sans-serif]">
+                    Thank You for Trading with{" "}
+                    <span className="text-[#f0b90b] font-['Orbitron',monospace]">
                       NODEXAI
                     </span>
                   </h3>
@@ -833,7 +832,7 @@ const Dashboard1 = () => {
 
               {/* Status & Copyright */}
               <div className="flex items-center gap-3 text-[11px] font-mono text-[#848e9c]">
-                <span className="inline-flex items-center gap-1.5 text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-xl border border-emerald-500/30">
+                <span className="inline-flex items-center gap-1.5 text-[#0ecb81] bg-[#1e2329] px-2.5 py-1 rounded-lg border border-[#2b313a]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0ecb81] animate-ping" />
                   <span>Nodes Online (99.99%)</span>
                 </span>

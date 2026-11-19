@@ -258,7 +258,7 @@ const Authenticated = () => {
             />
             <Route
               path={AuthenticatedUserRouters.WITHDRAWAL_HISTORY}
-              element={<WithdrawalHistory />}
+              element={<RequestWithdrawal />}
             />
             <Route
               path={AuthenticatedUserRouters.INCOME_HISTORY}
@@ -366,7 +366,7 @@ const Authenticated = () => {
             />
             <Route
               path={AuthenticatedUserRouters.SALARY_WITHDRAWAL}
-              element={<SalaryWithdrawal />}
+              element={<RequestWithdrawal />}
             />
           </Route>
 

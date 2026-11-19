@@ -360,36 +360,17 @@ const Sidebar = ({ isOpen, onClose }) => {
               />
             </SidebarDropdown>
 
-            {/* 5. Withdrawal (Withdrawal 5% fee, Principal Withdrawal, History) */}
-            <SidebarDropdown
-              id="withdrawal"
+            {/* 5. Withdrawal (Single Unified Module: Min $10, 5% Admin Charge) */}
+            <NavLink
+              to={AuthenticatedUserRouters.WITHDRAW}
               icon="fa-solid fa-money-bill-transfer"
               text="Withdrawal"
-              openDropdown={openDropdown}
-              setOpenDropdown={setOpenDropdown}
-            >
-              <NavLink
-                to={AuthenticatedUserRouters.WITHDRAW}
-                icon="fa-solid fa-arrow-down"
-                text="Withdrawal (5% Fee)"
-                badge="5%"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-
-
-              <NavLink
-                to={AuthenticatedUserRouters.WITHDRAWAL_HISTORY}
-                icon="fa-solid fa-receipt"
-                text="Withdrawal History"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
-            </SidebarDropdown>
+              badge="MIN $10 • 5%"
+              onClose={() => {
+                onClose();
+                setOpenDropdown(null);
+              }}
+            />
 
             {/* 6. Support */}
             <SidebarDropdown

@@ -1,1409 +1,865 @@
-// src/screens/UserPanel/RequestWithdrawal.jsx
-import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import {
-  Wallet,
-  ArrowDownLeft,
-  ArrowUpRight,
-  Zap,
-  Users,
-  ShieldCheck,
-  CheckCircle2,
-  AlertCircle,
-  RefreshCw,
-  DollarSign,
-  UserCheck,
-  Sparkles,
-  Layers,
-  ArrowRight,
-  Copy,
-  Check,
-  Info,
-  Clock,
-  ExternalLink,
-  ShieldAlert,
-  Lock,
-  Unlock,
-} from "lucide-react";
-import {
-  requestWithdrawalApi,
-  requestPrincipalWithdrawalApi,
-  activateTeamMemberApi,
-  reinvestSelfApi,
-  getWalletBalancesApi,
-  getUserProfileApi,
-  getAllUserWithdrawalHistory,
-} from "../../api/user.api";
-import { setLoading } from "../../redux/slices/loadingSlice";
-import { maskWalletAddress } from "../../utils/additionalFunc";
-
-const MIN_WITHDRAWAL = 1;              // $1 Minimum Withdrawal (Official NODEXAI Rule)
-const WITHDRAWAL_FEE_PERCENT = 5;      // 5% Platform Fee (Official NODEXAI Rule)
-const MIN_DEPOSIT = 10;                // $10 Minimum Deposit
-const PRINCIPAL_EARLY_DAYS = 30;       // 30 Days threshold for Principal Withdrawal
-const PRINCIPAL_EARLY_DEDUCTION = 25;  // 25% Principal Deduction Before 30 Days
-
-const RequestWithdrawal = () => {
-  const dispatch = useDispatch();
-  const loggedUser = useSelector((state) => state?.isLoggedUser?.data);
-
-  // Active Tab: "withdraw" | "principal" | "activate" | "reinvest" | "history"
-  const [activeTab, setActiveTab] = useState("withdraw");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
-  const [copiedText, setCopiedText] = useState(null);
-
-  // Live Wallet & System Balances
-  const [walletBalances, setWalletBalances] = useState({
-    currentIncomeWallet: 0,
-    p2pWallet: 0,
-    totalInvestment: 0,
-    activeInvestment: 0,
-    activePrincipal: 0,
-    isActive: false,
-    activationDate: null,
-    daysActive: 0,
-    isBefore30Days: true,
-    earlyDeductionPercent: 25,
-    earnings: {
-      totalRoi: 0,
-      totalWorking: 0,
-      maxRoiCap: 0,
-      maxWorkingCap: 0,
-      isRoiCapped: false,
-      isWorkingCapped: false,
-    },
-  });
-
-  // 1. Standard Income Withdrawal Form State (5% Fee, Min $1)
-  const [withdrawAmount, setWithdrawAmount] = useState("");
-  const [destinationWallet, setDestinationWallet] = useState(
-    loggedUser?.account || loggedUser?.walletAddress || ""
-  );
-
-  // 2. Principal Withdrawal Form State (25% Deduction < 30 Days | 0% >= 30 Days + 5% Fee)
-  const [principalWithdrawAmount, setPrincipalWithdrawAmount] = useState("");
-  const [principalDestinationWallet, setPrincipalDestinationWallet] = useState(
-    loggedUser?.account || loggedUser?.walletAddress || ""
-  );
-
-  // 3. Direct Team ID Activation Form State (0% Fee)
-  const [targetUsername, setTargetUsername] = useState("");
-  const [activationAmount, setActivationAmount] = useState(50);
-  const [activationWalletType, setActivationWalletType] = useState("INCOME"); // "INCOME" | "P2P"
-
-  // 4. Self Reinvestment Form State (0% Fee)
-  const [reinvestAmount, setReinvestAmount] = useState(50);
-  const [reinvestWalletType, setReinvestWalletType] = useState("P2P"); // "P2P" | "INCOME"
-
-  // 5. Withdrawal & Transaction History
-  const [historyList, setHistoryList] = useState([]);
-
-  // Copy helper
-  const handleCopy = (text, label = "Copied") => {
-    if (!text) return;
-    navigator.clipboard.writeText(text);
-    setCopiedText(text);
-    toast.success(`${label} copied to clipboard!`);
-    setTimeout(() => setCopiedText(null), 2000);
-  };
-
-  // 📡 Fetch All Balances & Profile Data
-  const loadData = useCallback(
-    async (isManual = false) => {
-      try {
-        if (isManual) setRefreshing(true);
-        else dispatch(setLoading(true));
-
-        const [balRes, profRes, histRes] = await Promise.allSettled([
-          getWalletBalancesApi(),
-          getUserProfileApi(),
-          getAllUserWithdrawalHistory(),
-        ]);
-
-        // Process Wallet Balances
-        if (balRes.status === "fulfilled" && balRes.value?.success) {
-          const d = balRes.value.data || balRes.value;
-          const activePrincipalVal = Number(d.activePrincipal ?? d.activeInvestment ?? d.totalInvestment ?? 0);
-          const actDate = d.principalWithdrawal?.activationDate || d.activationDate || loggedUser?.active?.activeDate || loggedUser?.createdAt;
-          const daysPassed = d.principalWithdrawal?.daysActive !== undefined
-            ? Number(d.principalWithdrawal.daysActive)
-            : Math.max(0, Math.floor((Date.now() - new Date(actDate || Date.now()).getTime()) / (1000 * 60 * 60 * 24)));
-          const before30 = daysPassed < PRINCIPAL_EARLY_DAYS;
-
-          setWalletBalances({
-            currentIncomeWallet: Number(d.currentIncomeWallet ?? d.availableBalance ?? d.totalIncome ?? 0),
-            p2pWallet: Number(d.p2pWallet ?? d.p2pBalance ?? 0),
-            totalInvestment: Number(d.totalInvestment ?? 0),
-            activeInvestment: activePrincipalVal,
-            activePrincipal: activePrincipalVal,
-            isActive: d.isActive ?? false,
-            activationDate: actDate,
-            daysActive: daysPassed,
-            isBefore30Days: before30,
-            earlyDeductionPercent: before30 ? PRINCIPAL_EARLY_DEDUCTION : 0,
-            earnings: d.earnings || {
-              totalRoi: 0,
-              totalWorking: 0,
-              maxRoiCap: activePrincipalVal * 2.2,
-              maxWorkingCap: activePrincipalVal * 5.0,
-              isRoiCapped: false,
-              isWorkingCapped: false,
-            },
-          });
-        }
-
-        // Process User Profile Wallet Address
-        if (profRes.status === "fulfilled" && profRes.value?.success && profRes.value?.data?.account) {
-          const addr = profRes.value.data.account;
-          if (!destinationWallet) setDestinationWallet(addr);
-          if (!principalDestinationWallet) setPrincipalDestinationWallet(addr);
-        }
-
-        // Process History
-        if (histRes.status === "fulfilled" && histRes.value) {
-          const raw = histRes.value.data || histRes.value;
-          const list = Array.isArray(raw?.history)
-            ? raw.history
-            : Array.isArray(raw)
-              ? raw
-              : [];
-          setHistoryList(list);
-        }
-
-      } catch (err) {
-        console.error("Error fetching withdrawal & balance hub data:", err);
-      } finally {
-        if (isManual) setRefreshing(false);
-        else dispatch(setLoading(false));
-      }
-    },
-    [dispatch, destinationWallet, principalDestinationWallet, loggedUser]
-  );
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
-  // 🧮 Standard Income Withdrawal Calculations (5% Fee)
-  const numWithdraw = Number(withdrawAmount) || 0;
-  const adminFee = (numWithdraw * WITHDRAWAL_FEE_PERCENT) / 100; // 5% Platform Deduction
-  const netWithdrawPayout = Math.max(0, numWithdraw - adminFee);   // 95% Net Payout
-
-  // 🧮 Principal Withdrawal Calculations (25% Deduction < 30 Days | 0% >= 30 Days + 5% Fee)
-  const numPrincipal = Number(principalWithdrawAmount) || 0;
-  const principalDays = walletBalances.daysActive || 0;
-  const isEarlyPrincipal = walletBalances.isBefore30Days;
-  const principalDeductionRate = isEarlyPrincipal ? PRINCIPAL_EARLY_DEDUCTION : 0;
-  const principalDeductionAmount = (numPrincipal * principalDeductionRate) / 100;
-  const principalPlatformFee = (numPrincipal * WITHDRAWAL_FEE_PERCENT) / 100; // 5%
-  const totalPrincipalDeductions = principalDeductionAmount + principalPlatformFee;
-  const netPrincipalPayout = Math.max(0, numPrincipal - totalPrincipalDeductions);
-
-  // =========================================================================
-  // 1️⃣ SUBMIT STANDARD INCOME WITHDRAWAL (5% Platform Fee, Min $1)
-  // =========================================================================
-  const handleStandardWithdrawalSubmit = async (e) => {
-    e.preventDefault();
-
-    if (numWithdraw < MIN_WITHDRAWAL) {
-      toast.warning(`Minimum withdrawal amount is $${MIN_WITHDRAWAL}.`);
-      return;
-    }
-    if (numWithdraw > walletBalances.currentIncomeWallet) {
-      toast.error("Withdrawal amount exceeds your available Current Income Wallet balance.");
-      return;
-    }
-    if (!destinationWallet || !destinationWallet.trim().startsWith("0x")) {
-      toast.warning("Please provide a valid USDT (BEP-20) wallet address starting with 0x.");
-      return;
-    }
-
-    try {
-      setIsSubmitting(true);
-      dispatch(setLoading(true));
-
-      const payload = {
-        amount: numWithdraw,
-        walletAddress: destinationWallet.trim(),
-      };
-
-      const res = await requestWithdrawalApi(payload);
-
-      if (res?.success || res?.message?.toLowerCase().includes("success")) {
-        toast.success(
-          res?.message ||
-          `Withdrawal request of $${numWithdraw} submitted! (5% Platform Fee: $${adminFee.toFixed(2)}, Net Payout: $${netWithdrawPayout.toFixed(2)})`
-        );
-        setWithdrawAmount("");
-        loadData(true);
-      } else {
-        toast.error(res?.message || "Failed to submit withdrawal request.");
-      }
-    } catch (err) {
-      toast.error(err?.response?.data?.message || err.message || "Withdrawal request failed.");
-    } finally {
-      setIsSubmitting(false);
-      dispatch(setLoading(false));
-    }
-  };
-
-  // =========================================================================
-  // 2️⃣ SUBMIT PRINCIPAL WITHDRAWAL (25% Deduction < 30 Days | 0% >= 30 Days + 5% Fee)
-  // =========================================================================
-  const handlePrincipalWithdrawalSubmit = async (e) => {
-    e.preventDefault();
-
-    if (numPrincipal < MIN_WITHDRAWAL) {
-      toast.warning(`Minimum principal withdrawal amount is $${MIN_WITHDRAWAL}.`);
-      return;
-    }
-    if (numPrincipal > walletBalances.activePrincipal) {
-      toast.error(`Requested amount exceeds your active principal balance of $${walletBalances.activePrincipal.toFixed(2)}.`);
-      return;
-    }
-    if (!principalDestinationWallet || !principalDestinationWallet.trim().startsWith("0x")) {
-      toast.warning("Please provide a valid USDT (BEP-20) wallet address starting with 0x.");
-      return;
-    }
-
-    try {
-      setIsSubmitting(true);
-      dispatch(setLoading(true));
-
-      const payload = {
-        amount: numPrincipal,
-        walletAddress: principalDestinationWallet.trim(),
-      };
-
-      const res = await requestPrincipalWithdrawalApi(payload);
-
-      if (res?.success || res?.message?.toLowerCase().includes("success")) {
-        toast.success(
-          res?.message ||
-          `Principal withdrawal of $${numPrincipal} submitted! Net Payout: $${netPrincipalPayout.toFixed(2)}`
-        );
-        setPrincipalWithdrawAmount("");
-        loadData(true);
-      } else {
-        toast.error(res?.message || "Failed to submit principal withdrawal request.");
-      }
-    } catch (err) {
-      toast.error(err?.response?.data?.message || err.message || "Principal withdrawal request failed.");
-    } finally {
-      setIsSubmitting(false);
-      dispatch(setLoading(false));
-    }
-  };
-
-  // =========================================================================
-  // 3️⃣ SUBMIT DIRECT TEAM MEMBER ID ACTIVATION (0% Platform Fee - $0 Deduction)
-  // =========================================================================
-  const handleTeamMemberActivationSubmit = async (e) => {
-    e.preventDefault();
-    const numAmount = Number(activationAmount) || 0;
-
-    if (!targetUsername.trim()) {
-      toast.warning("Please enter the target team member's username.");
-      return;
-    }
-    if (numAmount < MIN_DEPOSIT) {
-      toast.warning(`Minimum activation amount is $${MIN_DEPOSIT}.`);
-      return;
-    }
-
-    const availableBal =
-      activationWalletType === "INCOME"
-        ? walletBalances.currentIncomeWallet
-        : walletBalances.p2pWallet;
-
-    if (numAmount > availableBal) {
-      toast.error(
-        `Insufficient funds in ${activationWalletType} Wallet. Available: $${availableBal.toFixed(2)}`
-      );
-      return;
-    }
-
-    try {
-      setIsSubmitting(true);
-      dispatch(setLoading(true));
-
-      const payload = {
-        targetUsername: targetUsername.trim(),
-        amount: numAmount,
-        walletType: activationWalletType,
-      };
-
-      const res = await activateTeamMemberApi(payload);
-
-      if (res?.success || res?.message?.toLowerCase().includes("success")) {
-        toast.success(
-          res?.message ||
-          `Successfully activated ${targetUsername} with $${numAmount}! (0% Platform Fee Applied)`
-        );
-        setTargetUsername("");
-        loadData(true);
-      } else {
-        toast.error(res?.message || "Failed to activate team member.");
-      }
-    } catch (err) {
-      toast.error(err?.response?.data?.message || err.message || "Activation request failed.");
-    } finally {
-      setIsSubmitting(false);
-      dispatch(setLoading(false));
-    }
-  };
-
-  // =========================================================================
-  // 4️⃣ SUBMIT SELF REINVESTMENT (0% Platform Fee - $0 Deduction)
-  // =========================================================================
-  const handleSelfReinvestmentSubmit = async (e) => {
-    e.preventDefault();
-    const numAmount = Number(reinvestAmount) || 0;
-
-    if (numAmount < MIN_DEPOSIT) {
-      toast.warning(`Minimum reinvestment amount is $${MIN_DEPOSIT}.`);
-      return;
-    }
-
-    const availableBal =
-      reinvestWalletType === "P2P"
-        ? walletBalances.p2pWallet
-        : walletBalances.currentIncomeWallet;
-
-    if (numAmount > availableBal) {
-      toast.error(
-        `Insufficient funds in ${reinvestWalletType} Wallet. Available: $${availableBal.toFixed(2)}`
-      );
-      return;
-    }
-
-    try {
-      setIsSubmitting(true);
-      dispatch(setLoading(true));
-
-      const payload = {
-        amount: numAmount,
-        walletType: reinvestWalletType,
-      };
-
-      const res = await reinvestSelfApi(payload);
-
-      if (res?.success || res?.message?.toLowerCase().includes("success")) {
-        toast.success(
-          res?.message ||
-          `Successfully reinvested $${numAmount} from ${reinvestWalletType} Wallet! (0% Fee Applied)`
-        );
-        setReinvestAmount(50);
-        loadData(true);
-      } else {
-        toast.error(res?.message || "Self reinvestment failed.");
-      }
-    } catch (err) {
-      toast.error(err?.response?.data?.message || err.message || "Self reinvestment error.");
-    } finally {
-      setIsSubmitting(false);
-      dispatch(setLoading(false));
-    }
-  };
-
-  return (
-    <div className="p-3 sm:p-5 md:p-6 max-w-[1400px] mx-auto space-y-4 sm:space-y-6 text-slate-100 font-sans">
-      {/* 🌟 1. Top Executive Official Deposit & Withdrawal Banner (Exact Rules from Images) */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-950 via-[#070D1E] to-slate-950 border border-cyan-500/30 shadow-2xl p-4 sm:p-6 md:p-7">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-          <div className="space-y-1.5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center gap-1.5 shadow-[0_0_12px_rgba(6,182,212,0.3)]">
-                <DollarSign className="w-3.5 h-3.5" /> NODEXAI Official Rules
-              </span>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                Simple • Clear • Accessible
-              </span>
-            </div>
-
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white font-['Orbitron',monospace]">
-              Deposit & Withdrawal Hub
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-400 max-w-2xl">
-              Min Deposit: <strong className="text-white">$10</strong> | Min Withdrawal: <strong className="text-white">$1</strong> | Withdrawal Fee: <strong className="text-white">5%</strong> | Principal: <strong className="text-amber-300">25% Deduction (&lt;30 Days)</strong> / <strong className="text-emerald-400">0% Deduction (&ge;30 Days)</strong>
-            </p>
-          </div>
-
-          <button
-            onClick={() => loadData(true)}
-            disabled={refreshing}
-            className="px-4 py-2.5 bg-slate-900/90 hover:bg-slate-800 text-cyan-300 hover:text-white border border-slate-700 hover:border-cyan-400 rounded-2xl text-xs font-bold transition flex items-center gap-2 shadow-lg cursor-pointer shrink-0 active:scale-95"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-cyan-400" : ""}`} />
-            <span>Refresh Balances</span>
-          </button>
-        </div>
-
-        {/* 3 Executive Metric Badges Matching Image Structure */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 mt-4 border-t border-slate-800/80">
-          <div className="p-3 bg-slate-900/80 rounded-2xl border border-cyan-500/20 flex items-center justify-between">
-            <div>
-              <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Minimum Deposit</span>
-              <span className="text-lg font-black text-white font-mono">$10</span>
-            </div>
-            <div className="w-9 h-9 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-              <ArrowDownLeft size={18} />
-            </div>
-          </div>
-
-          <div className="p-3 bg-slate-900/80 rounded-2xl border border-emerald-500/20 flex items-center justify-between">
-            <div>
-              <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Minimum Withdrawal</span>
-              <span className="text-lg font-black text-white font-mono">$1</span>
-            </div>
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <ArrowUpRight size={18} />
-            </div>
-          </div>
-
-          <div className="p-3 bg-slate-900/80 rounded-2xl border border-amber-500/20 flex items-center justify-between">
-            <div>
-              <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Withdrawal Fee</span>
-              <span className="text-lg font-black text-amber-300 font-mono">5%</span>
-            </div>
-            <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
-              <DollarSign size={18} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 💳 2. Live Balances & Capping Pods (4 Grid) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        {/* Pod 1: Current Income Wallet */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-950/70 via-slate-900/90 to-[#040814] border border-emerald-500/30 hover:border-emerald-400 p-3.5 sm:p-4 shadow-lg hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all duration-300">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-emerald-300 transition">
-              Current Income Wallet
-            </span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition shadow-sm">
-              <DollarSign size={16} />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-100 font-mono tracking-tight font-['Orbitron',monospace]">
-              ${walletBalances.currentIncomeWallet.toFixed(2)}
-            </div>
-            <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium mt-1">
-              <span>Standard 5% Fee Withdraw</span>
-              <span className="text-emerald-400 font-bold">Min $1</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Pod 2: Active Principal Capital */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-950/70 via-slate-900/90 to-[#040814] border border-cyan-500/30 hover:border-cyan-400 p-3.5 sm:p-4 shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all duration-300">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-cyan-300 transition">
-              Active Principal Capital
-            </span>
-            <div className="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition shadow-sm">
-              <ShieldCheck size={16} />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-xl sm:text-2xl font-black text-white font-mono tracking-tight font-['Orbitron',monospace]">
-              ${walletBalances.activePrincipal.toFixed(2)}
-            </div>
-            <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium mt-1">
-              <span>Account Age: <strong className="text-cyan-300">{walletBalances.daysActive} Days</strong></span>
-              <span className={walletBalances.isBefore30Days ? "text-amber-400 font-bold" : "text-emerald-400 font-bold"}>
-                {walletBalances.isBefore30Days ? "25% Deduction" : "0% Deduction"}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Pod 3: P2P Wallet Balance */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-950/70 via-slate-900/90 to-[#040814] border border-purple-500/30 hover:border-purple-400 p-3.5 sm:p-4 shadow-lg hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] transition-all duration-300">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-purple-300 transition">
-              P2P Wallet Balance
-            </span>
-            <div className="w-8 h-8 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-105 transition shadow-sm">
-              <Zap size={16} />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-300 to-purple-100 font-mono tracking-tight font-['Orbitron',monospace]">
-              ${walletBalances.p2pWallet.toFixed(2)}
-            </div>
-            <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium mt-1">
-              <span>0% Fee Activation / Top-up</span>
-              <span className="text-purple-400 font-bold">0% Fee</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Pod 4: 220% Max ROI Capping */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-950/70 via-slate-900/90 to-[#040814] border border-blue-500/30 hover:border-blue-400 p-3.5 sm:p-4 shadow-lg hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-300">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-blue-300 transition">
-              220% Max ROI Capping
-            </span>
-            <div className="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-105 transition shadow-sm">
-              <Layers size={16} />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-base sm:text-lg font-black text-white font-mono tracking-tight flex items-center justify-between">
-              <span>Cap: <strong className="text-cyan-300">${walletBalances.earnings?.maxRoiCap?.toFixed(2) || "0.00"}</strong></span>
-            </div>
-            <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium mt-2 pt-1 border-t border-slate-800">
-              <span>Earned ROI: ${walletBalances.earnings?.totalRoi?.toFixed(2) || "0.00"}</span>
-              <span className="text-cyan-400 font-bold font-mono">220% Max</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 🧭 3. Navigation Hub Switcher (5 Tabs) */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-slate-800 pb-3">
-        {[
-          {
-            key: "withdraw",
-            label: "1. Income Withdrawal (5% Fee, Min $1)",
-            icon: ArrowDownLeft,
-            theme: "from-cyan-500 to-blue-600 text-black shadow-cyan-500/25",
-          },
-          {
-            key: "principal",
-            label: "2. Principal Withdrawal (30-Day Rule)",
-            icon: Lock,
-            theme: "from-amber-500 to-orange-600 text-black shadow-amber-500/25",
-          },
-          {
-            key: "activate",
-            label: "3. Direct Team ID Activation (0% Fee)",
-            icon: UserCheck,
-            theme: "from-emerald-500 to-teal-600 text-black shadow-emerald-500/25",
-          },
-          {
-            key: "reinvest",
-            label: "4. Self Reinvestment (0% Fee)",
-            icon: RefreshCw,
-            theme: "from-purple-500 to-indigo-600 text-white shadow-purple-500/25",
-          },
-          {
-            key: "history",
-            label: `Transaction History (${historyList.length})`,
-            icon: Clock,
-            theme: "from-slate-700 to-slate-800 text-white shadow-slate-700/25",
-          },
-        ].map((tab) => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.key;
-          return (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 py-2 px-3.5 sm:px-4 rounded-2xl text-xs font-bold transition-all duration-200 cursor-pointer ${isActive
-                  ? `bg-gradient-to-r ${tab.theme} font-black shadow-lg scale-102`
-                  : "bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700"
-                }`}
-            >
-              <Icon className="w-4 h-4" />
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* =====================================================================
-          TAB 1: STANDARD INCOME WITHDRAWAL (5% FEE, MIN $1)
-          ===================================================================== */}
-      {activeTab === "withdraw" && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          {/* Left Form: Withdrawal Submission */}
-          <div className="lg:col-span-7 bg-[#08101E]/95 border-2 border-slate-800 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 backdrop-blur-md">
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 bg-cyan-950/80 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">
-                Income / Profit Withdrawal
-              </span>
-              <h3 className="text-lg sm:text-xl font-black text-white mt-1 font-['Orbitron',monospace]">
-                Withdraw from Current Income Wallet
-              </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Minimum withdrawal is <strong>$1</strong>. Flat <strong>5% platform fee</strong> applies. 95% net amount is transferred directly to your BEP-20 wallet address.
-              </p>
-            </div>
-
-            <form onSubmit={handleStandardWithdrawalSubmit} className="space-y-4">
-              {/* Amount Input */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <label className="font-bold text-slate-300">Withdrawal Amount ($)</label>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setWithdrawAmount(
-                        walletBalances.currentIncomeWallet > 0
-                          ? walletBalances.currentIncomeWallet.toFixed(2)
-                          : "0"
-                      )
-                    }
-                    className="text-cyan-400 font-bold hover:underline cursor-pointer text-xs"
-                  >
-                    Max Available (${walletBalances.currentIncomeWallet.toFixed(2)})
-                  </button>
-                </div>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-lg">$</span>
-                  <input
-                    type="number"
-                    min={MIN_WITHDRAWAL}
-                    step="any"
-                    value={withdrawAmount}
-                    onChange={(e) => setWithdrawAmount(e.target.value)}
-                    placeholder="Enter amount (Min $1)"
-                    className="w-full pl-9 pr-4 py-3 bg-slate-950 border border-slate-800 focus:border-cyan-400 rounded-2xl text-white font-mono text-base outline-none transition shadow-inner"
-                  />
-                </div>
-              </div>
-
-              {/* Quick Amount Buttons */}
-              <div className="flex items-center gap-2 flex-wrap">
-                {[1, 5, 10, 25, 50, 100, 250, 500].map((amt) => (
-                  <button
-                    key={amt}
-                    type="button"
-                    onClick={() => setWithdrawAmount(amt.toString())}
-                    className="px-3 py-1 bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-cyan-300 rounded-xl text-xs font-mono font-bold border border-slate-800 transition cursor-pointer"
-                  >
-                    ${amt}
-                  </button>
-                ))}
-              </div>
-
-              {/* Destination Wallet Input */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <label className="font-bold text-slate-300">
-                    Recipient USDT (BEP-20) Wallet Address
-                  </label>
-                  {destinationWallet && (
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(destinationWallet, "Wallet Address")}
-                      className="text-cyan-400 hover:text-white flex items-center gap-1 cursor-pointer"
-                    >
-                      {copiedText === destinationWallet ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
-                      <span>{copiedText === destinationWallet ? "Copied" : "Copy"}</span>
-                    </button>
-                  )}
-                </div>
-                <input
-                  type="text"
-                  value={destinationWallet}
-                  onChange={(e) => setDestinationWallet(e.target.value)}
-                  placeholder="0x..."
-                  className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-cyan-400 rounded-2xl text-white font-mono text-xs outline-none transition"
-                />
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={
-                  isSubmitting ||
-                  numWithdraw < MIN_WITHDRAWAL ||
-                  numWithdraw > walletBalances.currentIncomeWallet ||
-                  !destinationWallet
-                }
-                className={`w-full py-3.5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer active:scale-95 ${isSubmitting ||
-                    numWithdraw < MIN_WITHDRAWAL ||
-                    numWithdraw > walletBalances.currentIncomeWallet ||
-                    !destinationWallet
-                    ? "bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700"
-                    : "bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black shadow-cyan-500/25 font-black"
-                  }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" /> Processing Withdrawal...
-                  </>
-                ) : (
-                  <>
-                    <ArrowDownLeft className="w-4 h-4" />
-                    Submit Withdrawal ${numWithdraw > 0 ? numWithdraw.toFixed(2) : "0.00"}
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-
-          {/* Right Summary: Real-Time Breakdown */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="bg-[#08101E]/95 border-2 border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4 backdrop-blur-md">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h4 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-1.5 font-['Orbitron',monospace]">
-                  <Sparkles className="w-4 h-4 text-cyan-400" />
-                  Live Fee & Payout Calculator
-                </h4>
-                <span className="text-[10px] font-bold text-slate-400 font-mono">5% Platform Fee</span>
-              </div>
-
-              <div className="space-y-2.5 text-xs">
-                <div className="flex items-center justify-between p-2.5 bg-slate-950 rounded-xl border border-slate-800/80">
-                  <span className="text-slate-400">Withdrawal Amount:</span>
-                  <span className="font-mono font-bold text-white text-sm">${numWithdraw.toFixed(2)}</span>
-                </div>
-
-                <div className="flex items-center justify-between p-2.5 bg-slate-950 rounded-xl border border-slate-800/80">
-                  <span className="text-slate-400">Platform Fee (5%):</span>
-                  <span className="font-mono font-bold text-rose-400">-${adminFee.toFixed(2)}</span>
-                </div>
-
-                <div className="flex items-center justify-between p-2.5 bg-slate-950 rounded-xl border border-slate-800/80">
-                  <span className="text-slate-300 font-bold">Net Payout to Wallet (95%):</span>
-                  <span className="font-mono font-black text-emerald-400 text-sm">${netWithdrawPayout.toFixed(2)}</span>
-                </div>
-              </div>
-
-              {/* Security & Verification Disclaimer */}
-              <div className="p-3 bg-slate-950/90 rounded-2xl border border-slate-800 text-[11px] text-slate-400 space-y-1.5">
-                <div className="flex items-center gap-1.5 text-cyan-300 font-bold">
-                  <ShieldAlert className="w-4 h-4 text-cyan-400" />
-                  Always Verify Before Confirming
-                </div>
-                <p>
-                  Review the amount, network (BEP-20), wallet, and transaction details carefully before approving any blockchain transaction. Applicable blockchain network fees may be separate from platform fees.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* =====================================================================
-          TAB 2: PRINCIPAL WITHDRAWAL (25% DEDUCTION < 30 DAYS | 0% >= 30 DAYS)
-          ===================================================================== */}
-      {activeTab === "principal" && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          {/* Left Form: Principal Withdrawal */}
-          <div className="lg:col-span-7 bg-[#08101E]/95 border-2 border-amber-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 backdrop-blur-md">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.3)]">
-                  Principal Capital Withdrawal
-                </span>
-                <span className="text-[10px] font-bold text-slate-400 font-mono">30-Day Rule</span>
-              </div>
-
-              <h3 className="text-lg sm:text-xl font-black text-white mt-1.5 font-['Orbitron',monospace]">
-                Withdraw Active Principal Investment
-              </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Withdraw from your staked principal balance. Early withdrawals before 30 days are subject to a 25% principal deduction. After 30 days, <strong>NO early deduction (0%)</strong> applies!
-              </p>
-            </div>
-
-            {/* Official 30-Day Status Banner Matching Image */}
-            <div className={`p-3.5 rounded-2xl border flex items-center justify-between ${isEarlyPrincipal ? "bg-rose-950/40 border-rose-500/40" : "bg-emerald-950/40 border-emerald-500/40"}`}>
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black ${isEarlyPrincipal ? "bg-rose-500/20 text-rose-400 border border-rose-500/40" : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"}`}>
-                  {isEarlyPrincipal ? <Clock className="w-5 h-5 text-rose-400 animate-pulse" /> : <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
-                </div>
-                <div>
-                  <div className="text-xs font-black text-white uppercase tracking-wider">
-                    {isEarlyPrincipal ? "Before 30 Days: 25% Principal Deduction" : "After 30 Days: No 25% Early Deduction"}
-                  </div>
-                  <div className="text-[11px] text-slate-300">
-                    Account active for <strong className="text-white font-mono">{principalDays} days</strong> ({isEarlyPrincipal ? `${Math.max(0, 30 - principalDays)} days remaining for 0% deduction` : "Fully eligible for zero early penalty!"})
-                  </div>
-                </div>
-              </div>
-              <span className={`px-2.5 py-1 rounded-xl text-[10px] font-black uppercase ${isEarlyPrincipal ? "bg-rose-500/20 text-rose-300 border border-rose-500/40" : "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40"}`}>
-                {isEarlyPrincipal ? "25% Deduction" : "0% Deduction"}
-              </span>
-            </div>
-
-            <form onSubmit={handlePrincipalWithdrawalSubmit} className="space-y-4">
-              {/* Amount Input */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <label className="font-bold text-slate-300">Principal Amount to Withdraw ($)</label>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setPrincipalWithdrawAmount(
-                        walletBalances.activePrincipal > 0
-                          ? walletBalances.activePrincipal.toFixed(2)
-                          : "0"
-                      )
-                    }
-                    className="text-amber-400 font-bold hover:underline cursor-pointer text-xs"
-                  >
-                    Max Active (${walletBalances.activePrincipal.toFixed(2)})
-                  </button>
-                </div>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-lg">$</span>
-                  <input
-                    type="number"
-                    min={MIN_WITHDRAWAL}
-                    step="any"
-                    value={principalWithdrawAmount}
-                    onChange={(e) => setPrincipalWithdrawAmount(e.target.value)}
-                    placeholder="Enter principal amount (Min $1)"
-                    className="w-full pl-9 pr-4 py-3 bg-slate-950 border border-slate-800 focus:border-amber-400 rounded-2xl text-white font-mono text-base outline-none transition shadow-inner"
-                  />
-                </div>
-              </div>
-
-              {/* Destination Wallet Input */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <label className="font-bold text-slate-300">
-                    Recipient USDT (BEP-20) Wallet Address
-                  </label>
-                  {principalDestinationWallet && (
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(principalDestinationWallet, "Wallet Address")}
-                      className="text-amber-400 hover:text-white flex items-center gap-1 cursor-pointer"
-                    >
-                      {copiedText === principalDestinationWallet ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
-                      <span>{copiedText === principalDestinationWallet ? "Copied" : "Copy"}</span>
-                    </button>
-                  )}
-                </div>
-                <input
-                  type="text"
-                  value={principalDestinationWallet}
-                  onChange={(e) => setPrincipalDestinationWallet(e.target.value)}
-                  placeholder="0x..."
-                  className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-amber-400 rounded-2xl text-white font-mono text-xs outline-none transition"
-                />
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={
-                  isSubmitting ||
-                  numPrincipal < MIN_WITHDRAWAL ||
-                  numPrincipal > walletBalances.activePrincipal ||
-                  !principalDestinationWallet
-                }
-                className={`w-full py-3.5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer active:scale-95 ${isSubmitting ||
-                    numPrincipal < MIN_WITHDRAWAL ||
-                    numPrincipal > walletBalances.activePrincipal ||
-                    !principalDestinationWallet
-                    ? "bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700"
-                    : "bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-black shadow-amber-500/25 font-black"
-                  }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" /> Processing Principal Withdrawal...
-                  </>
-                ) : (
-                  <>
-                    <Lock className="w-4 h-4" />
-                    Submit Principal Withdrawal ${numPrincipal > 0 ? numPrincipal.toFixed(2) : "0.00"}
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-
-          {/* Right Summary: Transparent Deductions Breakdown */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="bg-[#08101E]/95 border-2 border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4 backdrop-blur-md">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h4 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-1.5 font-['Orbitron',monospace]">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
-                  Principal Deductions & Payout
-                </h4>
-                <span className="text-[10px] font-bold text-slate-400 font-mono">
-                  {isEarlyPrincipal ? "25% Early + 5% Fee" : "0% Early + 5% Fee"}
-                </span>
-              </div>
-
-              <div className="space-y-2.5 text-xs">
-                <div className="flex items-center justify-between p-2.5 bg-slate-950 rounded-xl border border-slate-800/80">
-                  <span className="text-slate-400">Principal Requested:</span>
-                  <span className="font-mono font-bold text-white text-sm">${numPrincipal.toFixed(2)}</span>
-                </div>
-
-                <div className="flex items-center justify-between p-2.5 bg-slate-950 rounded-xl border border-slate-800/80">
-                  <span className="text-slate-400">
-                    Early Deduction ({principalDeductionRate}%):
-                  </span>
-                  <span className={`font-mono font-bold ${isEarlyPrincipal ? "text-rose-400" : "text-emerald-400"}`}>
-                    {isEarlyPrincipal ? `-$${principalDeductionAmount.toFixed(2)}` : "$0.00 (Waived)"}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between p-2.5 bg-slate-950 rounded-xl border border-slate-800/80">
-                  <span className="text-slate-400">Platform Withdrawal Fee (5%):</span>
-                  <span className="font-mono font-bold text-amber-400">-${principalPlatformFee.toFixed(2)}</span>
-                </div>
-
-                <div className="flex items-center justify-between p-2.5 bg-slate-950 rounded-xl border border-slate-800/80">
-                  <span className="text-slate-300 font-bold">Net Payout to Your Wallet:</span>
-                  <span className="font-mono font-black text-emerald-400 text-sm">${netPrincipalPayout.toFixed(2)}</span>
-                </div>
-              </div>
-
-              {/* Policy notes */}
-              <div className="p-3 bg-slate-950/90 rounded-2xl border border-slate-800 text-[11px] text-slate-400 space-y-1.5">
-                <div className="flex items-center gap-1.5 text-amber-300 font-bold">
-                  <Info className="w-4 h-4 text-amber-400" />
-                  Principal Withdrawal Policy
-                </div>
-                <ul className="list-disc pl-4 space-y-1 text-slate-400">
-                  <li><strong>Before 30 Days:</strong> 25% Principal Deduction applies due to early unstaking.</li>
-                  <li><strong>After 30 Days:</strong> 0% Early-Withdrawal Deduction (Only standard 5% platform fee applies).</li>
-                  <li>Your 220% Maximum ROI capping will automatically adjust to match your remaining active principal.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* =====================================================================
-          TAB 3: DIRECT TEAM MEMBER ID ACTIVATION (0% FEE - $0 DEDUCTION)
-          ===================================================================== */}
-      {activeTab === "activate" && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          {/* Left Form: Team Activation */}
-          <div className="lg:col-span-7 bg-[#08101E]/95 border-2 border-emerald-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 backdrop-blur-md">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-2.5 py-0.5 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.3)]">
-                  0% Platform Fee Applied
-                </span>
-                <span className="text-[10px] font-bold text-slate-400 font-mono">$0 Deduction</span>
-              </div>
-
-              <h3 className="text-lg sm:text-xl font-black text-white mt-1.5 font-['Orbitron',monospace]">
-                Direct Team Member ID Activation
-              </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Activate any team member's ID directly from your Income Wallet or P2P Wallet. 100% of the funds go straight into their package with <strong>ZERO platform or withdrawal deductions</strong>.
-              </p>
-            </div>
-
-            <form onSubmit={handleTeamMemberActivationSubmit} className="space-y-4">
-              {/* Target Username Input */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Target Member Username (or User ID)</label>
-                <div className="relative">
-                  <UserCheck className="w-4 h-4 text-emerald-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={targetUsername}
-                    onChange={(e) => setTargetUsername(e.target.value)}
-                    placeholder="Enter downline username (e.g. rahul_investor, PEH1025)"
-                    className="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 focus:border-emerald-400 rounded-2xl text-white text-xs font-mono outline-none transition"
-                  />
-                </div>
-              </div>
-
-              {/* Source Wallet Selection */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Select Source Deduction Wallet (0% Fee)</label>
-                <div className="grid grid-cols-2 gap-2.5">
-                  <button
-                    type="button"
-                    onClick={() => setActivationWalletType("INCOME")}
-                    className={`p-3 rounded-2xl border text-left transition cursor-pointer ${activationWalletType === "INCOME"
-                        ? "bg-emerald-950/60 border-emerald-400 text-white shadow-[0_0_12px_rgba(16,185,129,0.2)]"
-                        : "bg-slate-950 border-slate-800 text-slate-400 hover:text-white"
-                      }`}
-                  >
-                    <span className="text-[10px] uppercase font-bold block text-emerald-400">Income Wallet (0% Fee)</span>
-                    <span className="text-sm font-black font-mono mt-0.5 block">
-                      ${walletBalances.currentIncomeWallet.toFixed(2)}
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActivationWalletType("P2P")}
-                    className={`p-3 rounded-2xl border text-left transition cursor-pointer ${activationWalletType === "P2P"
-                        ? "bg-purple-950/60 border-purple-400 text-white shadow-[0_0_12px_rgba(168,85,247,0.2)]"
-                        : "bg-slate-950 border-slate-800 text-slate-400 hover:text-white"
-                      }`}
-                  >
-                    <span className="text-[10px] uppercase font-bold block text-purple-400">P2P Wallet (0% Fee)</span>
-                    <span className="text-sm font-black font-mono mt-0.5 block">
-                      ${walletBalances.p2pWallet.toFixed(2)}
-                    </span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Amount Input */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <label className="font-bold text-slate-300">Activation Amount ($)</label>
-                  <span className="text-emerald-400 font-bold font-mono">0% Fee = $0 Deduction</span>
-                </div>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-lg">$</span>
-                  <input
-                    type="number"
-                    min={MIN_DEPOSIT}
-                    step="any"
-                    value={activationAmount}
-                    onChange={(e) => setActivationAmount(e.target.value)}
-                    placeholder="Enter amount (Min $10)"
-                    className="w-full pl-9 pr-4 py-3 bg-slate-950 border border-slate-800 focus:border-emerald-400 rounded-2xl text-white font-mono text-base outline-none transition shadow-inner"
-                  />
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={
-                  isSubmitting ||
-                  !targetUsername.trim() ||
-                  Number(activationAmount) < MIN_DEPOSIT ||
-                  Number(activationAmount) >
-                  (activationWalletType === "INCOME"
-                    ? walletBalances.currentIncomeWallet
-                    : walletBalances.p2pWallet)
-                }
-                className={`w-full py-3.5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer active:scale-95 ${isSubmitting ||
-                    !targetUsername.trim() ||
-                    Number(activationAmount) < MIN_DEPOSIT ||
-                    Number(activationAmount) >
-                    (activationWalletType === "INCOME"
-                      ? walletBalances.currentIncomeWallet
-                      : walletBalances.p2pWallet)
-                    ? "bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700"
-                    : "bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-black shadow-emerald-500/25 font-black"
-                  }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" /> Activating ID...
-                  </>
-                ) : (
-                  <>
-                    <UserCheck className="w-4 h-4" />
-                    Activate {targetUsername ? targetUsername : "Member"} with ${activationAmount} (0% Fee)
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-
-          {/* Right Summary */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="bg-[#08101E]/95 border-2 border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4 backdrop-blur-md">
-              <h4 className="text-xs font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5 font-['Orbitron',monospace]">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                Zero Fee Direct Activation Benefits
-              </h4>
-
-              <div className="space-y-3 text-xs text-slate-300">
-                <div className="p-3 bg-emerald-950/30 border border-emerald-500/30 rounded-2xl space-y-1">
-                  <div className="flex items-center gap-1.5 font-bold text-emerald-300">
-                    <Sparkles className="w-4 h-4 text-emerald-400" />
-                    Save 100% Platform Fees
-                  </div>
-                  <p className="text-[11px] text-slate-400">
-                    No 5% platform fee is deducted. The full 100% value is instantly credited to the user's active investment balance.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-cyan-950/30 border border-cyan-500/30 rounded-2xl space-y-1">
-                  <div className="flex items-center gap-1.5 font-bold text-cyan-300">
-                    <Zap className="w-4 h-4 text-cyan-400" />
-                    Instant Daily ROI Activation
-                  </div>
-                  <p className="text-[11px] text-slate-400">
-                    The target user is upgraded to Active Status instantly, and their 4.5% - 7.5% daily trading ROI starts generating immediately.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-purple-950/30 border border-purple-500/30 rounded-2xl space-y-1">
-                  <div className="flex items-center gap-1.5 font-bold text-purple-300">
-                    <Users className="w-4 h-4 text-purple-400" />
-                    Generates 12% Direct Referral
-                  </div>
-                  <p className="text-[11px] text-slate-400">
-                    Generates 12% Direct Referral Income and 10-Level ROI Dividend automatically for eligible sponsors.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* =====================================================================
-          TAB 4: SELF REINVESTMENT (0% FEE FROM P2P / INCOME WALLET)
-          ===================================================================== */}
-      {activeTab === "reinvest" && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          {/* Left Form: Self Reinvestment */}
-          <div className="lg:col-span-7 bg-[#08101E]/95 border-2 border-purple-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 backdrop-blur-md">
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-purple-300 bg-purple-950/80 border border-purple-500/40 px-2.5 py-0.5 rounded-full shadow-[0_0_8px_rgba(168,85,247,0.3)]">
-                0% Fee Self Top-Up
-              </span>
-              <h3 className="text-lg sm:text-xl font-black text-white mt-1.5 font-['Orbitron',monospace]">
-                Self Reinvestment & Package Top-Up
-              </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Reinvest into your own account using your P2P Wallet or Income Wallet with <strong>0% fee</strong> to increase your active investment and expand your 220% Max ROI capping.
-              </p>
-            </div>
-
-            <form onSubmit={handleSelfReinvestmentSubmit} className="space-y-4">
-              {/* Source Wallet Selection */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Select Source Deduction Wallet (0% Fee)</label>
-                <div className="grid grid-cols-2 gap-2.5">
-                  <button
-                    type="button"
-                    onClick={() => setReinvestWalletType("P2P")}
-                    className={`p-3 rounded-2xl border text-left transition cursor-pointer ${reinvestWalletType === "P2P"
-                        ? "bg-purple-950/60 border-purple-400 text-white shadow-[0_0_12px_rgba(168,85,247,0.2)]"
-                        : "bg-slate-950 border-slate-800 text-slate-400 hover:text-white"
-                      }`}
-                  >
-                    <span className="text-[10px] uppercase font-bold block text-purple-400">P2P Wallet (0% Fee)</span>
-                    <span className="text-sm font-black font-mono mt-0.5 block">
-                      ${walletBalances.p2pWallet.toFixed(2)}
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setReinvestWalletType("INCOME")}
-                    className={`p-3 rounded-2xl border text-left transition cursor-pointer ${reinvestWalletType === "INCOME"
-                        ? "bg-emerald-950/60 border-emerald-400 text-white shadow-[0_0_12px_rgba(16,185,129,0.2)]"
-                        : "bg-slate-950 border-slate-800 text-slate-400 hover:text-white"
-                      }`}
-                  >
-                    <span className="text-[10px] uppercase font-bold block text-emerald-400">Income Wallet (0% Fee)</span>
-                    <span className="text-sm font-black font-mono mt-0.5 block">
-                      ${walletBalances.currentIncomeWallet.toFixed(2)}
-                    </span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Amount Input */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <label className="font-bold text-slate-300">Reinvestment Amount ($)</label>
-                  <span className="text-purple-400 font-bold font-mono">0% Platform Fee</span>
-                </div>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-lg">$</span>
-                  <input
-                    type="number"
-                    min={MIN_DEPOSIT}
-                    step="any"
-                    value={reinvestAmount}
-                    onChange={(e) => setReinvestAmount(e.target.value)}
-                    placeholder="Enter amount (Min $10)"
-                    className="w-full pl-9 pr-4 py-3 bg-slate-950 border border-slate-800 focus:border-purple-400 rounded-2xl text-white font-mono text-base outline-none transition shadow-inner"
-                  />
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={
-                  isSubmitting ||
-                  Number(reinvestAmount) < MIN_DEPOSIT ||
-                  Number(reinvestAmount) >
-                  (reinvestWalletType === "P2P"
-                    ? walletBalances.p2pWallet
-                    : walletBalances.currentIncomeWallet)
-                }
-                className={`w-full py-3.5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer active:scale-95 ${isSubmitting ||
-                    Number(reinvestAmount) < MIN_DEPOSIT ||
-                    Number(reinvestAmount) >
-                    (reinvestWalletType === "P2P"
-                      ? walletBalances.p2pWallet
-                      : walletBalances.currentIncomeWallet)
-                    ? "bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700"
-                    : "bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white shadow-purple-500/25 font-black"
-                  }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" /> Reinvesting...
-                  </>
-                ) : (
-                  <>
-                    <RefreshCw className="w-4 h-4" />
-                    Reinvest ${reinvestAmount} into My ID (0% Fee)
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-
-          {/* Right Info */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="bg-[#08101E]/95 border-2 border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4 backdrop-blur-md">
-              <h4 className="text-xs font-black uppercase tracking-wider text-purple-400 flex items-center gap-1.5 font-['Orbitron',monospace]">
-                <Layers className="w-4 h-4 text-purple-400" />
-                Reinvestment & Compounding Power
-              </h4>
-
-              <div className="space-y-3 text-xs text-slate-300">
-                <div className="p-3 bg-purple-950/30 border border-purple-500/30 rounded-2xl space-y-1">
-                  <span className="font-bold text-purple-300 block">220% Max ROI Capping Expansion:</span>
-                  <p className="text-[11px] text-slate-400">
-                    Reinvesting $100 immediately expands your maximum ROI cap by <strong>+$220.00</strong> (220%).
-                  </p>
-                </div>
-
-                <div className="p-3 bg-emerald-950/30 border border-emerald-500/30 rounded-2xl space-y-1">
-                  <span className="font-bold text-emerald-300 block">Daily Package Tier Upgrade:</span>
-                  <p className="text-[11px] text-slate-400">
-                    Your daily 4.5% - 7.5% package ROI will automatically scale up as your active principal balance advances across packages.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* =====================================================================
-          TAB 5: TRANSACTION & WITHDRAWAL HISTORY LEDGER
-          ===================================================================== */}
-      {activeTab === "history" && (
-        <div className="neon-glow-card border border-sky-400/40 rounded-3xl overflow-hidden shadow-[0_0_30px_rgba(14,165,233,0.22)] backdrop-blur-xl p-4 sm:p-6">
-          <div className="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="gold-badge-icon w-10 h-10 flex items-center justify-center">
-                <Clock className="w-5 h-5 text-slate-950 font-black" />
-              </div>
-              <div>
-                <h3 className="font-black gold-metallic-text text-sm sm:text-base uppercase tracking-wider">
-                  Withdrawal & Smart Distribution Ledger
-                </h3>
-                <p className="text-xs text-slate-300 font-semibold uppercase">Verified on-chain records of all withdrawal requests & activations</p>
-              </div>
-            </div>
-            <span className="px-3.5 py-1.5 bg-sky-500/15 text-sky-300 border border-sky-500/30 rounded-xl text-xs font-bold font-mono">
-              Total Records: {historyList.length}
-            </span>
-          </div>
-
-          <div className="overflow-x-auto rounded-2xl border border-sky-500/30 shadow-inner bg-[#040914]/90">
-            <table className="w-full text-left text-xs md:text-sm border-collapse">
-              <thead>
-                <tr className="text-nowrap divide-x divide-white/10">
-                  <th className="py-3.5 px-4 text-xs font-black tracking-wider uppercase split-header-blue">#</th>
-                  <th className="py-3.5 px-4 text-xs font-black tracking-wider uppercase split-header-blue">Transaction Type</th>
-                  <th className="py-3.5 px-4 text-xs font-black tracking-wider uppercase split-header-blue">Amount</th>
-                  <th className="py-3.5 px-4 text-xs font-black tracking-wider uppercase split-header-blue">Destination / Details</th>
-                  <th className="py-3.5 px-4 text-xs font-black tracking-wider uppercase split-header-gold">Status</th>
-                  <th className="py-3.5 px-4 text-xs font-black tracking-wider uppercase split-header-gold">Date</th>
-                  <th className="py-3.5 px-4 text-xs font-black tracking-wider uppercase split-header-gold text-right">TxHash</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-sky-500/15 text-xs sm:text-sm">
-                {historyList.length > 0 ? (
-                  historyList.map((item, idx) => {
-                    const status = item.status || "Pending";
-                    const isSuccess =
-                      status.toLowerCase() === "completed" ||
-                      status.toLowerCase() === "approved" ||
-                      status.toLowerCase() === "success";
-                    const isPending = status.toLowerCase() === "pending";
-
-                    return (
-                      <tr key={item._id || item.id || idx} className="hover:bg-sky-950/30 transition-colors border-b border-sky-500/10 text-nowrap">
-                        <td className="py-3.5 px-4 text-slate-400 font-mono">{idx + 1}</td>
-                        <td className="py-3.5 px-4">
-                          <span className="font-bold text-white">
-                            {item.type === "PrincipalWithdrawal"
-                              ? "Principal Capital Withdrawal"
-                              : item.type === "Withdrawal"
-                                ? "Income Withdrawal (5% Fee)"
-                                : item.type || "Transaction"}
-                          </span>
-                        </td>
-                        <td className="py-3.5 px-4 font-bold font-mono text-amber-300">
-                          ${Number(item.amount || item.investment || item.requestedAmount || 0).toFixed(2)}
-                        </td>
-                        <td className="py-3.5 px-4 font-mono text-xs text-slate-300">
-                          {item.walletAddress || item.clientAddress || item.recipient ? (
-                            <span title={item.walletAddress || item.clientAddress || item.recipient}>
-                              {maskWalletAddress(item.walletAddress || item.clientAddress || item.recipient)}
-                            </span>
-                          ) : (
-                            item.targetUser || item.targetUsername || "Self / ID"
-                          )}
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <span
-                            className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-flex items-center gap-1 ${isSuccess
-                                ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                                : isPending
-                                  ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                                  : "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-                              }`}
-                          >
-                            <span
-                              className={`w-1.5 h-1.5 rounded-full ${isSuccess
-                                  ? "bg-emerald-400"
-                                  : isPending
-                                    ? "bg-amber-400"
-                                    : "bg-rose-400"
-                                }`}
-                            />
-                            {status}
-                          </span>
-                        </td>
-                        <td className="py-3.5 px-4 text-slate-400 text-xs font-mono">
-                          {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : "—"}
-                        </td>
-                        <td className="py-3.5 px-4 text-right font-mono text-xs text-sky-400">
-                          {item.hash || item.txHash || item.transactionHash ? (
-                            <span className="truncate max-w-[100px] inline-block">
-                              {maskWalletAddress(item.hash || item.txHash || item.transactionHash)}
-                            </span>
-                          ) : (
-                            <span className="text-slate-600">—</span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <tr>
-                    <td colSpan={7} className="py-12 text-center text-slate-400 text-sm">
-                      No withdrawal or activation history found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default RequestWithdrawal;
+// src/screens/UserPanel/RequestWithdrawal.jsx
+import React, { useEffect, useState, useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import {
+  Wallet,
+  ArrowDownLeft,
+  ArrowUpRight,
+  ShieldCheck,
+  CheckCircle2,
+  AlertCircle,
+  RefreshCw,
+  DollarSign,
+  Copy,
+  Check,
+  Clock,
+  ExternalLink,
+  Info,
+  ShieldAlert,
+  Search,
+  Filter,
+  CheckCircle,
+  XCircle,
+  FileText,
+  Lock,
+} from "lucide-react";
+import {
+  requestWithdrawalApi,
+  getWalletBalancesApi,
+  getUserProfileApi,
+  getAllUserWithdrawalHistory,
+} from "../../api/user.api";
+import { setLoading } from "../../redux/slices/loadingSlice";
+import { maskWalletAddress } from "../../utils/additionalFunc";
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// OFFICIAL NODEXAI WITHDRAWAL RULES
+// 1. Minimum Withdrawal: $10.00
+// 2. Admin Charges: 5% flat fee
+// 3. Payout: 95% Net payout sent to registered BEP-20 address upon Admin Approval
+// ═══════════════════════════════════════════════════════════════════════════════
+const MIN_WITHDRAWAL = 10;          // $10 Minimum Withdrawal
+const WITHDRAWAL_FEE_PERCENT = 5;  // 5% Admin Charge
+
+const RequestWithdrawal = () => {
+  const dispatch = useDispatch();
+  const loggedUser = useSelector((state) => state?.isLoggedUser?.data);
+
+  // View Mode: "REQUEST" | "HISTORY" | "ALL"
+  const [activeTab, setActiveTab] = useState("REQUEST");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [copiedText, setCopiedText] = useState(null);
+
+  // Wallet balances
+  const [balances, setBalances] = useState({
+    currentIncomeWallet: 0,
+    totalWithdrawn: 0,
+    p2pWallet: 0,
+    activePrincipal: 0,
+  });
+
+  // Withdrawal form inputs
+  const [withdrawAmount, setWithdrawAmount] = useState("");
+  const [destinationWallet, setDestinationWallet] = useState(
+    loggedUser?.account || loggedUser?.walletAddress || ""
+  );
+
+  // History & Filters
+  const [historyList, setHistoryList] = useState([]);
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Copy helper
+  const handleCopy = (text, label = "Address") => {
+    if (!text) return;
+    navigator.clipboard.writeText(text);
+    setCopiedText(text);
+    toast.success(`${label} copied to clipboard!`);
+    setTimeout(() => setCopiedText(null), 2000);
+  };
+
+  // 📡 Fetch Wallet Balances, Profile, and History
+  const loadData = useCallback(
+    async (isManual = false) => {
+      try {
+        if (isManual) setRefreshing(true);
+        else dispatch(setLoading(true));
+
+        const [balRes, profRes, histRes] = await Promise.allSettled([
+          getWalletBalancesApi(),
+          getUserProfileApi(),
+          getAllUserWithdrawalHistory(),
+        ]);
+
+        // 1. Process Wallet Balances
+        if (balRes.status === "fulfilled" && balRes.value?.success) {
+          const d = balRes.value.data || balRes.value;
+          const inc = Number(
+            d.currentIncomeWallet ??
+            d.availableBalance ??
+            d.walletBalances?.currentIncomeWallet ??
+            d.totalIncome ??
+            0
+          );
+          setBalances((prev) => ({
+            ...prev,
+            currentIncomeWallet: inc,
+            p2pWallet: Number(d.p2pWallet ?? d.walletBalances?.p2pWallet ?? 0),
+            activePrincipal: Number(d.activePrincipal ?? d.walletBalances?.activePrincipal ?? 0),
+          }));
+        }
+
+        // 2. Process User Profile Wallet Address
+        if (profRes.status === "fulfilled" && profRes.value?.success) {
+          const profData = profRes.value?.data || profRes.value;
+          const addr = profData?.account || profData?.walletAddress || "";
+          if (addr && !destinationWallet) {
+            setDestinationWallet(addr);
+          }
+          if (profData?.incomeDetails?.income?.currentIncome !== undefined) {
+            setBalances((prev) => ({
+              ...prev,
+              currentIncomeWallet: Number(profData.incomeDetails.income.currentIncome || 0),
+            }));
+          }
+        }
+
+        // 3. Process History
+        if (histRes.status === "fulfilled" && histRes.value) {
+          const raw = histRes.value.data || histRes.value;
+          const list = Array.isArray(raw?.history)
+            ? raw.history
+            : Array.isArray(raw)
+            ? raw
+            : [];
+          setHistoryList(list);
+
+          if (raw?.totalWithdrawn !== undefined) {
+            setBalances((prev) => ({
+              ...prev,
+              totalWithdrawn: Number(raw.totalWithdrawn || 0),
+            }));
+          } else {
+            const sumCompleted = list
+              .filter(
+                (item) =>
+                  String(item.status).toLowerCase() === "completed" ||
+                  String(item.status).toLowerCase() === "approved"
+              )
+              .reduce(
+                (sum, item) =>
+                  sum + Number(item.investment || item.requestedAmount || item.amount || 0),
+                0
+              );
+            setBalances((prev) => ({ ...prev, totalWithdrawn: sumCompleted }));
+          }
+        }
+
+        if (isManual) toast.success("Withdrawal data refreshed!");
+      } catch (err) {
+        console.error("Error loading withdrawal data:", err);
+      } finally {
+        if (isManual) setRefreshing(false);
+        else dispatch(setLoading(false));
+      }
+    },
+    [dispatch, destinationWallet]
+  );
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  // Keep destination wallet synced with loggedUser if empty
+  useEffect(() => {
+    if (!destinationWallet && (loggedUser?.account || loggedUser?.walletAddress)) {
+      setDestinationWallet(loggedUser?.account || loggedUser?.walletAddress);
+    }
+  }, [loggedUser, destinationWallet]);
+
+  // 🧮 Live Calculations
+  const numWithdraw = Number(withdrawAmount) || 0;
+  const adminFee = (numWithdraw * WITHDRAWAL_FEE_PERCENT) / 100;
+  const netWithdrawPayout = Math.max(0, numWithdraw - adminFee);
+
+  // Preset Amount Buttons
+  const handlePresetAmount = (val) => {
+    if (val === "MAX") {
+      setWithdrawAmount(Math.floor(balances.currentIncomeWallet).toString());
+    } else {
+      setWithdrawAmount(val.toString());
+    }
+  };
+
+  // 🚀 Submit Withdrawal Request
+  const handleWithdrawalSubmit = async (e) => {
+    e.preventDefault();
+
+    if (numWithdraw < MIN_WITHDRAWAL) {
+      toast.warning(`Minimum withdrawal amount is $${MIN_WITHDRAWAL}.00`);
+      return;
+    }
+    if (numWithdraw > balances.currentIncomeWallet) {
+      toast.error(
+        `Insufficient balance. Available: $${balances.currentIncomeWallet.toFixed(
+          2
+        )}, Requested: $${numWithdraw.toFixed(2)}`
+      );
+      return;
+    }
+    if (!destinationWallet || !destinationWallet.trim().startsWith("0x") || destinationWallet.trim().length !== 42) {
+      toast.warning("Please provide a valid USDT BEP-20 (EVM) wallet address (starts with 0x, 42 chars).");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      dispatch(setLoading(true));
+
+      const payload = {
+        amount: numWithdraw,
+        walletAddress: destinationWallet.trim(),
+      };
+
+      const res = await requestWithdrawalApi(payload);
+
+      if (res?.success || String(res?.message || "").toLowerCase().includes("success")) {
+        toast.success(
+          res?.message ||
+            `Withdrawal of $${numWithdraw.toFixed(2)} submitted! (Fee: $${adminFee.toFixed(
+              2
+            )}, Net: $${netWithdrawPayout.toFixed(2)})`
+        );
+        setWithdrawAmount("");
+        await loadData(true);
+        setActiveTab("HISTORY"); // Switch to history so user immediately sees their pending request
+      } else {
+        toast.error(res?.message || "Failed to submit withdrawal request.");
+      }
+    } catch (err) {
+      toast.error(
+        err?.response?.data?.message || err?.message || "Withdrawal request failed."
+      );
+    } finally {
+      setIsSubmitting(false);
+      dispatch(setLoading(false));
+    }
+  };
+
+  // Filtered History
+  const filteredHistory = useMemo(() => {
+    return historyList.filter((item) => {
+      const status = String(item?.status || "Pending").toLowerCase();
+      if (statusFilter === "PENDING" && status !== "pending") return false;
+      if (
+        statusFilter === "COMPLETED" &&
+        status !== "completed" &&
+        status !== "approved"
+      )
+        return false;
+      if (
+        statusFilter === "CANCELLED" &&
+        status !== "cancelled" &&
+        status !== "rejected"
+      )
+        return false;
+
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase().trim();
+        const txId = String(item?.id || item?._id || "").toLowerCase();
+        const addr = String(item?.clientAddress || "").toLowerCase();
+        const amount = String(item?.investment || item?.requestedAmount || "");
+        const hash = String(item?.hash || "").toLowerCase();
+        if (
+          !txId.includes(query) &&
+          !addr.includes(query) &&
+          !amount.includes(query) &&
+          !hash.includes(query)
+        ) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [historyList, statusFilter, searchQuery]);
+
+  return (
+    <div className="p-3 sm:p-5 md:p-6 max-w-[1400px] mx-auto space-y-5 sm:space-y-6 text-slate-100 font-sans">
+      {/* 🌟 Top Official Executive Header Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#020817] via-[#08152c] to-[#020817] border border-cyan-500/30 shadow-[0_0_30px_rgba(0,210,255,0.12)] p-4 sm:p-6 md:p-7">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center gap-1.5 shadow-[0_0_12px_rgba(0,210,255,0.3)]">
+                <DollarSign className="w-3.5 h-3.5" /> NODEXAI Official Withdrawal
+              </span>
+              <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5" /> Min $10 • 5% Admin Charge
+              </span>
+              <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Manual Admin Approval & Payout
+              </span>
+            </div>
+
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white font-['Orbitron',sans-serif] tracking-wide">
+              Withdrawal Management Hub
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+              Request withdrawals from your Current Income Wallet. Flat <strong className="text-amber-400">5% Admin Fee</strong> is deducted, and <strong className="text-emerald-400">95% Net Payout</strong> is verified and transferred manually by Admin to your registered BEP-20 wallet.
+            </p>
+          </div>
+
+          <button
+            onClick={() => loadData(true)}
+            disabled={refreshing}
+            className="px-4 py-2.5 bg-[#09172f]/90 hover:bg-[#0d2247] text-cyan-300 hover:text-white border border-cyan-500/30 hover:border-cyan-400 rounded-2xl text-xs font-bold transition flex items-center gap-2 shadow-[0_0_15px_rgba(0,210,255,0.15)] cursor-pointer shrink-0 active:scale-95"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-cyan-400" : ""}`} />
+            <span>Refresh Balances</span>
+          </button>
+        </div>
+
+        {/* 4 Executive Stat Metric Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-4 mt-4 border-t border-cyan-500/20">
+          {/* Card 1: Available Income */}
+          <div className="p-3.5 rounded-2xl bg-[#09172f]/70 border border-cyan-500/25">
+            <div className="flex items-center justify-between text-slate-400 text-[11px] font-bold uppercase tracking-wider">
+              <span>Available Income</span>
+              <Wallet className="w-4 h-4 text-cyan-400" />
+            </div>
+            <div className="mt-1.5 text-lg sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-amber-300 font-['Orbitron',sans-serif]">
+              ${balances.currentIncomeWallet.toFixed(2)}
+            </div>
+            <div className="text-[10px] text-cyan-400/80 font-mono mt-0.5">Withdrawable USDT</div>
+          </div>
+
+          {/* Card 2: Minimum Withdrawal */}
+          <div className="p-3.5 rounded-2xl bg-[#09172f]/70 border border-amber-500/25">
+            <div className="flex items-center justify-between text-slate-400 text-[11px] font-bold uppercase tracking-wider">
+              <span>Minimum Withdrawal</span>
+              <DollarSign className="w-4 h-4 text-amber-400" />
+            </div>
+            <div className="mt-1.5 text-lg sm:text-2xl font-black text-amber-400 font-['Orbitron',sans-serif]">
+              ${MIN_WITHDRAWAL}.00
+            </div>
+            <div className="text-[10px] text-amber-400/80 font-mono mt-0.5">Strict Threshold</div>
+          </div>
+
+          {/* Card 3: Admin Charges */}
+          <div className="p-3.5 rounded-2xl bg-[#09172f]/70 border border-rose-500/25">
+            <div className="flex items-center justify-between text-slate-400 text-[11px] font-bold uppercase tracking-wider">
+              <span>Admin Charges</span>
+              <Info className="w-4 h-4 text-rose-400" />
+            </div>
+            <div className="mt-1.5 text-lg sm:text-2xl font-black text-rose-400 font-['Orbitron',sans-serif]">
+              {WITHDRAWAL_FEE_PERCENT}%
+            </div>
+            <div className="text-[10px] text-rose-400/80 font-mono mt-0.5">Flat Deduction (95% Net)</div>
+          </div>
+
+          {/* Card 4: Total Withdrawn */}
+          <div className="p-3.5 rounded-2xl bg-[#09172f]/70 border border-emerald-500/25">
+            <div className="flex items-center justify-between text-slate-400 text-[11px] font-bold uppercase tracking-wider">
+              <span>Total Withdrawn</span>
+              <CheckCircle className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div className="mt-1.5 text-lg sm:text-2xl font-black text-emerald-400 font-['Orbitron',sans-serif]">
+              ${balances.totalWithdrawn.toFixed(2)}
+            </div>
+            <div className="text-[10px] text-emerald-400/80 font-mono mt-0.5">Lifetime Approved</div>
+          </div>
+        </div>
+      </div>
+
+      {/* 🧭 Tab Switcher: Request Form / History Table */}
+      <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-[#08152c]/90 border border-cyan-500/20 max-w-md">
+        <button
+          onClick={() => setActiveTab("REQUEST")}
+          className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition cursor-pointer ${
+            activeTab === "REQUEST"
+              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-[0_0_15px_rgba(0,210,255,0.4)]"
+              : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+          }`}
+        >
+          <ArrowDownLeft className="w-4 h-4" />
+          <span>Request Withdrawal</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab("HISTORY")}
+          className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition cursor-pointer ${
+            activeTab === "HISTORY"
+              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-[0_0_15px_rgba(0,210,255,0.4)]"
+              : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+          }`}
+        >
+          <Clock className="w-4 h-4" />
+          <span>Withdrawal History ({historyList.length})</span>
+        </button>
+      </div>
+
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {/* 1️⃣ TAB 1: WITHDRAWAL REQUEST FORM                                   */}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {activeTab === "REQUEST" && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          {/* Form Card (7 Cols) */}
+          <div className="lg:col-span-7 rounded-3xl bg-[#08152c]/90 border border-cyan-500/25 p-5 sm:p-7 shadow-xl space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
+              <div>
+                <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2 font-['Orbitron',sans-serif]">
+                  <ArrowDownLeft className="w-5 h-5 text-cyan-400" /> Submit Withdrawal Request
+                </h2>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Direct transfer to your BEP-20 wallet upon Admin verification.
+                </p>
+              </div>
+              <span className="px-2.5 py-1 text-[11px] font-bold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                Min $10 • 5% Fee
+              </span>
+            </div>
+
+            <form onSubmit={handleWithdrawalSubmit} className="space-y-5">
+              {/* Amount Input */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-semibold">
+                  <label className="text-slate-300">Withdrawal Amount (USDT)</label>
+                  <span className="text-slate-400">
+                    Available: <strong className="text-cyan-300 font-mono">${balances.currentIncomeWallet.toFixed(2)}</strong>
+                  </span>
+                </div>
+
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400 font-bold text-lg font-mono">
+                    $
+                  </span>
+                  <input
+                    type="number"
+                    step="any"
+                    min={MIN_WITHDRAWAL}
+                    max={balances.currentIncomeWallet}
+                    placeholder="Enter amount (min $10)"
+                    value={withdrawAmount}
+                    onChange={(e) => setWithdrawAmount(e.target.value)}
+                    className="w-full bg-[#030914] border border-cyan-500/30 focus:border-cyan-400 rounded-2xl py-3.5 pl-9 pr-24 text-white text-base sm:text-lg font-mono placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handlePresetAmount("MAX")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 rounded-xl text-xs font-bold font-mono transition cursor-pointer"
+                  >
+                    MAX
+                  </button>
+                </div>
+
+                {/* Preset Chips */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="text-[11px] text-slate-400 mr-1">Presets:</span>
+                  {[10, 25, 50, 100, 250, 500].map((preset) => (
+                    <button
+                      key={preset}
+                      type="button"
+                      onClick={() => handlePresetAmount(preset)}
+                      className="px-2.5 py-1 bg-[#09172f] hover:bg-[#0f2752] text-slate-300 hover:text-cyan-300 border border-slate-700 hover:border-cyan-500/50 rounded-xl text-xs font-mono font-bold transition cursor-pointer"
+                    >
+                      +${preset}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Destination Wallet Address Input */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-semibold">
+                  <label className="text-slate-300">Receiving Wallet Address (USDT BEP-20)</label>
+                  {destinationWallet && (
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(destinationWallet, "Wallet Address")}
+                      className="text-cyan-400 hover:text-cyan-300 text-[11px] flex items-center gap-1 cursor-pointer"
+                    >
+                      {copiedText === destinationWallet ? <Check size={12} /> : <Copy size={12} />}
+                      <span>Copy Address</span>
+                    </button>
+                  )}
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="0x... (BEP-20 / EVM address)"
+                    value={destinationWallet}
+                    onChange={(e) => setDestinationWallet(e.target.value)}
+                    className="w-full bg-[#030914] border border-cyan-500/30 focus:border-cyan-400 rounded-2xl py-3.5 px-4 text-white text-xs sm:text-sm font-mono placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition"
+                  />
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  Ensure this is your Binance Smart Chain (BEP-20) address. Admin sends USDT directly to this address.
+                </p>
+              </div>
+
+              {/* Real-time Calculation Breakdown Box */}
+              <div className="p-4 rounded-2xl bg-[#030914] border border-cyan-500/20 space-y-2.5">
+                <div className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+                  <span>Calculation Summary</span>
+                  <span className="text-cyan-400 font-mono">5% Flat Fee Applied</span>
+                </div>
+
+                <div className="flex items-center justify-between text-xs sm:text-sm text-slate-300">
+                  <span>Gross Requested Amount</span>
+                  <span className="font-mono font-bold text-white">${numWithdraw.toFixed(2)}</span>
+                </div>
+
+                <div className="flex items-center justify-between text-xs sm:text-sm text-rose-400">
+                  <span>Admin / Platform Fee ({WITHDRAWAL_FEE_PERCENT}%)</span>
+                  <span className="font-mono font-bold">-${adminFee.toFixed(2)}</span>
+                </div>
+
+                <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-sm sm:text-base font-bold">
+                  <span className="text-emerald-400 flex items-center gap-1.5">
+                    <CheckCircle2 size={16} /> Net Payout (95%)
+                  </span>
+                  <span className="font-mono text-emerald-400 text-lg sm:text-xl font-black">
+                    ${netWithdrawPayout.toFixed(2)} USDT
+                  </span>
+                </div>
+              </div>
+
+              {/* Submit CTA */}
+              <button
+                type="submit"
+                disabled={isSubmitting || numWithdraw < MIN_WITHDRAWAL || numWithdraw > balances.currentIncomeWallet}
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-cyan-400 hover:from-cyan-400 hover:to-blue-500 text-black font-black text-sm uppercase tracking-wider shadow-[0_0_25px_rgba(0,210,255,0.4)] disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-98 font-['Orbitron',sans-serif]"
+              >
+                {isSubmitting ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    <span>Processing Request...</span>
+                  </>
+                ) : (
+                  <>
+                    <ArrowDownLeft className="w-4 h-4" />
+                    <span>Submit Withdrawal Request (${MIN_WITHDRAWAL} Min • 5% Fee)</span>
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+
+          {/* Rules & Policy Side Panel (5 Cols) */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="rounded-3xl bg-[#08152c]/90 border border-cyan-500/20 p-5 sm:p-6 shadow-xl space-y-4">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2 font-['Orbitron',sans-serif]">
+                <ShieldCheck className="w-4 h-4 text-cyan-400" /> Official Withdrawal Guidelines
+              </h3>
+
+              <div className="space-y-3 text-xs text-slate-300">
+                <div className="p-3 rounded-2xl bg-[#030914] border border-slate-800 flex items-start gap-3">
+                  <div className="w-7 h-7 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0 font-bold font-mono">
+                    10
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white">Minimum Withdrawal: $10.00</h4>
+                    <p className="text-slate-400 text-[11px] mt-0.5">
+                      Requests below $10 cannot be submitted. You can accumulate earnings and request anytime.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-[#030914] border border-slate-800 flex items-start gap-3">
+                  <div className="w-7 h-7 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400 shrink-0 font-bold font-mono">
+                    5%
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white">Admin / Platform Charge: 5%</h4>
+                    <p className="text-slate-400 text-[11px] mt-0.5">
+                      A flat 5% platform charge is deducted automatically. You receive 95% net amount in USDT.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-[#030914] border border-slate-800 flex items-start gap-3">
+                  <div className="w-7 h-7 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 font-bold font-mono">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white">Manual Admin Verification & Payout</h4>
+                    <p className="text-slate-400 text-[11px] mt-0.5">
+                      All withdrawal requests undergo manual administrative audit. Once approved, the payment is dispatched manually with an on-chain transaction hash.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-[#030914] border border-slate-800 flex items-start gap-3">
+                  <div className="w-7 h-7 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 font-bold font-mono">
+                    24h
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white">1 Withdrawal Request Per 24h</h4>
+                    <p className="text-slate-400 text-[11px] mt-0.5">
+                      Users can place 1 withdrawal request per 24 hours to ensure orderly blockchain settlement.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Balance Status */}
+            <div className="rounded-3xl bg-gradient-to-br from-[#09172f] to-[#030914] border border-cyan-500/30 p-5 shadow-xl">
+              <div className="flex items-center justify-between text-xs text-slate-400 font-bold">
+                <span>Account Status</span>
+                <span className="text-emerald-400 flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Active Member
+                </span>
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <div>
+                  <div className="text-xs text-slate-400">Available to Withdraw</div>
+                  <div className="text-xl font-black text-cyan-300 font-mono mt-0.5">
+                    ${balances.currentIncomeWallet.toFixed(2)} USDT
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("HISTORY")}
+                  className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-cyan-300 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                >
+                  <span>View History</span>
+                  <ExternalLink size={12} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {/* 2️⃣ TAB 2: LIVE WITHDRAWAL HISTORY & STATUS TRACKER                  */}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {(activeTab === "HISTORY" || activeTab === "ALL") && (
+        <div className="rounded-3xl bg-[#08152c]/90 border border-cyan-500/25 p-5 sm:p-7 shadow-xl space-y-5">
+          {/* Header & Controls */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/80 pb-4">
+            <div>
+              <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2 font-['Orbitron',sans-serif]">
+                <Clock className="w-5 h-5 text-cyan-400" /> Withdrawal History & Status Tracker
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Track pending approvals, completed manual payments, and transaction hashes.
+              </p>
+            </div>
+
+            {/* Filter Buttons */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              {["ALL", "PENDING", "COMPLETED", "CANCELLED"].map((st) => (
+                <button
+                  key={st}
+                  onClick={() => setStatusFilter(st)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition cursor-pointer ${
+                    statusFilter === st
+                      ? "bg-cyan-500 text-black shadow-[0_0_10px_rgba(0,210,255,0.4)]"
+                      : "bg-[#030914] text-slate-400 hover:text-white border border-slate-800"
+                  }`}
+                >
+                  {st === "COMPLETED" ? "PAID" : st}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative max-w-md">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <input
+              type="text"
+              placeholder="Search by ID, Address, Amount, or Hash..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#030914] border border-slate-800 focus:border-cyan-500/50 rounded-2xl py-2.5 pl-10 pr-4 text-xs sm:text-sm text-white placeholder:text-slate-600 focus:outline-none transition"
+            />
+          </div>
+
+          {/* Table */}
+          <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-[#030914]">
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="bg-[#09172f]/80 text-slate-400 uppercase tracking-wider text-[11px] font-bold border-b border-slate-800">
+                  <th className="py-3 px-4">#</th>
+                  <th className="py-3 px-4">Request ID</th>
+                  <th className="py-3 px-4">Gross Amount</th>
+                  <th className="py-3 px-4">5% Admin Fee</th>
+                  <th className="py-3 px-4">Net Payout</th>
+                  <th className="py-3 px-4">Receiving Wallet</th>
+                  <th className="py-3 px-4">Status</th>
+                  <th className="py-3 px-4">Date & Time</th>
+                  <th className="py-3 px-4">Payment TxID / Note</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-800/60 font-sans">
+                {filteredHistory.length === 0 ? (
+                  <tr>
+                    <td colSpan={9} className="py-10 text-center text-slate-500">
+                      <FileText className="w-8 h-8 mx-auto text-slate-600 mb-2 opacity-50" />
+                      <p className="text-sm font-semibold">No withdrawal records found.</p>
+                      <p className="text-xs text-slate-600 mt-0.5">
+                        {statusFilter !== "ALL"
+                          ? `No records under "${statusFilter}" filter.`
+                          : "Submit a withdrawal above to see your history."}
+                      </p>
+                    </td>
+                  </tr>
+                ) : (
+                  filteredHistory.map((item, idx) => {
+                    const gross = Number(
+                      item.investment || item.requestedAmount || item.amount || 0
+                    );
+                    const fee = Number(item.gasFee ?? gross * 0.05);
+                    const net = Number(
+                      item.exchangeAmount ?? item.netAmount ?? gross - fee
+                    );
+                    const rawStatus = String(item.status || "Pending").toLowerCase();
+                    const isPending = rawStatus === "pending";
+                    const isApproved =
+                      rawStatus === "completed" || rawStatus === "approved";
+                    const isCancelled =
+                      rawStatus === "cancelled" || rawStatus === "rejected";
+                    const addr = item.clientAddress || loggedUser?.account || "";
+                    const txId = item.id || item._id || "WITH-ID";
+
+                    return (
+                      <tr
+                        key={item._id || item.id || idx}
+                        className="hover:bg-[#09172f]/40 transition duration-150"
+                      >
+                        {/* Index */}
+                        <td className="py-3.5 px-4 text-slate-500 font-mono">
+                          {idx + 1}
+                        </td>
+
+                        {/* Request ID */}
+                        <td className="py-3.5 px-4 font-mono font-bold text-cyan-300">
+                          {txId}
+                        </td>
+
+                        {/* Gross */}
+                        <td className="py-3.5 px-4 font-bold text-white font-mono">
+                          ${gross.toFixed(2)}
+                        </td>
+
+                        {/* 5% Fee */}
+                        <td className="py-3.5 px-4 font-mono font-semibold text-rose-400">
+                          -${fee.toFixed(2)}
+                        </td>
+
+                        {/* Net */}
+                        <td className="py-3.5 px-4 font-mono font-black text-emerald-400 text-sm">
+                          ${net.toFixed(2)}
+                        </td>
+
+                        {/* Receiving Wallet */}
+                        <td className="py-3.5 px-4 font-mono text-slate-300">
+                          <div className="flex items-center gap-1.5">
+                            <span title={addr}>{maskWalletAddress(addr)}</span>
+                            {addr && (
+                              <button
+                                onClick={() => handleCopy(addr, "Address")}
+                                className="text-slate-500 hover:text-cyan-400 transition"
+                                title="Copy Address"
+                              >
+                                {copiedText === addr ? (
+                                  <Check size={12} className="text-emerald-400" />
+                                ) : (
+                                  <Copy size={12} />
+                                )}
+                              </button>
+                            )}
+                          </div>
+                        </td>
+
+                        {/* Status */}
+                        <td className="py-3.5 px-4">
+                          {isPending && (
+                            <span className="px-2.5 py-1 text-[11px] font-bold rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 inline-flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                              Pending Approval
+                            </span>
+                          )}
+                          {isApproved && (
+                            <span className="px-2.5 py-1 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 inline-flex items-center gap-1.5">
+                              <CheckCircle2 size={12} />
+                              Paid / Approved
+                            </span>
+                          )}
+                          {isCancelled && (
+                            <span className="px-2.5 py-1 text-[11px] font-bold rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30 inline-flex items-center gap-1.5">
+                              <XCircle size={12} />
+                              Rejected & Refunded
+                            </span>
+                          )}
+                        </td>
+
+                        {/* Date */}
+                        <td className="py-3.5 px-4 text-slate-400 text-[11px]">
+                          {item.createdAt
+                            ? new Date(item.createdAt).toLocaleString()
+                            : "—"}
+                        </td>
+
+                        {/* Tx Hash / Note */}
+                        <td className="py-3.5 px-4 font-mono text-[11px]">
+                          {item.hash && item.hash !== "—" ? (
+                            <div className="flex items-center gap-1 text-cyan-300">
+                              <span className="truncate max-w-[120px]" title={item.hash}>
+                                {item.hash.startsWith("0x")
+                                  ? maskWalletAddress(item.hash)
+                                  : item.hash}
+                              </span>
+                              <button
+                                onClick={() => handleCopy(item.hash, "Tx Hash")}
+                                className="text-slate-500 hover:text-cyan-400 transition"
+                                title="Copy Tx Hash"
+                              >
+                                {copiedText === item.hash ? (
+                                  <Check size={12} className="text-emerald-400" />
+                                ) : (
+                                  <Copy size={12} />
+                                )}
+                              </button>
+                              {item.hash.startsWith("0x") && (
+                                <a
+                                  href={`https://bscscan.com/tx/${item.hash}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-slate-500 hover:text-cyan-400 transition"
+                                  title="View on BscScan"
+                                >
+                                  <ExternalLink size={12} />
+                                </a>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="text-slate-500 italic">
+                              {item.remark || (isPending ? "Awaiting Admin Payout" : "—")}
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default RequestWithdrawal;

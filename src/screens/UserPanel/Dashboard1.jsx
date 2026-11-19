@@ -157,7 +157,7 @@ const Dashboard1 = () => {
     };
 
     fetchDashboardData();
-  }, [dispatch, access, role]);
+  }, [dispatch, role]);
 
   // Consolidate User & Stats Object
   const stats = totalIncome?.data || totalIncome || incomeSummary?.data || incomeSummary || {};

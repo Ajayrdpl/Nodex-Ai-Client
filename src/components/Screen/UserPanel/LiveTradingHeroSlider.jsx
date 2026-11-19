@@ -284,9 +284,9 @@ export const LiveMarketTickerMarquee = ({
   const displayCoins = [...coins, ...coins, ...coins];
 
   return (
-    <div className="bg-[#070E1E]/95 border border-slate-800 hover:border-cyan-500/40 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2 sm:gap-3 overflow-hidden backdrop-blur-md shadow-lg transition group select-none w-full">
+    <div className="bg-[#060e1d]/90 border border-cyan-500/20 hover:border-cyan-400/50 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2 sm:gap-3 overflow-hidden backdrop-blur-xl shadow-lg transition group select-none w-full">
       {/* Pinned Left LIVE MARKET Badge */}
-      <div className="flex items-center gap-1.5 sm:gap-2 text-xs font-black text-cyan-400 shrink-0 font-['Orbitron',monospace] bg-cyan-950/90 border border-cyan-800/80 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl shadow-md z-10">
+      <div className="flex items-center gap-1.5 sm:gap-2 text-xs font-black text-cyan-400 shrink-0 font-['Orbitron',sans-serif] bg-cyan-950/80 border border-cyan-500/40 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl shadow-[0_0_10px_rgba(0,210,255,0.2)] z-10">
         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
         <span className="hidden sm:inline tracking-wider">LIVE MARKET</span>
         <span className="sm:hidden tracking-wider text-[10px]">LIVE</span>
@@ -318,18 +318,18 @@ export const LiveMarketTickerMarquee = ({
               <div
                 key={`${c.id}-${index}`}
                 onClick={() => onSelectCoin && onSelectCoin(c)}
-                className={`flex items-center gap-1.5 sm:gap-2 shrink-0 cursor-pointer px-2 sm:px-2.5 py-1 rounded-xl transition-all duration-200 border text-xs whitespace-nowrap ${
+                className={`flex items-center gap-1.5 sm:gap-2 shrink-0 cursor-pointer px-2.5 sm:px-3 py-1 rounded-xl transition-all duration-200 border text-xs whitespace-nowrap ${
                   isSelected
                     ? "bg-cyan-500/25 border-cyan-400 text-white shadow-md shadow-cyan-500/20 scale-105"
-                    : "bg-slate-950/85 border-slate-800 hover:bg-slate-900 hover:border-cyan-500/50 text-slate-200 hover:scale-102"
+                    : "bg-[#08152c]/80 border-cyan-500/20 hover:bg-[#0c1f40] hover:border-cyan-400/50 text-slate-200 hover:scale-102"
                 }`}
               >
                 <img
                   src={c.icon}
                   alt={c.symbol}
-                  className="w-4 h-4 rounded-full object-contain bg-slate-900 border border-slate-700 shrink-0"
+                  className="w-4 h-4 rounded-full object-contain bg-[#060e1d] border border-cyan-500/30 shrink-0"
                 />
-                <span className="font-black text-white tracking-wide font-['Orbitron',monospace] text-[11px] sm:text-xs">
+                <span className="font-black text-white tracking-wide font-['Orbitron',sans-serif] text-[11px] sm:text-xs">
                   {c.symbol}
                 </span>
                 <span className="font-mono text-cyan-300 font-extrabold text-[11px] sm:text-xs">

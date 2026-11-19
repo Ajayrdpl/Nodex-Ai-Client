@@ -3,79 +3,79 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowUpRight, ArrowDownRight, TrendingUp, Sparkles } from "lucide-react";
 
-// Curated Binance Pro Dark & Gold Theme Definitions
+// Curated NODEXAI Cyber-Glass Theme Definitions (Matching Landing Page)
 const THEME_CONFIG = {
   emerald: {
-    cardBg: "bg-[#181a20]",
-    border: "border-[#2b313a] hover:border-[#0ecb81]",
-    glow: "bg-[#0ecb81]/15 group-hover:bg-[#0ecb81]/25",
-    shadow: "hover:shadow-[0_4px_16px_rgba(14,203,129,0.2)]",
-    iconPod: "bg-[#1e2329] border-[#2b313a] text-[#0ecb81] group-hover:border-[#0ecb81] group-hover:scale-105",
+    cardBg: "bg-gradient-to-br from-[#08152c]/95 via-[#061022]/95 to-[#030814]/95 backdrop-blur-xl",
+    border: "border-cyan-500/20 hover:border-emerald-400/60",
+    glow: "bg-emerald-500/15 group-hover:bg-emerald-500/25",
+    shadow: "hover:shadow-[0_8px_25px_rgba(16,185,129,0.2)]",
+    iconPod: "bg-[#06181f] border border-emerald-500/40 text-emerald-400 group-hover:border-emerald-400 group-hover:scale-105 shadow-[0_0_10px_rgba(16,185,129,0.15)]",
     titleColor: "text-white font-bold group-hover:text-white",
-    valueGradient: "text-[#0ecb81]",
-    badgeBg: "bg-[#0ecb81]/25 text-white font-extrabold border-[#0ecb81]/40",
-    actionColor: "text-[#0ecb81] group-hover:text-emerald-300",
-    beacon: "bg-[#0ecb81]",
+    valueGradient: "text-emerald-400 font-black",
+    badgeBg: "bg-emerald-950/60 text-emerald-300 font-extrabold border-emerald-500/40 font-mono",
+    actionColor: "text-emerald-400 group-hover:text-emerald-300 font-bold",
+    beacon: "bg-emerald-400",
   },
   cyan: {
-    cardBg: "bg-[#181a20]",
-    border: "border-[#2b313a] hover:border-[#f0b90b]",
-    glow: "bg-[#f0b90b]/15 group-hover:bg-[#f0b90b]/25",
-    shadow: "hover:shadow-[0_4px_16px_rgba(240,185,11,0.2)]",
-    iconPod: "bg-[#1e2329] border-[#2b313a] text-[#f0b90b] group-hover:border-[#f0b90b] group-hover:scale-105",
+    cardBg: "bg-gradient-to-br from-[#08152c]/95 via-[#061022]/95 to-[#030814]/95 backdrop-blur-xl",
+    border: "border-cyan-500/25 hover:border-cyan-400/60",
+    glow: "bg-cyan-500/20 group-hover:bg-cyan-500/30",
+    shadow: "hover:shadow-[0_8px_25px_rgba(0,210,255,0.2)]",
+    iconPod: "bg-[#0a1e3f] border border-cyan-500/40 text-cyan-400 group-hover:border-cyan-300 group-hover:scale-105 shadow-[0_0_10px_rgba(0,210,255,0.2)]",
     titleColor: "text-white font-bold group-hover:text-white",
-    valueGradient: "text-[#f0b90b]",
-    badgeBg: "bg-[#2b313a] text-white font-extrabold border-[#363d45]",
-    actionColor: "text-[#f0b90b] group-hover:text-[#fcd535]",
-    beacon: "bg-[#f0b90b]",
+    valueGradient: "bg-gradient-to-r from-cyan-300 via-sky-200 to-white bg-clip-text text-transparent font-black",
+    badgeBg: "bg-cyan-950/60 text-cyan-300 font-extrabold border-cyan-500/40 font-mono",
+    actionColor: "text-cyan-400 group-hover:text-cyan-300 font-bold",
+    beacon: "bg-cyan-400",
   },
   purple: {
-    cardBg: "bg-[#181a20]",
-    border: "border-[#2b313a] hover:border-[#f0b90b]",
-    glow: "bg-[#f0b90b]/10 group-hover:bg-[#f0b90b]/20",
-    shadow: "hover:shadow-[0_4px_16px_rgba(240,185,11,0.2)]",
-    iconPod: "bg-[#1e2329] border-[#2b313a] text-[#f0b90b] group-hover:border-[#f0b90b] group-hover:scale-105",
+    cardBg: "bg-gradient-to-br from-[#08152c]/95 via-[#061022]/95 to-[#030814]/95 backdrop-blur-xl",
+    border: "border-cyan-500/20 hover:border-amber-400/60",
+    glow: "bg-amber-500/15 group-hover:bg-cyan-500/25",
+    shadow: "hover:shadow-[0_8px_25px_rgba(245,158,11,0.2)]",
+    iconPod: "bg-[#0a1e3f] border border-cyan-500/30 text-cyan-300 group-hover:border-amber-400 group-hover:scale-105 shadow-[0_0_10px_rgba(0,210,255,0.15)]",
     titleColor: "text-white font-bold group-hover:text-white",
     valueGradient: "text-white font-black",
-    badgeBg: "bg-[#2b313a] text-white font-extrabold border-[#363d45]",
-    actionColor: "text-[#f0b90b] group-hover:text-[#fcd535]",
-    beacon: "bg-[#f0b90b]",
+    badgeBg: "bg-cyan-950/60 text-cyan-300 font-extrabold border-cyan-500/40 font-mono",
+    actionColor: "text-amber-400 group-hover:text-amber-300 font-bold",
+    beacon: "bg-amber-400",
   },
   amber: {
-    cardBg: "bg-[#181a20]",
-    border: "border-[#2b313a] hover:border-[#f0b90b]",
-    glow: "bg-[#f0b90b]/20 group-hover:bg-[#f0b90b]/30",
-    shadow: "hover:shadow-[0_4px_16px_rgba(240,185,11,0.3)]",
-    iconPod: "bg-[#1e2329] border-[#2b313a] text-[#f0b90b] shadow-sm group-hover:border-[#f0b90b] group-hover:scale-105",
+    cardBg: "bg-gradient-to-br from-[#08152c]/95 via-[#061022]/95 to-[#030814]/95 backdrop-blur-xl",
+    border: "border-amber-500/25 hover:border-amber-400/60",
+    glow: "bg-amber-500/20 group-hover:bg-amber-500/35",
+    shadow: "hover:shadow-[0_8px_25px_rgba(245,158,11,0.25)]",
+    iconPod: "bg-[#211705] border border-amber-500/40 text-amber-400 group-hover:border-amber-300 group-hover:scale-105 shadow-[0_0_10px_rgba(245,158,11,0.2)]",
     titleColor: "text-white font-bold group-hover:text-white",
-    valueGradient: "text-[#f0b90b]",
-    badgeBg: "bg-[#f0b90b]/25 text-white font-extrabold border-[#f0b90b]/40",
-    actionColor: "text-[#f0b90b] group-hover:text-[#fcd535]",
-    beacon: "bg-[#f0b90b]",
+    valueGradient: "bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-500 bg-clip-text text-transparent font-black",
+    badgeBg: "bg-amber-950/60 text-amber-300 font-extrabold border-amber-500/40 font-mono",
+    actionColor: "text-amber-400 group-hover:text-amber-300 font-bold",
+    beacon: "bg-amber-400",
   },
   rose: {
-    cardBg: "bg-[#181a20]",
-    border: "border-[#2b313a] hover:border-[#f6465d]",
-    glow: "bg-[#f6465d]/15 group-hover:bg-[#f6465d]/25",
-    shadow: "hover:shadow-[0_4px_16px_rgba(246,70,93,0.2)]",
-    iconPod: "bg-[#1e2329] border-[#2b313a] text-[#f6465d] group-hover:border-[#f6465d] group-hover:scale-105",
+    cardBg: "bg-gradient-to-br from-[#08152c]/95 via-[#061022]/95 to-[#030814]/95 backdrop-blur-xl",
+    border: "border-rose-500/25 hover:border-rose-400/60",
+    glow: "bg-rose-500/15 group-hover:bg-rose-500/25",
+    shadow: "hover:shadow-[0_8px_25px_rgba(244,63,94,0.2)]",
+    iconPod: "bg-[#230914] border border-rose-500/40 text-rose-400 group-hover:border-rose-300 group-hover:scale-105 shadow-[0_0_10px_rgba(244,63,94,0.15)]",
     titleColor: "text-white font-bold group-hover:text-white",
-    valueGradient: "text-[#f6465d]",
-    badgeBg: "bg-[#f6465d]/25 text-white font-extrabold border-[#f6465d]/40",
-    actionColor: "text-[#f6465d] group-hover:text-rose-400",
-    beacon: "bg-[#f6465d]",
+    valueGradient: "text-rose-400 font-black",
+    badgeBg: "bg-rose-950/60 text-rose-300 font-extrabold border-rose-500/40 font-mono",
+    actionColor: "text-rose-400 group-hover:text-rose-300 font-bold",
+    beacon: "bg-rose-400",
   },
   blue: {
-    cardBg: "bg-[#181a20]",
-    border: "border-[#2b313a] hover:border-[#f0b90b]",
-    glow: "bg-[#f0b90b]/15 group-hover:bg-[#f0b90b]/25",
-    shadow: "hover:shadow-[0_4px_16px_rgba(240,185,11,0.25)]",
-    iconPod: "bg-[#1e2329] border-[#2b313a] text-white group-hover:border-[#f0b90b] group-hover:scale-105",
+    cardBg: "bg-gradient-to-br from-[#08152c]/95 via-[#061022]/95 to-[#030814]/95 backdrop-blur-xl",
+    border: "border-cyan-500/20 hover:border-cyan-400/60",
+    glow: "bg-cyan-500/15 group-hover:bg-cyan-500/25",
+    shadow: "hover:shadow-[0_8px_25px_rgba(0,210,255,0.2)]",
+    iconPod: "bg-[#0b1c3a] border border-cyan-500/30 text-cyan-300 group-hover:border-cyan-300 group-hover:scale-105 shadow-[0_0_10px_rgba(0,210,255,0.15)]",
     titleColor: "text-white font-bold group-hover:text-white",
-    valueGradient: "text-white",
-    badgeBg: "bg-[#2b313a] text-white font-extrabold border-[#363d45]",
-    actionColor: "text-[#f0b90b] group-hover:text-[#fcd535]",
-    beacon: "bg-[#f0b90b]",
+    valueGradient: "text-white font-black",
+    badgeBg: "bg-cyan-950/60 text-cyan-300 font-extrabold border-cyan-500/40 font-mono",
+    actionColor: "text-cyan-400 group-hover:text-cyan-300 font-bold",
+    beacon: "bg-cyan-400",
   },
 };
 
@@ -122,7 +122,7 @@ const StatCard = ({
   return (
     <div
       onClick={handleNavigate}
-      className={`relative overflow-hidden rounded-xl p-2 sm:p-2.5 transition-all duration-200 group select-none border backdrop-blur-md shadow-sm hover:shadow-md ${cfg.cardBg
+      className={`relative overflow-hidden rounded-2xl p-2.5 sm:p-3 transition-all duration-300 group select-none border backdrop-blur-xl shadow-lg hover:shadow-xl ${cfg.cardBg
         } ${cfg.border} ${cfg.shadow} ${path ? "cursor-pointer hover:-translate-y-0.5 active:scale-[0.99]" : ""
         }`}
     >
@@ -175,7 +175,7 @@ const StatCard = ({
       </div>
 
       {/* Subtext & Live / Action Strip (Tight Compact Footer) */}
-      <div className="relative z-10 flex items-center justify-between pt-0.5 mt-1 border-t border-slate-800/60 text-[7.5px] sm:text-[8.5px] gap-1 min-w-0">
+      <div className="relative z-10 flex items-center justify-between pt-1 mt-1.5 border-t border-cyan-500/15 text-[7.5px] sm:text-[8.5px] gap-1 min-w-0">
         {subText ? (
           <span className="text-white font-semibold truncate max-w-[70%]">
             {subText}

@@ -291,7 +291,7 @@ const InactiveUsers = () => {
   ];
   return (
     <DataTable
-      title="Inactive Users (Deposit < $50 / Inactive ID)"
+      title="Inactive Users (Deposit < $25 / Inactive ID)"
       columns={columns}
       data={allUsers}
       pageSize={10}

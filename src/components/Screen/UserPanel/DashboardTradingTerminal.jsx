@@ -297,26 +297,26 @@ export const DashboardTradingTerminal = ({
   return (
     <div className="space-y-4 max-w-full overflow-hidden">
       {/* ── Section Title Header ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#2b313a] pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cyan-500/20 pb-3">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#f0b90b]/15 border border-[#f0b90b]/30 flex items-center justify-center text-[#f0b90b] font-bold shadow-sm shrink-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#0a1e3f] border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-[0_0_10px_rgba(0,210,255,0.2)] font-bold shadow-sm shrink-0">
             <Activity size={18} />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#0ecb81] animate-ping" />
-              <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#f0b90b] font-mono">
+              <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-amber-300 font-mono">
                 INSTITUTIONAL TRADING ENGINE
               </span>
             </div>
-            <h2 className="text-base sm:text-lg md:text-xl font-black text-[#eaecef] font-['Orbitron',monospace]">
+            <h2 className="text-base sm:text-lg md:text-xl font-black bg-gradient-to-r from-cyan-400 via-white to-amber-300 bg-clip-text text-transparent font-['Orbitron',sans-serif]">
               Live Multi-Chain Market Terminal
             </h2>
           </div>
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
-          <div className="flex items-center gap-2 bg-[#1e2329] border border-[#2b313a] px-3 py-1 rounded-xl text-xs font-mono">
+          <div className="flex items-center gap-2 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-xl text-xs font-mono shadow-[0_0_10px_rgba(16,185,129,0.15)]">
             <span className="text-[#848e9c]">Status:</span>
             <span className="text-[#0ecb81] font-bold flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[#0ecb81] animate-pulse" /> 100% Live Stream
@@ -328,12 +328,12 @@ export const DashboardTradingTerminal = ({
       {/* ── ROW 1: EXPANSIVE TRADING CHART (TOP/RIGHT) & MARKET WATCH (LEFT) ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start">
         {/* Market Watch & Pair List */}
-        <div className="order-2 lg:order-1 lg:col-span-4 bg-[#181a20] border border-[#2b313a] rounded-2xl p-3 sm:p-3.5 space-y-2.5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-[#2b313a] pb-2">
-            <span className="text-xs font-black uppercase tracking-wider text-[#f0b90b] flex items-center gap-1.5">
+        <div className="order-2 lg:order-1 lg:col-span-4 bg-gradient-to-br from-[#08152c]/95 to-[#040c1a]/95 border border-cyan-500/20 rounded-2xl p-3 sm:p-3.5 space-y-2.5 shadow-lg">
+          <div className="flex items-center justify-between border-b border-cyan-500/20 pb-2">
+            <span className="text-xs font-black uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
               <Activity size={13} /> Market Pairs
             </span>
-            <span className="text-[10px] bg-[#1e2329] px-2 py-0.5 rounded text-[#848e9c] font-mono border border-[#2b313a]">
+            <span className="text-[10px] bg-[#030814] px-2 py-0.5 rounded text-cyan-300 font-mono border border-cyan-500/20">
               {coins.length} Pairs
             </span>
           </div>
@@ -345,7 +345,7 @@ export const DashboardTradingTerminal = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search (VC, BTC, ETH)..."
-              className="w-full bg-[#1e2329] border border-[#2b313a] rounded-xl py-1.5 pl-8 pr-7 text-xs text-[#eaecef] placeholder-[#848e9c] focus:border-[#f0b90b] outline-none font-mono"
+              className="w-full bg-[#030814] border border-cyan-500/25 rounded-xl py-1.5 pl-8 pr-7 text-xs text-white placeholder-slate-400 focus:border-cyan-400 outline-none font-mono"
             />
             <Search
               size={12}
@@ -445,9 +445,9 @@ export const DashboardTradingTerminal = ({
       {/* ── ROW 2: PRECISION TRADE & AI BOT CONSOLE (LEFT) + ORDER BOOK (RIGHT) ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
         {/* Order Execution Engine */}
-        <div className="lg:col-span-7 xl:col-span-8 bg-[#181a20] border border-[#2b313a] rounded-2xl p-3 sm:p-4 shadow-sm flex flex-col justify-between space-y-3">
+        <div className="lg:col-span-7 xl:col-span-8 bg-gradient-to-br from-[#08152c]/95 to-[#040c1a]/95 border border-cyan-500/20 rounded-2xl p-3 sm:p-4 shadow-lg flex flex-col justify-between space-y-3">
           {/* Top Tabs: Market | Limit | AI Bot + Leverage Pills */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#2b313a] pb-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cyan-500/20 pb-2.5">
             {/* Mode Switcher */}
             <div className="flex items-center gap-1 bg-[#12161c] p-0.5 rounded-xl border border-[#2b313a] overflow-x-auto scrollbar-none w-full sm:w-auto">
               {[
@@ -743,9 +743,9 @@ export const DashboardTradingTerminal = ({
         </div>
 
         {/* Live Order Book */}
-        <div className="lg:col-span-5 xl:col-span-4 bg-[#181a20] border border-[#2b313a] rounded-2xl p-3 space-y-2 shadow-sm flex flex-col justify-between">
-          <div className="flex items-center justify-between border-b border-[#2b313a] pb-1.5">
-            <span className="text-[11px] font-black uppercase tracking-wider text-[#f0b90b] flex items-center gap-1.5">
+        <div className="lg:col-span-5 xl:col-span-4 bg-gradient-to-br from-[#08152c]/95 to-[#040c1a]/95 border border-cyan-500/20 rounded-2xl p-3 space-y-2 shadow-lg flex flex-col justify-between">
+          <div className="flex items-center justify-between border-b border-cyan-500/20 pb-1.5">
+            <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
               <Layers size={12} /> Order Book
             </span>
             <span className="text-[9px] bg-[#0ecb81]/15 text-[#0ecb81] px-1.5 py-0.2 rounded font-mono border border-[#0ecb81]/30">

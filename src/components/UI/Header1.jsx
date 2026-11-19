@@ -32,6 +32,7 @@ const Header1 = () => {
     { name: "Ecosystem", href: "#ecosystem" },
     { name: "Packages", href: "#packages" },
     { name: "Income Streams", href: "#income" },
+    { name: "Node Wonder", href: "#node-wonder" },
     { name: "Booster Bonus", href: "#booster" },
     { name: "Why Us", href: "#why-choose-us" },
     { name: "Terms & Rules", href: "#terms" },

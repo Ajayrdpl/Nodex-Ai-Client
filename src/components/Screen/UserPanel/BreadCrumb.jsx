@@ -27,13 +27,13 @@ const Breadcrumb = () => {
         : AuthenticatedUserRouters.DASHBOARD;
 
     return (
-        <div className="mb-2">
-            <p className="text-[#848e9c] text-xs font-medium">
-                <Link to={dashboardPath} className="hover:text-[#f0b90b] transition-colors">
+        <div className="mb-2.5">
+            <p className="text-slate-400 text-xs font-mono font-medium flex items-center gap-1.5">
+                <Link to={dashboardPath} className="text-cyan-400 hover:text-amber-300 font-bold transition-colors">
                     Dashboard
                 </Link>
-                {" / "}
-                <span className="text-[#eaecef] font-semibold">{generateBreadcrumb()}</span>
+                <span className="text-cyan-500/40">/</span>
+                <span className="text-white font-black tracking-wide font-['Orbitron',sans-serif]">{generateBreadcrumb()}</span>
             </p>
         </div>
     );

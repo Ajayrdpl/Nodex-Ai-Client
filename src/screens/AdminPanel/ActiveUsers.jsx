@@ -291,7 +291,7 @@ const ActiveUsers = () => {
   ];
   return (
     <DataTable
-      title="Active Users ($50+ Cumulative Investment)"
+      title="Active Users ($25 Cumulative Investment)"
       columns={columns}
       data={allUsers}
       pageSize={10}

@@ -88,6 +88,24 @@ const INCOME_STREAMS = [
       "Decentralized ecosystem growth and adoption",
     ],
   },
+  {
+    key: "node-wonder",
+    num: "06",
+    title: "Node Wonder Cycle & Referral",
+    tag: "150% Yield • Auto FIFO",
+    highlight: "$150",
+    highlightLabel: "$150 Payout / $100 Entry",
+    desc: "Autonomous FIFO global queue system. Every 2 new entries push the top position to cycle out for $150. Plus 5% ($5.00) unconditional direct sponsor bonus with zero requirements.",
+    color: "#00d2ff",
+    icon: <FiZap className="w-6 h-6" />,
+    points: [
+      "$100 Node Wonder Global Queue Entry",
+      "$150.00 Payout per completed cycle (150% Return)",
+      "Automated FIFO 2:1 global push mechanism",
+      "5% ($5.00) unconditional direct referral bonus",
+      "Unlimited re-entries and continuous cycling",
+    ],
+  },
 ];
 
 const IncomeTypes = () => {

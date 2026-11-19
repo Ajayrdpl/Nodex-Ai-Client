@@ -19,31 +19,31 @@ const NavLink = ({ to, icon, text, badge, hasNotification = false, onClose }) =>
       end={to === AuthenticatedUserRouters.DASHBOARD || to === AuthenticatedAdminRouters.ADMIN_DASHBOARD}
       onClick={onClose}
       className={({ isActive }) => `
-        flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl relative
+        group flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl relative
         transition-all duration-200 ease-in-out cursor-pointer text-xs font-bold
         ${isActive
-          ? "text-[#f0b90b] bg-[#1e2329] border border-[#f0b90b]/40 shadow-sm"
-          : "text-white hover:text-[#f0b90b] hover:bg-[#1e2329]/80"
+          ? "text-amber-300 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)]"
+          : "text-slate-100 hover:text-cyan-300 hover:bg-[#0a1833]/80 border border-transparent hover:border-cyan-500/25"
         }
       `}
     >
       {({ isActive }) => (
         <>
           {isActive && (
-            <span className="absolute left-0 top-2 bottom-2 w-1 bg-[#f0b90b] rounded-r-full shadow-[0_0_8px_rgba(240,185,11,0.5)]" />
+            <span className="absolute left-0 top-2 bottom-2 w-1 bg-gradient-to-b from-amber-400 to-yellow-300 rounded-r-full shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
           )}
 
-          <i className={`${icon} w-4 text-center text-xs transition-colors ${isActive ? "text-[#f0b90b]" : "text-white/80"}`} />
+          <i className={`${icon} w-4 text-center text-xs transition-colors ${isActive ? "text-amber-400" : "text-cyan-400/80 group-hover:text-cyan-300"}`} />
           <span className="truncate text-white font-medium">{text}</span>
 
           {badge && (
-            <span className="ml-auto px-1.5 py-0.5 rounded text-[9px] font-extrabold bg-[#f0b90b]/20 text-white border border-[#f0b90b]/40 tracking-wider font-mono">
+            <span className="ml-auto px-1.5 py-0.5 rounded text-[9px] font-extrabold bg-cyan-950/70 text-cyan-300 border border-cyan-500/40 tracking-wider font-mono">
               {badge}
             </span>
           )}
 
           {hasNotification && !badge && (
-            <span className="ml-auto bg-[#f6465d] text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-bold text-white">
+            <span className="ml-auto bg-rose-500 text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-bold text-white shadow-[0_0_8px_rgba(244,63,94,0.6)]">
               1
             </span>
           )}
@@ -72,18 +72,18 @@ const SidebarDropdown = ({
       <button
         onClick={toggleDropdown}
         className={`
-          flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold text-nowrap
-          text-left text-white hover:text-[#f0b90b] hover:bg-[#1e2329]/80
-          transition-all cursor-pointer border border-transparent hover:border-[#2b313a]
-          ${isOpen ? "text-[#f0b90b] bg-[#1e2329] border-[#2b313a]" : ""}
+          group flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold text-nowrap
+          text-left text-slate-100 hover:text-cyan-300 hover:bg-[#0a1833]/80
+          transition-all cursor-pointer border border-transparent hover:border-cyan-500/25
+          ${isOpen ? "text-amber-300 bg-[#09172f] border-cyan-500/30 font-bold" : ""}
         `}
       >
         <span className="flex items-center gap-3.5">
-          <i className={`${icon} w-4 text-center text-xs ${isOpen ? "text-[#f0b90b]" : "text-white/80"}`}></i>
+          <i className={`${icon} w-4 text-center text-xs transition-colors ${isOpen ? "text-amber-400" : "text-cyan-400/80 group-hover:text-cyan-300"}`}></i>
           <span className="text-white font-medium">{text}</span>
         </span>
         <i
-          className={`fa-solid fa-chevron-${isOpen ? "up" : "down"} text-[10px] ${isOpen ? "text-[#f0b90b]" : "text-white/70"}`}
+          className={`fa-solid fa-chevron-${isOpen ? "up" : "down"} text-[10px] ${isOpen ? "text-amber-400" : "text-cyan-400/60"}`}
         ></i>
       </button>
       <div
@@ -133,40 +133,40 @@ const Sidebar = ({ isOpen, onClose }) => {
       className={`
         fixed inset-y-0 left-0 z-40 w-64 p-4 flex flex-col
         transform transition-transform duration-300 ease-in-out 
-        bg-[#181a20] border-r border-[#2b313a]
+        bg-[#060d1a]/95 backdrop-blur-2xl border-r border-cyan-500/20 shadow-[0_0_35px_rgba(0,0,0,0.8)]
         ${isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"}
         lg:relative lg:translate-x-0
       `}
     >
-      {/* Binance Yellow Header Accent Line */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-[#f0b90b]"></div>
+      {/* Top Cyber Accent Line */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-amber-400 to-emerald-400"></div>
 
       {/* Brand Header */}
-      <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#2b313a] relative pt-1">
+      <div className="flex items-center justify-between pb-3 mb-3 border-b border-cyan-500/20 relative pt-1">
         <div
           onClick={() => {
             handleNavigate();
             onClose();
           }}
-          className="flex items-center gap-2.5 p-2 rounded-xl bg-[#1e2329] border border-[#2b313a] cursor-pointer hover:border-[#f0b90b] transition-all duration-200 w-full"
+          className="flex items-center gap-2.5 p-2 rounded-2xl bg-gradient-to-r from-[#09172f] to-[#040a14] border border-cyan-500/30 cursor-pointer hover:border-cyan-400/60 shadow-[0_0_15px_rgba(0,210,255,0.15)] transition-all duration-200 w-full"
         >
           <img
             src={MainContent.shortLogo}
             alt="NODEXAI Logo"
-            className="h-9 w-9 rounded-full object-cover border border-[#f0b90b]/50 shadow-[0_0_8px_rgba(240,185,11,0.3)]"
+            className="h-9 w-9 rounded-full object-cover border border-cyan-400/50 shadow-[0_0_10px_rgba(0,210,255,0.3)] shrink-0"
           />
           <div className="min-w-0 flex-1">
-            <span className="text-xs font-black text-white font-['Orbitron',monospace] tracking-wider block truncate">
+            <span className="text-xs font-black bg-gradient-to-r from-cyan-400 via-white to-amber-300 bg-clip-text text-transparent font-['Orbitron',sans-serif] tracking-wider block truncate">
               {MainContent.appName}
             </span>
-            <span className="text-[9px] text-[#f0b90b] font-mono block">
+            <span className="text-[9px] text-cyan-300 font-mono tracking-wider block">
               {role === "ADMIN" ? "ADMIN CONSOLE" : "TRADING TERMINAL"}
             </span>
           </div>
         </div>
         <button
           onClick={onClose}
-          className="lg:hidden text-white hover:text-[#f0b90b] text-xl p-1.5 hover:bg-[#1e2329] rounded-lg ml-2 cursor-pointer"
+          className="lg:hidden text-slate-300 hover:text-cyan-300 text-xl p-1.5 hover:bg-[#09172f] rounded-xl ml-2 cursor-pointer transition-colors"
         >
           ×
         </button>
@@ -378,16 +378,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                   setOpenDropdown(null);
                 }}
               />
-              <NavLink
-                to={AuthenticatedUserRouters.USER_FUND_TRANSFER}
-                icon="fa-solid fa-arrow-right-arrow-left"
-                text="Transfer (100% Wallet)"
-                badge="100%"
-                onClose={() => {
-                  onClose();
-                  setOpenDropdown(null);
-                }}
-              />
+
+
               <NavLink
                 to={AuthenticatedUserRouters.WITHDRAWAL_HISTORY}
                 icon="fa-solid fa-receipt"
@@ -661,22 +653,22 @@ const Sidebar = ({ isOpen, onClose }) => {
       </nav>
 
       {/* Bottom Pinned User Profile & High-Visibility Logout */}
-      <div className="pt-3 mt-auto border-t border-[#2b313a] space-y-2 shrink-0">
-        <div className="flex items-center gap-2.5 p-2 rounded-xl bg-[#1e2329]/80 border border-[#2b313a]">
+      <div className="pt-3 mt-auto border-t border-cyan-500/20 space-y-2 shrink-0">
+        <div className="flex items-center gap-2.5 p-2 rounded-2xl bg-gradient-to-r from-[#08152c] to-[#040c1a] border border-cyan-500/25 shadow-lg">
           <img
             src={userInfo?.picture || "https://api.dicebear.com/8.x/lorelei/svg?seed=Lanre"}
             alt="User Avatar"
-            className="w-8 h-8 rounded-full border border-[#f0b90b]/50 object-cover shrink-0"
+            className="w-8 h-8 rounded-full border border-cyan-400/60 shadow-[0_0_8px_rgba(0,210,255,0.3)] object-cover shrink-0"
           />
           <div className="min-w-0 flex-1">
             <p className="text-xs font-bold text-white truncate uppercase">
               {userInfo?.username || (role === "ADMIN" ? "ADMIN" : "TRADER")}
             </p>
-            <p className="text-[10px] text-slate-200 font-mono truncate">
+            <p className="text-[10px] text-cyan-300/80 font-mono truncate">
               {maskWalletAddress(userInfo?.account)}
             </p>
           </div>
-          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-[#f0b90b]/20 text-white border border-[#f0b90b]/40">
+          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-lg bg-cyan-950/70 text-cyan-300 border border-cyan-500/40 font-mono">
             {role || "USER"}
           </span>
         </div>
@@ -686,7 +678,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             if (onClose) onClose();
             logoutHandler();
           }}
-          className="w-full flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-xl font-bold text-xs tracking-wider transition-all duration-200 cursor-pointer shadow-md bg-red-500/15 hover:bg-red-500/25 text-[#f6465d] hover:text-white border border-red-500/30 hover:border-red-500/60 shadow-[0_0_12px_rgba(246,70,93,0.15)] hover:shadow-[0_0_18px_rgba(246,70,93,0.3)]"
+          className="w-full flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-xl font-bold text-xs tracking-wider transition-all duration-200 cursor-pointer bg-gradient-to-r from-rose-500/15 to-red-600/25 hover:from-rose-500/30 hover:to-red-600/40 text-rose-300 hover:text-white border border-rose-500/40 hover:border-rose-400 shadow-[0_0_12px_rgba(244,63,94,0.15)] hover:shadow-[0_0_18px_rgba(244,63,94,0.3)] uppercase"
         >
           <i className="fa-solid fa-arrow-right-from-bracket text-sm"></i>
           <span>LOGOUT</span>

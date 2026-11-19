@@ -5,6 +5,7 @@ import AboutSafealtCoin from "../../components/Screen/Landing/About";
 import VisionEcosystem from "../../components/Screen/Landing/VisionEcosystem ";
 import PackageSection from "../../components/Screen/Landing/PackageSection";
 import IncomeTypes from "../../components/Screen/Landing/IncomeTypes";
+import NodeWonderSection from "../../components/Screen/Landing/NodeWonderSection";
 import DirectReferralIncome from "../../components/Screen/Landing/Directreferal";
 import BoosterIncome from "../../components/Screen/Landing/BoosterIncome";
 import LevelIncome from "../../components/Screen/Landing/Levelincome";
@@ -39,6 +40,7 @@ const LandingPage = () => {
       <VisionEcosystem />
       <PackageSection />
       <IncomeTypes />
+      <NodeWonderSection />
       <DirectReferralIncome />
       <BoosterIncome />
       <LevelIncome />

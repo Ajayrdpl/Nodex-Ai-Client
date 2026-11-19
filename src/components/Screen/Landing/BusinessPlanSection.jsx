@@ -22,7 +22,7 @@ import {
 const PLAN_TABS = [
   { id: "overview", label: "Plan Overview", icon: Globe, color: "text-cyan-400", bg: "bg-cyan-500/10", border: "border-cyan-500/30" },
   { id: "booster", label: "2% Booster ROI", icon: Zap, color: "text-amber-400", bg: "bg-amber-500/10", border: "border-amber-500/30" },
-  { id: "direct", label: "10% Direct Income", icon: Users, color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30" },
+  { id: "direct", label: "5% Direct Income", icon: Users, color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30" },
   { id: "level", label: "15-Level ROI", icon: Network, color: "text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/30" },
   { id: "salary", label: "15 Salary & Ranks", icon: Award, color: "text-rose-400", bg: "bg-rose-500/10", border: "border-rose-500/30" },
   { id: "withdrawal", label: "Withdrawal Rules", icon: Wallet, color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
@@ -238,13 +238,13 @@ const BusinessPlanSection = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-blue-400">Instant Sponsor Commission</span>
-              <h3 className="text-2xl md:text-3xl font-black text-white mt-1">10% Flat Direct Referral Income</h3>
+              <h3 className="text-2xl md:text-3xl font-black text-white mt-1">5% Flat Direct Referral Income</h3>
               <p className="text-slate-400 text-sm mt-1">
-                Earn <strong className="text-white">10% instant direct commission</strong> whenever any direct partner joins or upgrades their package.
+                Earn <strong className="text-white">5% instant direct commission ($1.25 on $25 package)</strong> whenever any direct partner joins or activates their package.
               </p>
             </div>
             <div className="bg-blue-500/10 border border-blue-500/30 px-5 py-3 rounded-2xl text-blue-400 font-extrabold text-xl">
-              10% Instant Payout
+              5% Instant Payout
             </div>
           </div>
 
@@ -258,13 +258,13 @@ const BusinessPlanSection = () => {
             <div className="bg-slate-950/80 p-5 rounded-2xl border border-slate-800 space-y-2">
               <CheckCircle2 className="w-5 h-5 text-blue-400" />
               <h4 className="text-white font-bold">Unlimited Directs</h4>
-              <p className="text-slate-400 text-xs">No limitation on direct sponsors. Earn 10% on every direct member without restrictions.</p>
+              <p className="text-slate-400 text-xs">No limitation on direct sponsors. Earn 5% on every direct member without restrictions.</p>
             </div>
 
             <div className="bg-slate-950/80 p-5 rounded-2xl border border-slate-800 space-y-2">
               <CheckCircle2 className="w-5 h-5 text-blue-400" />
               <h4 className="text-white font-bold">Reinvestment Bonus</h4>
-              <p className="text-slate-400 text-xs">Whenever your direct partner reinvests from their wallet, you earn 10% direct commission again!</p>
+              <p className="text-slate-400 text-xs">Whenever your direct partner reinvests from their wallet, you earn 5% direct commission again!</p>
             </div>
           </div>
         </div>

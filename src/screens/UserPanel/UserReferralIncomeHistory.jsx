@@ -323,13 +323,13 @@ const UserReferralIncomeHistory = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-bold mb-2">
               <Share2 size={13} className="text-cyan-400" />
-              12% Instant Direct Referral Commission
+              5% Instant Direct Referral Commission
             </div>
             <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
               Direct Referral Income Hub
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm mt-1 max-w-2xl">
-              Earn a flat <strong className="text-white">12% instant direct bonus</strong> on every activation package deposited by your directly sponsored partners.
+              Earn a flat <strong className="text-white">5% instant direct bonus ($1.25 on $25 package)</strong> on every activation package deposited by your directly sponsored partners.
             </p>
           </div>
 
@@ -407,7 +407,7 @@ const UserReferralIncomeHistory = () => {
 
       {/* Referral History Data Table */}
       <DataTable
-        title="Direct Referral Income History (10%)"
+        title="Direct Referral Income History (5%)"
         columns={columns}
         data={filteredHistory}
         pageSize={15}

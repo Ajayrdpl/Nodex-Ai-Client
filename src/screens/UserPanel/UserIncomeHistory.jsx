@@ -354,12 +354,12 @@ const UserIncomeHistory = () => {
       subText: `Today: +$ ${todayDailyRoi.toFixed(2)}`,
     },
     {
-      title: "Direct Referral (12%)",
+      title: "Direct Referral (5%)",
       value: `$ ${((totalReferral || 0) + (totalDirectBooster || 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://img.icons8.com/3d-plastilina/69/share--v1.png",
       path: AuthenticatedUserRouters.REFERRAL_INCOME_HISTORY,
       theme: "amber",
-      badge: "12% DIRECT",
+      badge: "5% DIRECT",
       subText: `Active Partners: ${partnerActive}`,
     },
     {
@@ -741,7 +741,7 @@ const UserIncomeHistory = () => {
             {[
               { id: "all", label: "All Incomes", count: allIncomeHistory.length },
               { id: "roi", label: "Package ROI (4.5%-7.5%)", count: roiHistory.length },
-              { id: "direct", label: "Direct Referral (12%)", count: referralHistory.length + directBoosterHistory.length },
+              { id: "direct", label: "Direct Referral (5%)", count: referralHistory.length + directBoosterHistory.length },
               { id: "level", label: "10-Level ROI (24%)", count: levelHistory.length },
               { id: "team-booster", label: "7-Days Booster", count: teamBoosterHistory.length },
               { id: "compounding", label: "Auto Compounding (0.5%)", count: compoundingHistory.length },

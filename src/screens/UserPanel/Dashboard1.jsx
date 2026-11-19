@@ -281,8 +281,20 @@ const Dashboard1 = () => {
   );
 
   // 6. NODE WONDER (Universal 2-ID Queue + 5% Referral)
-  const totalNodeWonderCycle = Number(stats?.nodeWonderIncome?.total ?? incomes?.nodeWonderIncome?.total ?? userObj?.nodeWonderInfo?.totalEarnedFromCycles ?? 0);
-  const totalNodeWonderRef = Number(stats?.nodeWonderReferral?.total ?? incomes?.nodeWonderReferral?.total ?? userObj?.nodeWonderInfo?.totalReferralIncome ?? 0);
+  const totalNodeWonderCycle = Number(
+    stats?.nodeWonderIncome?.total ??
+    incomes?.nodeWonderIncome?.total ??
+    userObj?.nodeWonderInfo?.totalEarnedFromCycles ??
+    userObj?.nodeWonderInfo?.totalQueueEarned ??
+    0
+  );
+  const totalNodeWonderRef = Number(
+    stats?.nodeWonderReferral?.total ??
+    incomes?.nodeWonderReferral?.total ??
+    userObj?.nodeWonderInfo?.totalReferralIncome ??
+    userObj?.nodeWonderInfo?.totalReferralEarned ??
+    0
+  );
   const totalNodeWonder = totalNodeWonderCycle + totalNodeWonderRef;
 
   // Aggregate Total Income
@@ -377,14 +389,14 @@ const Dashboard1 = () => {
       badge: "WITHDRAWABLE",
       subText: fundWallet > 0 ? `Fund Wallet: $ ${fundWallet.toFixed(2)}` : "Available for Payout",
     },
-    // 3. DIRECT INCOME (10% = $2.50)
+    // 3. DIRECT INCOME (5% = $1.25)
     {
       title: "01. Direct Income",
       value: `$ ${totalDirectIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: "https://img.icons8.com/3d-plastilina/69/share--v1.png",
       path: AuthenticatedUserRouters.REFERRAL_INCOME_HISTORY,
       theme: "amber",
-      badge: "10% ($2.50 / Direct)",
+      badge: "5% ($1.25 / Direct)",
       subText: `Today: +$ ${todayDirectIncome.toFixed(2)} • ${partnerActive} Active Directs`,
     },
     // 4. LEVEL INCOME (20% = $5.00)

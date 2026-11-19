@@ -250,7 +250,7 @@ const Hero = () => {
                   $25 Joining Package
                 </span>
                 , 100% transparent distribution across 5 income streams:{" "}
-                <span className="text-cyan-300 font-semibold">10% Direct, 20% Level, 50% 1:1 Binary, 10% Club CTO Pool & 10% Community Support</span>.
+                <span className="text-cyan-300 font-semibold">5% Direct, 20% Level, 50% 1:1 Binary, 10% Club CTO Pool & 10% Community Support</span>.
               </motion.p>
 
               {/* Key Metric Highlights */}

@@ -40,7 +40,7 @@ export const NODEXAI_PACKAGES = [
     badgeText: "$25 JOINING PACKAGE",
     presetAmounts: [25],
     features: [
-      "10% Direct Income ($2.50 instant)",
+      "5% Direct Income ($1.25 instant)",
       "20% 10-Level Matrix Income ($5.00)",
       "50% Binary 1:1 Matching Bonus ($12.50)",
       "10% Club Income (Puma, Pajero, Panther CTO)",
@@ -134,7 +134,7 @@ const InvestmentPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#030d22] border border-cyan-500/20 text-xs text-slate-200 font-mono">
                 <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>10% Direct ($2.50)</span>
+                <span>5% Direct ($1.25)</span>
               </div>
               <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#030d22] border border-amber-500/20 text-xs text-slate-200 font-mono">
                 <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />

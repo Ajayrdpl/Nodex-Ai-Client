@@ -109,13 +109,13 @@ const WelcomeModal = () => {
               <h2>
                 Refer & Earn
                 <br />
-                <span>10% Direct Commission</span>
+                <span>5% Direct Commission</span>
               </h2>
 
               {/* Description */}
               <p>
                 Invite friends and network partners. Receive an{" "}
-                <strong>instant 10% direct commission</strong> straight to your wallet on every investment.
+                <strong>instant 5% direct commission ($1.25 on $25 package)</strong> straight to your wallet on every activation.
               </p>
 
               {/* Example Calculation Box */}

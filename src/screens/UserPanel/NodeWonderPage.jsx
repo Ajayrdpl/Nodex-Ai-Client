@@ -82,7 +82,17 @@ const NodeWonderPage = () => {
       ]);
 
       if (statusRes?.success && statusRes?.data) {
-        setStatusData(statusRes.data);
+        const d = statusRes.data;
+        setStatusData({
+          hasActivePackage: Boolean(d.hasActivePackage),
+          activePackage: d.activePackage || d.activeEntry || null,
+          totalCyclesCompleted: Number(d.totalCyclesCompleted || 0),
+          totalEarnedFromCycles: Number(d.totalEarnedFromCycles ?? d.totalQueueEarned ?? 0),
+          totalReferralIncome: Number(d.totalReferralIncome ?? d.totalReferralEarned ?? 0),
+          canEarnCycle: Boolean(d.hasActivePackage),
+          canEarnReferral: true,
+          ...d,
+        });
       }
 
       if (balRes?.data) {
@@ -260,7 +270,11 @@ const NodeWonderPage = () => {
     }
   };
 
-  const { activePackage, hasActivePackage, totalCyclesCompleted, totalEarnedFromCycles, totalReferralIncome } = statusData;
+  const activePackage = statusData?.activePackage || statusData?.activeEntry || null;
+  const hasActivePackage = Boolean(statusData?.hasActivePackage);
+  const totalCyclesCompleted = Number(statusData?.totalCyclesCompleted || 0);
+  const totalEarnedFromCycles = Number(statusData?.totalEarnedFromCycles ?? statusData?.totalQueueEarned ?? 0);
+  const totalReferralIncome = Number(statusData?.totalReferralIncome ?? statusData?.totalReferralEarned ?? 0);
   const subsequentCount = activePackage?.subsequentIdsCount || 0;
 
   return (
@@ -323,7 +337,7 @@ const NodeWonderPage = () => {
             </div>
           </div>
           <div className="text-2xl font-black font-['Orbitron',monospace] text-emerald-400 mt-2">
-            ${totalEarnedFromCycles.toFixed(2)}
+            ${Number(totalEarnedFromCycles || 0).toFixed(2)}
           </div>
           <div className="text-[11px] text-slate-400 mt-1 font-mono">
             {totalCyclesCompleted} Complete Cycles ($150 each)
@@ -338,7 +352,7 @@ const NodeWonderPage = () => {
             </div>
           </div>
           <div className="text-2xl font-black font-['Orbitron',monospace] text-amber-400 mt-2">
-            ${totalReferralIncome.toFixed(2)}
+            ${Number(totalReferralIncome || 0).toFixed(2)}
           </div>
           <div className="text-[11px] text-amber-400/80 mt-1 font-mono">
             $5.00 per direct buyer (Unconditional)
@@ -353,7 +367,7 @@ const NodeWonderPage = () => {
             </div>
           </div>
           <div className="text-2xl font-black font-['Orbitron',monospace] text-cyan-300 mt-2">
-            ${(totalEarnedFromCycles + totalReferralIncome).toFixed(2)}
+            ${(Number(totalEarnedFromCycles || 0) + Number(totalReferralIncome || 0)).toFixed(2)}
           </div>
           <div className="text-[11px] text-slate-400 mt-1 font-mono">
             Cycles + Referral Earnings
@@ -637,7 +651,7 @@ const NodeWonderPage = () => {
                       {item.type}
                     </td>
                     <td className="py-3 px-4 font-bold text-emerald-400">
-                      +${item.income?.toFixed(2)}
+                      +${Number(item.income || 0).toFixed(2)}
                     </td>
                     <td className="py-3 px-4 text-slate-300">
                       {item.description || (item.fromUser ? `From @${item.fromUser?.username}` : "Universal 2-ID Queue Payout")}

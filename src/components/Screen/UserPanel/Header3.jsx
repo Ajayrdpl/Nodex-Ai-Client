@@ -146,38 +146,63 @@ const Header3 = ({ onMenuClick, hideSidebar = false }) => {
             <div className="p-4 bg-[#1e2329]/70">
               <div className="flex items-center justify-between">
                 <p className="font-black text-sm text-[#f0b90b] uppercase tracking-wider truncate">
-                  {userInfo?.username || "NODEXAI Trader"}
+                  {userInfo?.username || (role === "ADMIN" ? "ADMIN CONSOLE" : "NODEXAI Trader")}
                 </p>
                 <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-[#f0b90b]/15 text-[#f0b90b] border border-[#f0b90b]/30">
-                  TRADER
+                  {role === "ADMIN" ? "ADMIN" : "TRADER"}
                 </span>
               </div>
               <p className="text-xs text-[#eaecef] font-mono mt-1 font-semibold">
-                ID: {userInfo?.id || "VLT000001"}
+                ID: {userInfo?.id || (role === "ADMIN" ? "ADMIN001" : "NDX000001")}
               </p>
-              <p className="text-[11px] text-[#848e9c] font-mono mt-0.5 truncate">
-                {maskWalletAddress(userInfo?.account)}
-              </p>
+              {userInfo?.account && (
+                <p className="text-[11px] text-[#848e9c] font-mono mt-0.5 truncate">
+                  {maskWalletAddress(userInfo?.account)}
+                </p>
+              )}
             </div>
 
             {/* Quick Links */}
             <div className="p-2 space-y-1">
-              <Link
-                to={AuthenticatedUserRouters.PROFILE}
-                onClick={() => setProfileMenuOpen(false)}
-                className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#eaecef] hover:bg-[#1e2329] hover:text-[#f0b90b] transition-colors"
-              >
-                <i className="fa-solid fa-user-gear w-4 text-center text-[#f0b90b]"></i>
-                <span>My Profile & Security</span>
-              </Link>
-              <Link
-                to={AuthenticatedUserRouters.DASHBOARD}
-                onClick={() => setProfileMenuOpen(false)}
-                className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#eaecef] hover:bg-[#1e2329] hover:text-[#f0b90b] transition-colors"
-              >
-                <i className="fa-solid fa-chart-line w-4 text-center text-[#0ecb81]"></i>
-                <span>Trading Terminal</span>
-              </Link>
+              {role === "ADMIN" ? (
+                <>
+                  <Link
+                    to={AuthenticatedAdminRouters.ADMIN_DASHBOARD}
+                    onClick={() => setProfileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#eaecef] hover:bg-[#1e2329] hover:text-[#f0b90b] transition-colors"
+                  >
+                    <i className="fa-solid fa-gauge-high w-4 text-center text-[#f0b90b]"></i>
+                    <span>Admin Overview</span>
+                  </Link>
+                  <Link
+                    to={AuthenticatedAdminRouters.ALL_USERS}
+                    onClick={() => setProfileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#eaecef] hover:bg-[#1e2329] hover:text-[#0ecb81] transition-colors"
+                  >
+                    <i className="fa-solid fa-users w-4 text-center text-[#0ecb81]"></i>
+                    <span>User Management</span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to={AuthenticatedUserRouters.PROFILE}
+                    onClick={() => setProfileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#eaecef] hover:bg-[#1e2329] hover:text-[#f0b90b] transition-colors"
+                  >
+                    <i className="fa-solid fa-user-gear w-4 text-center text-[#f0b90b]"></i>
+                    <span>My Profile & Security</span>
+                  </Link>
+                  <Link
+                    to={AuthenticatedUserRouters.DASHBOARD}
+                    onClick={() => setProfileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#eaecef] hover:bg-[#1e2329] hover:text-[#0ecb81] transition-colors"
+                  >
+                    <i className="fa-solid fa-chart-line w-4 text-center text-[#0ecb81]"></i>
+                    <span>Trading Terminal</span>
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Dropdown Action Buttons */}

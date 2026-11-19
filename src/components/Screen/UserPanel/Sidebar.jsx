@@ -302,7 +302,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 to={AuthenticatedUserRouters.REFERRAL_INCOME_HISTORY}
                 icon="fa-solid fa-share-nodes"
                 text="01. Direct Income"
-                badge="10% ($2.50)"
+                badge="5% ($1.25)"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);
@@ -524,8 +524,8 @@ const Sidebar = ({ isOpen, onClose }) => {
               <NavLink
                 to={AuthenticatedAdminRouters.REFERRAL_INCOME_HISTORY}
                 icon="fa-solid fa-share-nodes"
-                text="01. Direct Income (10%)"
-                badge="$2.50"
+                text="01. Direct Income (5%)"
+                badge="$1.25"
                 onClose={() => {
                   onClose();
                   setOpenDropdown(null);

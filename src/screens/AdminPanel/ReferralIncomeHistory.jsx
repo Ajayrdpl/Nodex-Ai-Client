@@ -345,13 +345,13 @@ const ReferralIncomeHistory = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-bold mb-2">
               <Share2 size={13} className="text-cyan-400" />
-              12% Direct Referral Commission Distribution (Admin Records)
+              5% Direct Referral Commission Distribution (Admin Records)
             </div>
             <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
               All Referral Income Distributions
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm mt-1 max-w-2xl">
-              Real-time audit log of all 12% direct sponsor bonuses distributed across the platform with sender and recipient ledger entries.
+              Real-time audit log of all 5% ($1.25 on $25 package) direct sponsor bonuses distributed across the platform with sender and recipient ledger entries.
             </p>
           </div>
 

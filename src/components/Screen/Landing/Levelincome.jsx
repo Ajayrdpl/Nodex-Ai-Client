@@ -4,7 +4,7 @@ import { FiLayers, FiCheckCircle, FiUnlock, FiUsers, FiStar, FiShield } from "re
 import { RiOrganizationChart } from "react-icons/ri";
 
 const levelData = [
-  { level: 1, percent: "10.0%", amount: "$2.50", desc: "Direct Income", color: "#00D2FF", badge: "DIRECT" },
+  { level: 1, percent: "5.0%", amount: "$1.25", desc: "Direct Income", color: "#00D2FF", badge: "DIRECT" },
   { level: 2, percent: "5.0%", amount: "$1.25", desc: "Generation 2", color: "#38bdf8", badge: "TIER 02" },
   { level: 3, percent: "3.0%", amount: "$0.75", desc: "Generation 3", color: "#60a5fa", badge: "TIER 03" },
   { level: 4, percent: "2.0%", amount: "$0.50", desc: "Generation 4", color: "#818cf8", badge: "TIER 04" },

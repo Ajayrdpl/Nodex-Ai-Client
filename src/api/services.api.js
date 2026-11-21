@@ -5,7 +5,7 @@ import { logoutUser } from "../redux/slices/authSlice";
 const BASE_URL =
   (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_BASE_URL) ||
   (typeof process !== "undefined" && process.env && process.env.REACT_APP_API_URL) ||
-  "https://api.valtrioncapital.online/api";
+  "https://api.nodexai.io/api";
 
 export const API = axios.create({
   baseURL: BASE_URL,

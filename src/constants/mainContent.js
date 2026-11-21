@@ -18,8 +18,8 @@ export const MainContent = {
 };
 
 export const backendConfig = {
-  origin: import.meta.env.VITE_API_ORIGIN || "https://api.valtrioncapital.online",
-  base: import.meta.env.VITE_API_BASE_URL || "https://api.valtrioncapital.online/api",
+  origin: import.meta.env.VITE_API_ORIGIN || "https://api.nodexai.io",
+  base: import.meta.env.VITE_API_BASE_URL || "https://api.nodexai.io/api",
 };
 
 export const Axios = axios.create({
